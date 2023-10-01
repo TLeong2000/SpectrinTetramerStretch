@@ -1,0 +1,178 @@
+# Minimize prototype structure of Alpha Spectin
+log log_protoMinAlpha.lammps
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -500 500 -500 500 -500 500
+create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+# region insertionVolume block -10 10 -10 10 -10 10
+
+molecule protoAlpha protoAlpha.txt
+bond_style harmonic
+angle_style harmonic
+pair_style none
+
+create_atoms 0 single 0 0 0 mol protoAlpha ${seed} rotate 0 0 0 1
+
+bond_coeff 1	2.045	46.1746
+bond_coeff 2	5.825	23.4984
+bond_coeff 3	4.228	26.8487
+bond_coeff 4	2.885	23.3675
+bond_coeff 5	5.96	26.2061
+bond_coeff 6	7.155	23.162
+bond_coeff 7	7.6	    26.5093
+bond_coeff 8	6.976	23.1642
+bond_coeff 9	4.116	27.0226
+bond_coeff 10	2.448	22.9662
+bond_coeff 11	1	    25.385
+bond_coeff 12	4.414	22.0843
+bond_coeff 13	3.833	26.5635
+bond_coeff 14	3.1	    23.7467
+bond_coeff 15	5.165	24.4217
+bond_coeff 16	1.221	20.7661
+bond_coeff 17	0.275	40.283
+bond_coeff 18	0.247	29.8576
+bond_coeff 19	0.315	42.2959
+bond_coeff 20	4.921	23.0997
+bond_coeff 21	0.622	24.3761
+bond_coeff 22	3.942	23.6432
+bond_coeff 23	4.625	27.5279
+bond_coeff 24	5.61	24.0771
+bond_coeff 25	5.383	26.705
+bond_coeff 26	4.342	23.231
+bond_coeff 27	0.594	25.2867
+bond_coeff 28	3.183	22.0111
+bond_coeff 29	3.759	24.9744
+bond_coeff 30	4.732	23.8018
+bond_coeff 31	4.27	25.416
+bond_coeff 32	2.483	25.7527
+bond_coeff 33	4.777	24.6831
+bond_coeff 34	2.623	24.9634
+bond_coeff 35	1.963	27.6717
+bond_coeff 36	3.459	26.8195
+bond_coeff 37	0.854	35.2366
+bond_coeff 38	2.821	25.4128
+bond_coeff 39	5.6	    27.0142
+bond_coeff 40	1.766	34.3423
+bond_coeff 41	0.03	50.9712
+
+angle_coeff 1	69.386	 163.9983
+angle_coeff 2	314.499	 175.7
+angle_coeff 3	144.392	 172.0911
+angle_coeff 4	431.93	 174.1817
+angle_coeff 5	75.83	 167.9456
+angle_coeff 6	492.352	 175.3977
+angle_coeff 7	136.887	 161.0032
+angle_coeff 8	337.411	 166.7403
+angle_coeff 9	99.209	 171.7309
+angle_coeff 10	97.609	 141.8924
+angle_coeff 11	31.388	 114.574
+angle_coeff 12	288.624	 153.2106
+angle_coeff 13	78.482	 160.0255
+angle_coeff 14	237.823	 171.6865
+angle_coeff 15	86.92	 171.0823
+angle_coeff 16	294.159	 33.7401
+angle_coeff 17	2904.897 13.9182
+angle_coeff 18	63.607	 153.6164
+angle_coeff 19	62.496	 156.4121
+angle_coeff 20	217.821	 147.0511
+angle_coeff 21	123.821	 81.2009
+angle_coeff 22	186.414	 170.2844
+angle_coeff 23	132.593	 172.9203
+angle_coeff 24	381.213	 174.4828
+angle_coeff 25	165.011	 171.8501
+angle_coeff 26	80.455	 162.8038
+angle_coeff 27	71.636	 95.767
+angle_coeff 28	183.101	 156.3353
+angle_coeff 29	85.786	 147.7152
+angle_coeff 30	178.587	 158.8278
+angle_coeff 31	85.495	 166.6108
+angle_coeff 32	180.507	 174.6714
+angle_coeff 33	93.417	 163.1374
+angle_coeff 34	176.485	 165.4036
+angle_coeff 35	37.427	 153.3686
+angle_coeff 36	170.776	 157.8103
+angle_coeff 37	78.479	 81.569
+angle_coeff 38	247.384	 172.3991
+angle_coeff 39	47.626	 161.6989
+angle_coeff 40	27.584	 166.4208
+
+
+mass 1	18121.2887
+mass 2	1263.554
+mass 3	11018.2408
+mass 4	1116.269
+mass 5	10799.2278
+mass 6	1496.74
+mass 7	11058.7018
+mass 8	1294.449
+mass 9	11016.1008
+mass 10	1167.482
+mass 11	11023.2288
+mass 12	1208.322
+mass 13	11057.3328
+mass 14	1171.473
+mass 15	10755.0208
+mass 16	1157.206
+mass 17	8933.8708
+mass 18	5067.8109
+mass 19	6177.9699
+mass 20	1290.532
+mass 21	10663.7918
+mass 22	1010.14
+mass 23	10933.9498
+mass 24	1254.454
+mass 25	10911.2138
+mass 26	1219.438
+mass 27	10937.2478
+mass 28	1150.302
+mass 29	11190.2758
+mass 30	1213.367
+mass 31	10961.4098
+mass 32	1193.435
+mass 33	11045.5368
+mass 34	1216.398
+mass 35	11113.4088
+mass 36	1235.228
+mass 37	11953.5388
+mass 38	1171.317
+mass 39	11379.8468
+mass 40	1212.355
+mass 41	12757.5148
+mass 42	17941.8887
+
+
+# group firstAtoms type 1
+# group lastAtoms type 42
+# displace_atoms firstAtoms move 0  ${dispDist} 0
+# displace_atoms lastAtoms move  0 -${dispDist} 0
+
+group internals type 2:41
+group endpoints subtract all internals
+
+write_dump all image out/preMinAlpha.png type type zoom 4 adiam 5.0 bond atom 1.0 size 1280 1280
+# This is keep the endpoints stationary during minimization
+fix stationary endpoints setforce 0.0 0.0 0.0
+# Minimize the prototype structure
+minimize 0.0 0.0 1000000 1000000
+# Remove the stationary fix now the minimization is done
+unfix stationary
+write_dump all image out/postMinAlpha.png type type zoom 4 adiam 5.0 bond atom 1.0 size 1280 1280
+# write_dump endpoints custom out/afterMinCoords.${dispRatio}.dump mol id type x y z
+
+# Re-center the center-of-geometry on the origin
+compute avePos all reduce ave x y z
+fix avePos all ave/time 1 1 1 c_avePos mode vector
+variable aveX equal "-1*f_avePos[1]"
+variable aveY equal "-1*f_avePos[2]"
+variable aveZ equal "-1*f_avePos[3]"
+
+run 0
+displace_atoms all move v_aveX v_aveY v_aveZ
+
+write_data productionAlpha.data
+write_dump all custom coords_productionAlpha.dump id x y z

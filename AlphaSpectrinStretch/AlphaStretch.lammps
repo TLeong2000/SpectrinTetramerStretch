@@ -1,0 +1,114 @@
+# Reminder: indicate displacement ratio as a -var variable
+# Stretching a single copy of Alpha Spectrin
+
+# variable dispRatio universe 0.0 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+
+log out/log_AlphaStretchSingle.lammps
+
+variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
+variable dispDist equal "v_totLength*v_dispRatio/2"
+# Displacement distance is divided by two because I want to displace both the bow and stern atoms of each chain.
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -2500 2500 -2500 2500 -2500 2500
+create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+region insertionVolume block -1500 1500 -1500 1500 -1500 1500
+
+molecule productionAlpha productionAlpha.txt
+bond_style harmonic
+angle_style harmonic
+pair_style none
+
+create_atoms 0 random 20 ${seed} insertionVolume mol productionAlpha ${seed} rotate 0 0 0 1
+
+# Load in Alpha Spectrin Parameters:
+read_data AlphaCoeffs.data add merge
+
+# Verify that parameters were assigned as intended:
+# write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass 
+# write_coeff debug/coeffCheck.${dispRatio}.data
+
+# write_dump all image images/beforeDisplacement.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+
+
+group firstAtoms type 1
+group lastAtoms type 42
+displace_atoms firstAtoms move 0  ${dispDist} 0
+displace_atoms lastAtoms move  0 -${dispDist} 0
+
+group internals type 2:41
+group endpoints subtract all internals
+
+# write_dump all image images/min.${dispRatio}.before.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# This is keep the endpoints stationary during minimization
+fix stationary endpoints setforce 0.0 0.0 0.0
+# Minimize the initial structure for initializing velocities
+minimize 0.0 1.0e-9 100000 100000
+# Remove the stationary fix now the minimization is done
+unfix stationary
+# write_dump all image images/min.${dispRatio}.post.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# write_dump endpoints custom out/afterMinCoords.${dispRatio}.dump mol id type x y z
+
+reset_timestep 0
+
+velocity internals create 310.0 ${seed} dist gaussian
+
+timestep 100
+fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
+
+compute internalsTemp internals temp
+thermo 100
+thermo_style custom step c_internalsTemp epair emol etotal press
+
+# dump coordsDump all yaml 100 coords_dump.${displacement}.yaml mol id x y z
+# dump_modify coordsDump time yes sort id
+# dump thermoDump internals yaml 100 thermo_dump.${displacement}.yaml mol id vx vy vz
+# dump_modify thermoDump time yes thermo yes sort id
+# dump coordsDCD all dcd 100 trajectory.${displacement}.dcd
+# dump movie all movie 100 ForcedPolymerStretching.${displacement}.mp4 type type size 1280 720
+
+# dump forceDump all yaml 100 force_dump.${displacement}.yaml mol id fx fy fz
+# dump_modify forceDump time yes thermo yes sort id
+
+# dump forceDump all custom 100 out/force_dump.${dispRatio}.dump id mol type fx fy fz
+
+compute molChunks all chunk/atom molecule
+
+group bowAtoms type 1
+group sternAtoms type 42
+
+compute bowComp bowAtoms property/atom fy
+compute sternComp sternAtoms property/atom fy
+
+run 0
+velocity internals scale 310.0
+
+fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
+# fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
+# fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
+
+
+variable netTension atom "c_bowComp - c_sternComp"
+
+# Calculate, for every molecule individually, the net tension
+fix tensions all ave/chunk 100 1 100 molChunks v_netTension norm none file out/tensions.${dispRatio}.txt
+# write_data MultiplePolymerDisplacements.${displacement}.polymer
+
+# Calculate the ensemble average of the net tensions
+variable ensAvg equal ave(f_tensions[2]) 
+
+# Time-average the ensemble average of the net tensions
+# We will average over the 100 most recent timesteps in increments of 100 steps
+fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
+
+run 100000
+
+# clear
+
+# next dispRatio
+# jump EndPointForceDisplacement.lammps
