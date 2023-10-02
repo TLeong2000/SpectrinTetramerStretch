@@ -106,6 +106,8 @@ variable ensAvg equal ave(f_tensions[2])
 # We will average over the 100 most recent timesteps in increments of 100 steps
 fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
 
+neighbor 10.0 bin
+
 run 100000
 
 # clear
