@@ -92,18 +92,18 @@ fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internal
 # fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
 # fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
 
-# Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
-fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
-fix sternForces all ave/chunk 100 1 100 molChunks c_sternComp norm none file out/sternForces.${dispRatio}.txt
 
-# Calculate the ensemble average of the bow/stern forces:
-variable ensBow equal ave(f_bowForces[2])
-variable ensStern equal ave(f_sternForces[2])
+variable netEndForce atom "c_bowComp + c_sternComp"
 
-# Time-average the ensemble average of the bow/stern forces
+# Calculate, for every molecule individually, the net endpoint forces
+fix netEndForces all ave/chunk 100 1 100 molChunks v_netEndForce norm none file out/netEndForces.${dispRatio}.txt
+
+# Calculate the ensemble average of the net endpoint forces
+variable ens_netEnd equal ave(f_netEndForces[2])
+
+# Time-average the ensemble average of the net endpoint forces
 # We will average over the 100 most recent timesteps in increments of 100 steps
-fix timeBow all ave/time 100 100 10000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
-fix timeStern all ave/time 100 100 10000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
+fix timeAvg_netEnd all ave/time 100 100 10000 v_ens_netEnd file out/timeAvg_netEndForces.${dispRatio}.txt
 
 
 # variable netTension atom "c_bowComp - c_sternComp"
