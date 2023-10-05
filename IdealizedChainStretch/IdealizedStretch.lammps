@@ -92,19 +92,32 @@ fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internal
 # fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
 # fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
 
+# Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
+fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
+fix sternForces all ave/chunk 100 1 100 molChunks c_sternComp norm none file out/sternForces.${dispRatio}.txt
 
-variable netTension atom "c_bowComp - c_sternComp"
+# Calculate the ensemble average of the bow/stern forces:
+variable ensBow equal ave(f_bowForces[2])
+variable ensStern equal ave(f_sternForces[2])
+
+# Time-average the ensemble average of the bow/stern forces
+# We will average over the 100 most recent timesteps in increments of 100 steps
+fix timeBow all ave/time 100 100 10000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
+fix timeStern all ave/time 100 100 10000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
+
+
+# variable netTension atom "c_bowComp - c_sternComp"
 
 # Calculate, for every molecule individually, the net tension
-fix tensions all ave/chunk 100 1 100 molChunks v_netTension norm none file out/tensions.${dispRatio}.txt
+# fix tensions all ave/chunk 100 1 100 molChunks v_netTension norm none file out/tensions.${dispRatio}.txt
 # write_data MultiplePolymerDisplacements.${displacement}.polymer
 
 # Calculate the ensemble average of the net tensions
-variable ensAvg equal ave(f_tensions[2]) 
+# variable ensAvg equal ave(f_tensions[2]) 
 
 # Time-average the ensemble average of the net tensions
 # We will average over the 100 most recent timesteps in increments of 100 steps
-fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
+# fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
 
 neighbor 10.0 bin
 
