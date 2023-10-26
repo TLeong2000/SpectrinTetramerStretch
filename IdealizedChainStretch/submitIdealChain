@@ -1,0 +1,34 @@
+#!/bin/bash
+#COBALT -n 8
+#COBALT -t 5
+#COBALT -q -debug-cache-quad
+#COBALT -A ModelingCoronaVirus
+#COBALT -O cobaltIdealizedStretch.out
+
+echo "COBALT_JOBID = " $COBALT_JOBID
+echo "COBALT_JOBSIZE (nodes) =" $COBALT_JOBSIZE
+echo "COBALT_PARTNAME = " $COBALT_PARTNAME
+
+NNODES=${COBALT_JOBSIZE}
+NRANKS_PER_NODE=64
+NTHREADS_PER_CORE=1
+NDEPTH=1
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+
+# option  long version            (explanation)
+#
+# -n                              "PEs" (ranks)
+# -N      --pes-per-node          ranks per node
+# -d      --cpus-per-pe           hyperthreads per rank
+# -cc     --cpu-binding depth
+# -j                              cpus (hyperthreads) per compute unit (core)
+
+
+
+aprun -n ${NTOTRANKS} -N ${NRANKS_PER_NODE} -d ${NDEPTH} -j ${NTHREADS_PER_CORE} -cc depth ./lmp_theta -in IdealizedStretch.lammps
+status=$?
+
+
+echo "Exit status of aprun is: $status"
+exit $status
