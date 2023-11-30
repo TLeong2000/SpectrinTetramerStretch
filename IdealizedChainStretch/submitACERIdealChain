@@ -1,11 +1,13 @@
 #!/bin/bash
 #PBS -N IdealizedStretch
-#PBS -l walltime=00:05:00
-#PBS -l nodes=1:ppn=4
-#PBS -q debug
-
+#PBS -l walltime=00:15:00
+#PBS -l nodes=1:ppn=32
+#PBS -q bioe_zhpeng
+#PBS -o nohup.out
+#PBS -e nohup.error
+######PBS -t 1-10
 cd $PBS_O_WORKDIR
 
 module load intel
 
-mpirun -np 1 -ppn 4 lmp_intel_cpu_intelmpi -in IdealizedStretch.lammps
+mpirun -np 32 ./lmp_intel_cpu_intelmpi -in IdealizedStretch.lammps
