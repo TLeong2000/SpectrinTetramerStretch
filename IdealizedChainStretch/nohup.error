@@ -1,11 +1,12 @@
 Epilog:  walltime=00:15:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
+=>> PBS: job killed: walltime 930 exceeded limit 900
 Epilog:  walltime=00:15:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
-Epilog:  cput=00:20:17
-Epilog:  vmem=149911212kb
-Epilog:  walltime=00:00:40
-Epilog:  mem=1142160kb
+Epilog:  cput=08:06:46
+Epilog:  vmem=149887084kb
+Epilog:  walltime=00:15:30
+Epilog:  mem=1232848kb
 Epilog:  energy_used=0

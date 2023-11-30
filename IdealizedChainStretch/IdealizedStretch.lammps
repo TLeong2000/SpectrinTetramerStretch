@@ -144,7 +144,7 @@ fix timeStern all ave/time 1000 1000 1000000 v_ensStern file out/timeAvg_sternFo
 
 neighbor 10.0 bin
 
-run 10000
+run 10000000
 
 clear
 
