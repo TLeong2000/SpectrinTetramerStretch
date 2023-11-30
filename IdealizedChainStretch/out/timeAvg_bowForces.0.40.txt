@@ -1,2 +1,3 @@
 # Time-averaged data for fix timeBow
 # TimeStep v_ensBow
+1000000 0.141246
