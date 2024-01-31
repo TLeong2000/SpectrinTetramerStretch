@@ -1,7 +1,8 @@
 # Reminder: indicate displacement ratio as a -var variable
 # Stretching a single copy of Alpha Spectrin
 
-variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05 0.00
+# variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
 
 log out/log_IdealizedStretchSingle.lammps
 print "The current dispRatio value is: ${dispRatio}"
@@ -17,18 +18,29 @@ boundary p p p
 
 atom_style molecular
 
-region main block -25000 25000 -25000 25000 -25000 25000
+lattice sc 12000
+
+region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+region insertionVolume block -1 2 0 1 -1 2 units lattice
+
+# region main block -25000 25000 -25000 25000 -25000 25000
 create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
-region insertionVolume block -15000 15000 -15000 15000 -15000 15000
+# region insertionVolume block -15000 15000 -15000 15000 -15000 15000
 
 molecule productionIdealized productionIdealized.txt
 bond_style harmonic
 angle_style harmonic
-pair_style none
+# pair_style none
+pair_style lj/cut 0
+pair_coeff * * 0 0
+
+# pair_style zero 54.0
+# pair_coeff * *
 # pair_style dpd 1.0 20.0 23454
 # pair_coeff * * 0.0 0.0
 
-create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+# create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs.data add merge
@@ -48,7 +60,7 @@ displace_atoms lastAtoms move  0 -${dispDist} 0  units box
 group internals type 2:41
 group endpoints subtract all internals
 # Change communication cutoff distance
-comm_modify mode single cutoff ${commDist} vel yes
+# comm_modify mode single cutoff ${commDist} vel yes
 
 # write_dump all image images/min.${dispRatio}.before.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 # This is keep the endpoints stationary during minimization
@@ -60,7 +72,7 @@ minimize 0.0 1.0e-9 100000 100000
 unfix stationary
 
 # Change communication cutoff dist back to default
-comm_modify mode single cutoff 0.0
+# comm_modify mode single cutoff 0.0
 
 # write_dump all image images/min.${dispRatio}.post.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 # write_dump endpoints custom out/afterMinCoords.${dispRatio}.dump mol id type x y z
@@ -72,11 +84,14 @@ velocity internals create 310.0 ${seed} dist gaussian
 timestep 100
 fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
 
-compute internalsTemp internals temp
-thermo 100
-thermo_style custom step c_internalsTemp epair emol etotal press
+# fix debug internals nve
 
-# dump coordsDump all atom 1000 coords_dump.lammpstraj
+compute internalsTemp internals temp
+thermo 1000000
+# thermo_style custom step temp
+thermo_style custom step c_internalsTemp
+
+# dump coordsDump all atom 1000 coords_dump.lammpstrj
 # dump_modify coordsDump time yes sort id
 # dump thermoDump internals yaml 100 thermo_dump.${displacement}.yaml mol id vx vy vz
 # dump_modify thermoDump time yes thermo yes sort id
@@ -93,28 +108,28 @@ compute molChunks all chunk/atom molecule
 group bowAtoms type 1
 group sternAtoms type 42
 
-compute bowComp bowAtoms property/atom fy
+# compute bowComp bowAtoms property/atom fy
 compute sternComp sternAtoms property/atom fy
 
 run 0
 velocity internals scale 310.0
 
-fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
+# fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
 # fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
 # fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
 
 # Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
-fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
-fix sternForces all ave/chunk 100 1 100 molChunks c_sternComp norm none file out/sternForces.${dispRatio}.txt
+# fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
+fix sternForces all ave/chunk 10000 1 10000 molChunks c_sternComp norm none # file out/sternForces.${dispRatio}.txt
 
 # Calculate the ensemble average of the bow/stern forces:
-variable ensBow equal ave(f_bowForces[2])
+# variable ensBow equal ave(f_bowForces[2])
 variable ensStern equal ave(f_sternForces[2])
 
 # Time-average the ensemble average of the bow/stern forces
-# We will average over the 1000 most recent timesteps in increments of 1000 steps
-fix timeBow all ave/time 1000 1000 1000000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
-fix timeStern all ave/time 1000 1000 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
+# Using increments of 10000 steps, we will average over the 100 most recent increments
+# fix timeBow all ave/time 1000 1000 1000000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
+fix timeStern all ave/time 10000 100 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
 
 # variable netEndForce atom "c_bowComp + c_sternComp"
 
@@ -142,7 +157,9 @@ fix timeStern all ave/time 1000 1000 1000000 v_ensStern file out/timeAvg_sternFo
 # We will average over the 100 most recent timesteps in increments of 100 steps
 # fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
 
-neighbor 10.0 bin
+neighbor 1.0 bin
+# comm_modify cutoff 100
+neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
 
 run 10000000
 

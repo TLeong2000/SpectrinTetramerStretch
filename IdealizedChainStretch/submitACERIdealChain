@@ -10,4 +10,4 @@ cd $PBS_O_WORKDIR
 
 module load intel
 
-mpirun -np 32 ./lmp_intel_cpu_intelmpi -in IdealizedStretch.lammps
+mpirun -np 32 ./lmp_intel_cpu_intelmpi -sf intel -in IdealizedStretch.lammps
