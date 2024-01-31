@@ -35,9 +35,14 @@ Read molecule template productionIdealized:
   0 impropers with max type 0
 bond_style harmonic
 angle_style harmonic
-# pair_style none
-pair_style lj/cut 0
-pair_coeff * * 0 0
+# Uncomment below if using dispRatio 0.00 or if NOT using INTEL package
+#
+pair_style none
+
+# Uncomment below if using INTEL package AND NOT using dispRatio 0.00
+#
+# pair_style lj/cut 0
+# pair_coeff * * 0 0
 
 # pair_style zero 54.0
 # pair_coeff * *
@@ -49,7 +54,7 @@ create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0
 create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 1344 atoms
   using lattice units in orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
-  create_atoms CPU = 0.001 seconds
+  create_atoms CPU = 0.004 seconds
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs.data add merge
@@ -63,8 +68,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.001 seconds
-  read_data CPU = 0.005 seconds
+  special bonds CPU = 0.003 seconds
+  read_data CPU = 0.008 seconds
 
 # Verify that parameters were assigned as intended:
 # write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
@@ -97,65 +102,46 @@ fix stationary endpoints setforce 0.0 0.0 0.0
 
 # Minimize the initial structure for initializing velocities
 minimize 0.0 1.0e-9 100000 100000
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-Neighbor list info ...
-  update: every = 1 steps, delay = 0 steps, check = yes
-  max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 0
-  ghost atom cutoff = 0
-  binsize = 48000, bins = 1 1 1
-  1 neighbor lists, perpetual/occasional/extra = 1 0 0
-  (1) pair lj/cut/intel, perpetual
-      attributes: half, newton on, intel
-      pair build: half/bin/newton/intel
-      stencil: half/bin/3d
-      bin: intel
-Per MPI rank memory allocation (min/avg/max) = 8.988 | 8.988 | 8.988 Mbytes
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2366)
+Per MPI rank memory allocation (min/avg/max) = 7.995 | 7.995 | 7.995 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-WARNING: Too many warnings: 164 vs 100. All future warnings will be suppressed (../thermo.cpp:472)
-         0   0             -nan            396752.82     -nan           -nan          
-         1   0             -nan            396752.82     -nan           -nan          
-Loop time of 0.000490878 on 32 procs for 1 steps with 1344 atoms
+         0   0              0              396752.87      396752.87     -0.00015920697
+     12098   0              0              5041.5798      5041.5798      2.3029537e-16
+Loop time of 0.331288 on 32 procs for 12098 steps with 1344 atoms
 
-99.3% CPU use with 32 MPI tasks x 1 OpenMP threads
+99.2% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
-  Stopping criterion = quadratic factors are zero
+  Stopping criterion = force tolerance
   Energy initial, next-to-last, final = 
-    -nan               -nan               -nan              
-  Force two-norm initial, final = 1996.9364 1996.9364
-  Force max component initial, final = 103.73382 103.73382
-  Final line search alpha, max atom move = 4.5967375e-10 4.7683716e-08
-  Iterations, force evaluations = 1 23
+      396752.867453517   5041.57978764051   5041.57978764052
+  Force two-norm initial, final = 1996.9289 9.9550094e-10
+  Force max component initial, final = 103.7268 8.5562335e-11
+  Final line search alpha, max atom move = 1 8.5562335e-11
+  Iterations, force evaluations = 12098 17037
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 2.5336e-05 | 2.7559e-05 | 4.973e-05  |   0.0 |  5.61
-Bond    | 5.4789e-05 | 5.8796e-05 | 0.00011621 |   0.0 | 11.98
-Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 4.936e-06  | 6.002e-06  | 1.2812e-05 |   0.0 |  1.22
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0.087137   | 0.089046   | 0.092728   |   0.6 | 26.88
+Neigh   | 0.0047902  | 0.0053837  | 0.0058259  |   0.3 |  1.63
+Comm    | 0.014491   | 0.015317   | 0.019359   |   0.8 |  4.62
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 8.732e-06  | 1.0123e-05 | 1.8462e-05 |   0.0 |  2.06
-Other   |            | 0.0003884  |            |       | 79.12
+Modify  | 0.0020667  | 0.0022987  | 0.0028428  |   0.5 |  0.69
+Other   |            | 0.2192     |            |       | 66.18
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
+Neighs:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
-Neighbor list builds = 0
+Neighbor list builds = 694
 Dangerous builds = 0
 # Remove the stationary fix now the minimization is done
 unfix stationary
@@ -205,20 +191,12 @@ group sternAtoms type 42
 compute sternComp sternAtoms property/atom fy
 
 run 0
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-Per MPI rank memory allocation (min/avg/max) = 7.989 | 7.989 | 7.989 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 6.995 | 6.995 | 6.995 Mbytes
    Step     c_internalsTemp
-WARNING: Too many warnings: 166 vs 100. All future warnings will be suppressed (../thermo.cpp:472)
          0   310          
-Loop time of 3.47228e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 2.97884e-06 on 32 procs for 0 steps with 1344 atoms
 
-118.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+61.9% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -229,17 +207,17 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.472e-06  |            |       |100.00
+Other   |            | 2.979e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
+Neighs:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
 Neighbor list builds = 0
 Dangerous builds = 0
@@ -294,51 +272,44 @@ neighbor 1.0 bin
 neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
 
 run 10000000
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-Per MPI rank memory allocation (min/avg/max) = 8.115 | 8.115 | 8.115 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.121 | 7.121 | 7.121 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   313.37092    
-   2000000   293.80853    
-   3000000   303.26284    
-   4000000   308.72205    
-   5000000   310.94055    
-   6000000   305.14866    
-   7000000   315.76237    
-   8000000   313.68481    
-   9000000   297.98889    
-  10000000   299.75934    
-Loop time of 75.1837 on 32 procs for 10000000 steps with 1344 atoms
+   1000000   305.43578    
+   2000000   317.36695    
+   3000000   314.03349    
+   4000000   329.4338     
+   5000000   308.48714    
+   6000000   296.85073    
+   7000000   312.62285    
+   8000000   318.53484    
+   9000000   318.95559    
+  10000000   313.62508    
+Loop time of 69.0916 on 32 procs for 10000000 steps with 1344 atoms
 
-Performance: 1149185.231 ns/day, 0.000 hours/ns, 133007.550 timesteps/s, 178.762 Matom-step/s
+Performance: 1250513.663 ns/day, 0.000 hours/ns, 144735.378 timesteps/s, 194.524 Matom-step/s
 99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.7221     | 9.1825     | 12.544     |  21.1 | 12.21
-Bond    | 20.953     | 21.386     | 22.442     |   6.9 | 28.44
-Neigh   | 0.00028169 | 0.00029433 | 0.0003039  |   0.0 |  0.00
-Comm    | 1.8877     | 2.1248     | 3.3162     |  20.9 |  2.83
-Output  | 0.00073977 | 0.0011017  | 0.0011325  |   0.2 |  0.00
-Modify  | 34.58      | 40.463     | 41.339     |  17.8 | 53.82
-Other   |            | 2.027      |            |       |  2.70
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 34.555     | 35.212     | 36.715     |  13.1 | 50.96
+Neigh   | 0.00014528 | 0.00015872 | 0.0001748  |   0.0 |  0.00
+Comm    | 1.5178     | 1.5709     | 1.849      |   4.6 |  2.27
+Output  | 0.00041032 | 0.00042533 | 0.0006356  |   0.0 |  0.00
+Modify  | 28.804     | 30.325     | 31.064     |  14.5 | 43.89
+Other   |            | 1.983      |            |       |  2.87
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
+Neighs:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
 Neighbor list builds = 10
 Dangerous builds = 10
@@ -346,9 +317,8 @@ Dangerous builds = 10
 clear
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
-package intel 1
 
 next dispRatio
-Increment via next: value 22 on partition 0
+Increment via next: value 2 on partition 0
 jump IdealizedStretch.lammps
-Total wall time: 0:26:30
+Total wall time: 0:01:10

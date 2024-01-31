@@ -1,7 +1,9 @@
 # Reminder: indicate displacement ratio as a -var variable
 # Stretching a single copy of Alpha Spectrin
 
-variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05 0.00
+# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
+variable dispRatio universe 0.00
+# variable dispRatio universe 0.96 0.97 0.98 0.99
 # variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
 
 log out/log_IdealizedStretchSingle.lammps
@@ -30,9 +32,14 @@ create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angl
 molecule productionIdealized productionIdealized.txt
 bond_style harmonic
 angle_style harmonic
-# pair_style none
-pair_style lj/cut 0
-pair_coeff * * 0 0
+# Uncomment below if using dispRatio 0.00 or if NOT using INTEL package
+# 
+pair_style none
+
+# Uncomment below if using INTEL package AND NOT using dispRatio 0.00
+# 
+# pair_style lj/cut 0
+# pair_coeff * * 0 0
 
 # pair_style zero 54.0
 # pair_coeff * *
