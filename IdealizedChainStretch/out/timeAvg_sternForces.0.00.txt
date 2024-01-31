@@ -1,0 +1,12 @@
+# Time-averaged data for fix timeStern
+# TimeStep v_ensStern
+1000000 -nan
+2000000 -nan
+3000000 -nan
+4000000 -nan
+5000000 -nan
+6000000 -nan
+7000000 -nan
+8000000 -nan
+9000000 -nan
+10000000 -nan
