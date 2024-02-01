@@ -13,8 +13,8 @@ module load intel
 # Because intel requires the use of a pair style (even if all coeffs are zero),
 # this means that below cannot be used for displacement ratio of 0.00
 #
-# mpirun -np 32 ./lmp_intel_cpu_intelmpi -sf intel -in IdealizedStretch.lammps
+mpirun -np 32 ./lmp_intel_cpu_intelmpi -sf intel -in IdealizedStretch.lammps
 
 # Use below for displacement ratio of 0.00
 #
-mpirun -np 32 ./lmp_intel_cpu_intelmpi -in IdealizedStretch.lammps
+# mpirun -np 32 ./lmp_intel_cpu_intelmpi -in IdealizedStretch.lammps
