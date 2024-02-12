@@ -2,9 +2,10 @@
 # Stretching a single copy of Alpha Spectrin
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-# variable dispRatio universe 0.00
+variable dispRatio universe 0.00
+# variable dispRatio universe 0.01 0.02 0.03 0.04
 # variable dispRatio universe 0.96 0.97 0.98 0.99
-variable dispRatio universe 0.16 0.17 0.18 0.19
+# variable dispRatio universe 0.16 0.17 0.18 0.19
 # variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
 
 log out/log_IdealizedStretchSingle.lammps
@@ -119,8 +120,12 @@ group sternAtoms type 42
 # compute bowComp bowAtoms property/atom fy
 compute sternComp sternAtoms property/atom fy
 
+compute endForce sternAtoms reduce ave fy
+
 run 0
 velocity internals scale 310.0
+
+fix printCenters all ave/time 100 100000 10000000 c_endForce file out/timeAvg_sternForces.${dispRatio}.txt
 
 # fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
 # fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
@@ -128,16 +133,16 @@ velocity internals scale 310.0
 
 # Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
 # fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
-fix sternForces all ave/chunk 10000 1 10000 molChunks c_sternComp norm none # file out/sternForces.${dispRatio}.txt
+# fix sternForces all ave/chunk 10000 1 10000 molChunks c_sternComp norm none # file out/sternForces.${dispRatio}.txt
 
 # Calculate the ensemble average of the bow/stern forces:
 # variable ensBow equal ave(f_bowForces[2])
-variable ensStern equal ave(f_sternForces[2])
+# variable ensStern equal ave(f_sternForces[2])
 
 # Time-average the ensemble average of the bow/stern forces
 # Using increments of 10000 steps, we will average over the 100 most recent increments
 # fix timeBow all ave/time 1000 1000 1000000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
-fix timeStern all ave/time 10000 100 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
+# fix timeStern all ave/time 10000 100 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
 
 # variable netEndForce atom "c_bowComp + c_sternComp"
 

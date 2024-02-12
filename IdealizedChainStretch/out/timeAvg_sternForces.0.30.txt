@@ -1,12 +1,3 @@
-# Time-averaged data for fix timeStern
-# TimeStep v_ensStern
-1000000 -0.150125
-2000000 -0.153595
-3000000 -0.141322
-4000000 -0.114366
-5000000 -0.12649
-6000000 -0.140701
-7000000 -0.136779
-8000000 -0.133664
-9000000 -0.148547
-10000000 -0.127852
+# Time-averaged data for fix printCenters
+# TimeStep c_endForce
+10000000 -0.147419
