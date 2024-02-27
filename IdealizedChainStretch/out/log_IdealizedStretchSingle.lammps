@@ -69,7 +69,7 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.003 seconds
-  read_data CPU = 0.008 seconds
+  read_data CPU = 0.009 seconds
 
 # Verify that parameters were assigned as intended:
 # write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
@@ -121,31 +121,31 @@ WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 8.627 | 8.627 | 8.627 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0              0              396752.87      396752.87     -0.00015920697
-     12098   0              0              5041.5798      5041.5798      2.3029537e-16
-Loop time of 0.364588 on 32 procs for 12098 steps with 1344 atoms
+         0   0              0              250036.7       250036.7      -0.00015920697
+     15026   0              0              1418.9662      1418.9662      5.4870762e-16
+Loop time of 0.499078 on 32 procs for 15026 steps with 1344 atoms
 
-99.1% CPU use with 32 MPI tasks x 1 OpenMP threads
+99.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = force tolerance
   Energy initial, next-to-last, final = 
-      396752.867453517   5041.57978764051   5041.57978764052
-  Force two-norm initial, final = 1996.9289 9.9550094e-10
-  Force max component initial, final = 103.7268 8.5562335e-11
-  Final line search alpha, max atom move = 1 8.5562335e-11
-  Iterations, force evaluations = 12098 17037
+      250036.702147237   1418.96620408346   1418.96620408346
+  Force two-norm initial, final = 1823.8264 9.9177344e-10
+  Force max component initial, final = 103.91692 1.0425466e-10
+  Final line search alpha, max atom move = 1 1.0425466e-10
+  Iterations, force evaluations = 15026 24807
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.0032345  | 0.0034537  | 0.0040808  |   0.3 |  0.95
-Bond    | 0.085899   | 0.088875   | 0.098398   |   1.1 | 24.38
-Neigh   | 0.0095794  | 0.010429   | 0.01088    |   0.3 |  2.86
-Comm    | 0.015389   | 0.016272   | 0.020645   |   0.8 |  4.46
+Pair    | 0.0048648  | 0.0052055  | 0.0056999  |   0.3 |  1.04
+Bond    | 0.12858    | 0.13558    | 0.14884    |   1.2 | 27.17
+Neigh   | 0.010122   | 0.010725   | 0.011101   |   0.2 |  2.15
+Comm    | 0.018371   | 0.019379   | 0.024462   |   1.0 |  3.88
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0021215  | 0.0023516  | 0.0030533  |   0.4 |  0.64
-Other   |            | 0.2432     |            |       | 66.71
+Modify  | 0.0031489  | 0.0036183  | 0.0044833  |   0.6 |  0.72
+Other   |            | 0.3246     |            |       | 65.03
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -157,7 +157,7 @@ Histogram: 32 0 0 0 0 0 0 0 0 0
 Total # of neighbors = 32
 Ave neighs/atom = 0.023809524
 Ave special neighs/atom = 5.7142857
-Neighbor list builds = 694
+Neighbor list builds = 732
 Dangerous builds = 0
 # Remove the stationary fix now the minimization is done
 unfix stationary
@@ -215,9 +215,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.627 | 7.627 | 7.627 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 3.023e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 3.25194e-06 on 32 procs for 0 steps with 1344 atoms
 
-61.0% CPU use with 32 MPI tasks x 1 OpenMP threads
+156.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -228,7 +228,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.023e-06  |            |       |100.00
+Other   |            | 3.252e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -301,31 +301,31 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.627 | 7.627 | 7.627 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   305.43578    
-   2000000   317.36695    
-   3000000   314.03349    
-   4000000   329.4338     
-   5000000   308.48714    
-   6000000   296.85073    
-   7000000   312.62285    
-   8000000   318.53484    
-   9000000   318.95559    
-  10000000   313.62508    
-Loop time of 78.9884 on 32 procs for 10000000 steps with 1344 atoms
+   1000000   317.89498    
+   2000000   305.03467    
+   3000000   308.59737    
+   4000000   301.81032    
+   5000000   317.5642     
+   6000000   302.40483    
+   7000000   302.52047    
+   8000000   308.516      
+   9000000   311.88151    
+  10000000   301.66997    
+Loop time of 72.1567 on 32 procs for 10000000 steps with 1344 atoms
 
-Performance: 1093831.790 ns/day, 0.000 hours/ns, 126600.902 timesteps/s, 170.152 Matom-step/s
+Performance: 1197393.568 ns/day, 0.000 hours/ns, 138587.219 timesteps/s, 186.261 Matom-step/s
 99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 1.3611     | 1.4616     | 1.5383     |   3.1 |  1.85
-Bond    | 34.321     | 35.641     | 44.338     |  39.3 | 45.12
-Neigh   | 0.00028424 | 0.00029067 | 0.00029606 |   0.0 |  0.00
-Comm    | 1.4948     | 1.5822     | 1.8482     |   5.9 |  2.00
-Output  | 0.00016074 | 0.0001829  | 0.00068115 |   0.0 |  0.00
-Modify  | 29.644     | 38.464     | 39.974     |  37.6 | 48.70
-Other   |            | 1.839      |            |       |  2.33
+Pair    | 1.3525     | 1.4467     | 1.5446     |   3.1 |  2.00
+Bond    | 34.682     | 35.529     | 36.879     |  15.3 | 49.24
+Neigh   | 0.00033642 | 0.00034904 | 0.00036529 |   0.0 |  0.00
+Comm    | 1.4925     | 1.5493     | 1.6074     |   2.5 |  2.15
+Output  | 0.00014258 | 0.00016296 | 0.00062692 |   0.0 |  0.00
+Modify  | 30.451     | 31.836     | 32.873     |  15.3 | 44.12
+Other   |            | 1.795      |            |       |  2.49
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -347,4 +347,4 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 next dispRatio
 Increment via next: value 2 on partition 0
 jump IdealizedStretch.lammps
-Total wall time: 0:01:20
+Total wall time: 0:01:13
