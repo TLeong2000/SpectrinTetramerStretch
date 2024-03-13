@@ -1,14 +1,100 @@
-LAMMPS (2 Aug 2023)
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
+LAMMPS (4 May 2022)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
-# Reminder: indicate displacement ratio as a -var variable
-# Stretching a single copy of Alpha Spectrin
+variable seed equal 1
+units real
+boundary p p p
 
-# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-variable dispRatio universe 0.00
-# variable dispRatio universe 0.01 0.02 0.03 0.04
-# variable dispRatio universe 0.96 0.97 0.98 0.99
-# variable dispRatio universe 0.16 0.17 0.18 0.19
-# variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+atom_style molecular
 
-log out/log_IdealizedStretchSingle.lammps
+region main block -5000 5000 -5000 5000 -5000 5000
+
+create_box 84 main bond/types 83 angle/types 82 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+Created orthogonal box = (-5000 -5000 -5000) to (5000 5000 5000)
+  1 by 1 by 1 MPI processor grid
+
+molecule proto84 prototypeIdealized84.txt
+Read molecule template proto84:
+  1 molecules
+  0 fragments
+  84 atoms with max type 84
+  83 bonds with max type 83
+  82 angles with max type 82
+  0 dihedrals with max type 0
+  0 impropers with max type 0
+bond_style harmonic
+angle_style harmonic
+
+create_atoms 0 single 0 0 0 mol proto84 ${seed} rotate 0 0 0 1
+create_atoms 0 single 0 0 0 mol proto84 1 rotate 0 0 0 1
+Created 84 atoms
+  using lattice units in orthogonal box = (-5000 -5000 -5000) to (5000 5000 5000)
+  create_atoms CPU = 0.002 seconds
+
+read_data IdealizedCoeffs84.data add merge
+Reading data file ...
+  orthogonal box = (-5000 -5000 -5000) to (5000 5000 5000)
+  1 by 1 by 1 MPI processor grid
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0       
+  special bond factors coul:  0        0        0       
+     2 = max # of 1-2 neighbors
+     2 = max # of 1-3 neighbors
+     4 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.002 seconds
+  read_data CPU = 0.012 seconds
+
+group internals type 2:83
+82 atoms in group internals
+group endpoints subtract all internals
+2 atoms in group endpoints
+
+fix stationary endpoints setforce 0 0 0
+
+minimize 0.0 1.0e-9 100000 100000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (src/min.cpp:187)
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (src/atom.cpp:2127)
+Per MPI rank memory allocation (min/avg/max) = 7.991 | 7.991 | 7.991 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0              0              8657274.9      8657274.9     -0.43557821   
+     53459   0              0              21.915319      21.915319      7.3665984e-09
+Loop time of 1.52401 on 1 procs for 53459 steps with 84 atoms
+
+94.3% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = max force evaluations
+  Energy initial, next-to-last, final = 
+      8657274.87718042   21.9153190069908    21.915318823065
+  Force two-norm initial, final = 19040.532 0.0015099665
+  Force max component initial, final = 4311.6142 0.00037183823
+  Final line search alpha, max atom move = 1 0.00037183823
+  Iterations, force evaluations = 53459 100000
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 1.2088     | 1.2088     | 1.2088     |   0.0 | 79.32
+Neigh   | 0.013397   | 0.013397   | 0.013397   |   0.0 |  0.88
+Comm    | 0.021736   | 0.021736   | 0.021736   |   0.0 |  1.43
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.016482   | 0.016482   | 0.016482   |   0.0 |  1.08
+Other   |            | 0.2636     |            |       | 17.30
+
+Nlocal:             84 ave          84 max          84 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = -1
+Ave neighs/atom = -0.011904762
+Ave special neighs/atom = 5.8571429
+Neighbor list builds = 2310
+Dangerous builds = 0
+
+write_dump all custom proto84MinCoords.dump id x y z
+Total wall time: 0:00:01

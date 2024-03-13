@@ -1,0 +1,26 @@
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -5000 5000 -5000 5000 -5000 5000
+
+create_box 84 main bond/types 83 angle/types 82 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+
+molecule proto84 prototypeIdealized84.txt
+bond_style harmonic
+angle_style harmonic
+
+create_atoms 0 single 0 0 0 mol proto84 ${seed} rotate 0 0 0 1
+
+read_data IdealizedCoeffs84.data add merge
+
+group internals type 2:83
+group endpoints subtract all internals
+
+fix stationary endpoints setforce 0 0 0
+
+minimize 0.0 1.0e-9 100000 100000
+
+write_dump all custom proto84MinCoords.dump id x y z

@@ -1,0 +1,127 @@
+# Reminder: indicate displacement ratio as a -var variable
+# Stretching a single copy of Alpha Spectrin
+
+# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
+variable dispRatio universe 0.00
+# variable dispRatio universe 0.01 0.02 0.03 0.04
+# variable dispRatio universe 0.96 0.97 0.98 0.99
+# variable dispRatio universe 0.16 0.17 0.18 0.19
+# variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+
+log out84/log_Idealized84Stretch.lammps
+print "The current dispRatio value is: ${dispRatio}"
+
+variable totLength equal 2270.031578 # Sum of all bond equilibrium lengths
+variable dispDist equal "v_totLength*v_dispRatio/2"
+variable commDist equal "v_dispDist*2"
+# Displacement distance is divided by two because I want to displace both the bow and stern atoms of each chain.
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+lattice sc 24000
+
+region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+region insertionVolume block -1 2 0 1 -1 2 units lattice
+
+# region main block -25000 25000 -25000 25000 -25000 25000
+create_box 84 main bond/types 83 angle/types 82 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+# region insertionVolume block -15000 15000 -15000 15000 -15000 15000
+
+molecule productionIdealized84 productionIdealized84.txt
+bond_style harmonic
+angle_style harmonic
+# Uncomment below if using dispRatio 0.00 or if NOT using INTEL package
+# 
+# pair_style none
+
+# Uncomment below if using INTEL package AND NOT using dispRatio 0.00
+# 
+pair_style lj/cut 0
+pair_coeff * * 0 0
+
+# pair_style zero 54.0
+# pair_coeff * *
+# pair_style dpd 1.0 20.0 23454
+# pair_coeff * * 0.0 0.0
+
+# create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+create_atoms 0 region insertionVolume mol productionIdealized84 ${seed} rotate 0 0 0 1
+
+# Load in Idealized Chain Parameters:
+read_data IdealizedCoeffs84.data add merge
+
+# Verify that parameters were assigned as intended:
+# write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass 
+# write_coeff debug/coeffCheck.${dispRatio}.data
+
+# write_dump all image images/beforeDisplacement.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+
+
+group firstAtoms type 1
+group lastAtoms type 84
+displace_atoms firstAtoms move 0  ${dispDist} 0  units box
+displace_atoms lastAtoms move  0 -${dispDist} 0  units box
+
+group internals type 2:43
+group endpoints subtract all internals
+# Change communication cutoff distance
+# comm_modify mode single cutoff ${commDist} vel yes
+
+# write_dump all image images/min.${dispRatio}.before.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# This is keep the endpoints stationary during minimization
+fix stationary endpoints setforce 0 0 0
+
+# Minimize the initial structure for initializing velocities
+minimize 0.0 1.0e-9 100000 100000
+# Remove the stationary fix now the minimization is done
+unfix stationary
+
+# Change communication cutoff dist back to default
+# comm_modify mode single cutoff 0.0
+
+# write_dump all image images/min.${dispRatio}.post.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# write_dump endpoints custom out/afterMinCoords.${dispRatio}.dump mol id type x y z
+
+reset_timestep 0
+
+velocity internals create 310.0 ${seed} dist gaussian
+
+timestep 100
+fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
+
+# fix debug internals nve
+
+compute internalsTemp internals temp
+thermo 1000000
+# thermo_style custom step temp
+thermo_style custom step c_internalsTemp
+
+compute molChunks all chunk/atom molecule
+
+group bowAtoms type 1
+group sternAtoms type 84
+
+# compute bowComp bowAtoms property/atom fy
+compute sternComp sternAtoms property/atom fy
+
+compute endForce sternAtoms reduce ave fy
+
+run 0
+velocity internals scale 310.0
+
+fix printCenters all ave/time 100 100000 10000000 c_endForce file out84/timeAvg_sternForces.${dispRatio}.txt
+
+neighbor 1.0 bin
+# comm_modify cutoff 100
+neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
+
+run 10000000
+
+clear
+
+next dispRatio
+jump Idealized84Stretch.lammps
