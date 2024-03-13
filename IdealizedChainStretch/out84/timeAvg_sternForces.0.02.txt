@@ -1,0 +1,3 @@
+# Time-averaged data for fix printCenters
+# TimeStep c_endForce
+10000000 -0.00144975
