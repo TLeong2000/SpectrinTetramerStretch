@@ -1,8 +1,8 @@
 # Reminder: indicate displacement ratio as a -var variable
 # Stretching a single copy of Alpha Spectrin
 
-# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-variable dispRatio universe 0.00
+variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
+# variable dispRatio universe 0.00
 # variable dispRatio universe 0.01 0.02 0.03 0.04
 # variable dispRatio universe 0.96 0.97 0.98 0.99
 # variable dispRatio universe 0.16 0.17 0.18 0.19
@@ -66,7 +66,7 @@ group lastAtoms type 84
 displace_atoms firstAtoms move 0  ${dispDist} 0  units box
 displace_atoms lastAtoms move  0 -${dispDist} 0  units box
 
-group internals type 2:43
+group internals type 2:83
 group endpoints subtract all internals
 # Change communication cutoff distance
 # comm_modify mode single cutoff ${commDist} vel yes
@@ -76,7 +76,7 @@ group endpoints subtract all internals
 fix stationary endpoints setforce 0 0 0
 
 # Minimize the initial structure for initializing velocities
-minimize 0.0 1.0e-9 100000 100000
+minimize 0.0 1.0e-9 1000000 1000000
 # Remove the stationary fix now the minimization is done
 unfix stationary
 
