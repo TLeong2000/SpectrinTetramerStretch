@@ -44,17 +44,18 @@ pair_style none
 # pair_style lj/cut 0
 # pair_coeff * * 0 0
 
+
 # pair_style zero 54.0
 # pair_coeff * *
 # pair_style dpd 1.0 20.0 23454
-# pair_coeff * * 0.0 0.0
+#  pair_coeff * * 0.0 0.0
 
 # create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
 create_atoms 0 region insertionVolume mol productionIdealized84 ${seed} rotate 0 0 0 1
 create_atoms 0 region insertionVolume mol productionIdealized84 1 rotate 0 0 0 1
 Created 2688 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.005 seconds
+  create_atoms CPU = 0.004 seconds
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs84.data add merge
@@ -69,7 +70,7 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.003 seconds
-  read_data CPU = 0.008 seconds
+  read_data CPU = 0.009 seconds
 
 # Verify that parameters were assigned as intended:
 # write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
@@ -105,31 +106,31 @@ minimize 0.0 1.0e-9 1000000 1000000
 WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2366)
 Per MPI rank memory allocation (min/avg/max) = 8.002 | 8.002 | 8.002 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0              0              701.29143      701.29143      5.965334e-10 
-      8064   0              0              701.26813      701.26813      2.926367e-16 
-Loop time of 0.384537 on 32 procs for 8064 steps with 2688 atoms
+         0   0              0              810877.17      810877.17     -0.00016172366
+      9921   0              0              1419.4325      1419.4325     -1.5084889e-17
+Loop time of 0.392315 on 32 procs for 9921 steps with 2688 atoms
 
-99.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+99.5% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = force tolerance
   Energy initial, next-to-last, final = 
-       701.29143484957   701.268132232109   701.268132232107
-  Force two-norm initial, final = 0.21290229 9.4267333e-10
-  Force max component initial, final = 0.0085765134 1.0601295e-10
-  Final line search alpha, max atom move = 1 1.0601295e-10
-  Iterations, force evaluations = 8064 16127
+      810877.173851226     1419.432503639     1419.432503639
+  Force two-norm initial, final = 390.78314 9.9961796e-10
+  Force max component initial, final = 16.541223 6.4850542e-11
+  Final line search alpha, max atom move = 1 6.4850542e-11
+  Iterations, force evaluations = 9921 15908
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
 Pair    | 0          | 0          | 0          |   0.0 |  0.00
-Bond    | 0.15221    | 0.15764    | 0.18422    |   1.6 | 40.99
-Neigh   | 1.5635e-05 | 2.9007e-05 | 4.3167e-05 |   0.0 |  0.01
-Comm    | 0.0032772  | 0.0037254  | 0.0068899  |   1.3 |  0.97
+Bond    | 0.15132    | 0.15502    | 0.16637    |   1.0 | 39.52
+Neigh   | 0.004741   | 0.0052494  | 0.0055606  |   0.2 |  1.34
+Comm    | 0.012315   | 0.013004   | 0.016836   |   0.8 |  3.31
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0031179  | 0.0034437  | 0.0039185  |   0.4 |  0.90
-Other   |            | 0.2197     |            |       | 57.13
+Modify  | 0.0029066  | 0.0034424  | 0.004112   |   0.4 |  0.88
+Other   |            | 0.2156     |            |       | 54.95
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -141,7 +142,7 @@ Histogram: 32 0 0 0 0 0 0 0 0 0
 Total # of neighbors = 0
 Ave neighs/atom = 0
 Ave special neighs/atom = 5.8571429
-Neighbor list builds = 1
+Neighbor list builds = 478
 Dangerous builds = 0
 # Remove the stationary fix now the minimization is done
 unfix stationary
@@ -184,9 +185,9 @@ run 0
 Per MPI rank memory allocation (min/avg/max) = 7.002 | 7.002 | 7.002 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 3.06828e-06 on 32 procs for 0 steps with 2688 atoms
+Loop time of 2.93884e-06 on 32 procs for 0 steps with 2688 atoms
 
-86.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+72.3% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -197,7 +198,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.068e-06  |            |       |100.00
+Other   |            | 2.939e-06  |            |       |100.00
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -224,31 +225,31 @@ run 10000000
 Per MPI rank memory allocation (min/avg/max) = 7.002 | 7.002 | 7.002 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   306.21441    
-   2000000   315.10971    
-   3000000   305.57801    
-   4000000   309.54851    
-   5000000   305.70076    
-   6000000   309.34028    
-   7000000   313.76474    
-   8000000   309.9556     
-   9000000   310.66155    
-  10000000   301.66293    
-Loop time of 115.568 on 32 procs for 10000000 steps with 2688 atoms
+   1000000   308.48139    
+   2000000   307.66346    
+   3000000   306.49497    
+   4000000   305.39759    
+   5000000   317.50719    
+   6000000   314.73266    
+   7000000   312.24453    
+   8000000   312.95211    
+   9000000   310.14567    
+  10000000   309.05913    
+Loop time of 112.398 on 32 procs for 10000000 steps with 2688 atoms
 
-Performance: 747614.008 ns/day, 0.000 hours/ns, 86529.399 timesteps/s, 232.591 Matom-step/s
+Performance: 768694.046 ns/day, 0.000 hours/ns, 88969.218 timesteps/s, 239.149 Matom-step/s
 99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
 Pair    | 0          | 0          | 0          |   0.0 |  0.00
-Bond    | 69.074     | 70.642     | 74.94      |  21.2 | 61.13
-Neigh   | 0.00017665 | 0.00023242 | 0.00028159 |   0.0 |  0.00
-Comm    | 1.5021     | 1.5612     | 1.8863     |   5.6 |  1.35
-Output  | 0.0006667  | 0.0011048  | 0.0011341  |   0.2 |  0.00
-Modify  | 37.265     | 41.418     | 43.202     |  27.2 | 35.84
-Other   |            | 1.945      |            |       |  1.68
+Bond    | 67.436     | 68.608     | 72.58      |  18.4 | 61.04
+Neigh   | 0.00016525 | 0.00017259 | 0.00018102 |   0.0 |  0.00
+Comm    | 1.5088     | 1.573      | 1.9298     |   7.5 |  1.40
+Output  | 0.00015903 | 0.00018037 | 0.00068061 |   0.0 |  0.00
+Modify  | 36.295     | 40.216     | 41.495     |  23.4 | 35.78
+Other   |            | 2.002      |            |       |  1.78
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -270,4 +271,4 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 next dispRatio
 Increment via next: value 2 on partition 0
 jump Idealized84Stretch.lammps
-Total wall time: 0:01:56
+Total wall time: 0:01:53
