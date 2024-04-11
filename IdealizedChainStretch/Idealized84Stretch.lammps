@@ -11,7 +11,7 @@ variable dispRatio universe 0.00
 log out84/log_Idealized84Stretch.lammps
 print "The current dispRatio value is: ${dispRatio}"
 
-variable totLength equal 2270.031578 # Sum of all bond equilibrium lengths
+variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
 variable dispDist equal "v_totLength*v_dispRatio/2"
 variable commDist equal "v_dispDist*2"
 # Displacement distance is divided by two because I want to displace both the bow and stern atoms of each chain.
@@ -91,13 +91,13 @@ reset_timestep 0
 
 velocity internals create 310.0 ${seed} dist gaussian
 
-timestep 100
+timestep 50
 fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
 
 # fix debug internals nve
 
 compute internalsTemp internals temp
-thermo 1000000
+thermo 2000000
 # thermo_style custom step temp
 thermo_style custom step c_internalsTemp
 
@@ -114,13 +114,13 @@ compute endForce sternAtoms reduce ave fy
 run 0
 velocity internals scale 310.0
 
-fix printCenters all ave/time 100 100000 10000000 c_endForce file out84/timeAvg_sternForces.${dispRatio}.txt
+fix printCenters all ave/time 100 200000 20000000 c_endForce file out84/timeAvg_sternForces.${dispRatio}.txt
 
 neighbor 1.0 bin
 # comm_modify cutoff 100
-neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
+neigh_modify every 2000000 delay 2000000 check yes exclude molecule/inter all
 
-run 10000000
+run 20000000
 
 clear
 
