@@ -4,8 +4,8 @@ Epilog:  neednodes=1:ppn=32
 Epilog:  walltime=01:30:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
-Epilog:  cput=01:00:47
-Epilog:  vmem=149494056kb
-Epilog:  walltime=00:01:56
-Epilog:  mem=1159168kb
+Epilog:  cput=02:04:45
+Epilog:  vmem=149514540kb
+Epilog:  walltime=00:03:56
+Epilog:  mem=1158244kb
 Epilog:  energy_used=0
