@@ -2,7 +2,7 @@
 # Stretching a single copy of Alpha Spectrin
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-variable dispRatio universe 0.50
+variable dispRatio universe 0.05
 # variable dispRatio universe 0.01 0.02 0.03 0.04
 # variable dispRatio universe 0.96 0.97 0.98 0.99
 # variable dispRatio universe 0.16 0.17 0.18 0.19
@@ -22,10 +22,10 @@ boundary p p p
 
 atom_style molecular
 
-lattice sc 12000
+lattice sc 2500
 
-region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
-region insertionVolume block -1 2 0 1 -1 2 units lattice
+region main block -2 2 -1 1 -2 2 units lattice
+region insertionVolume block -1.5 1.5 0.5 0.5 -1.5 1.5 units lattice
 
 # region main block -25000 25000 -25000 25000 -25000 25000
 create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
@@ -69,6 +69,8 @@ fix restraint all arclengthrestraint productionIdealized 0.5 ${totLength}
 
 # This is keep the endpoints stationary during minimization
 fix stationary endpoints setforce 0.0 0.0 0.0
+
+comm_modify cutoff 100
 
 # Minimize the initial structure for initializing velocities
 minimize 0.0 1.0e-9 100000 100000
