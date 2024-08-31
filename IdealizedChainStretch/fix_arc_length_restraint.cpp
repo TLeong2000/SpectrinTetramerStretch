@@ -73,12 +73,14 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    int newton_bond = force->newton_bond;
 
    int max_glo_molID;
-   int max_loc_molID = 0;
+   // int max_loc_molID = 0;
    for (n = 0; n < nlocal; n++) {
-      max_loc_molID = MAX(max_loc_molID, atom->molecule[n]);
+      // max_loc_molID = MAX(max_loc_molID, atom->molecule[n]);
+      max_glo_molID = MAX(max_glo_molID, atom->molecule[n]);
    }
-   MPI_Allreduce(&max_loc_molID, &max_glo_molID, 1, MPI_INT, MPI_MAX, world);
+   MPI_Allreduce(MPI_IN_PLACE, &max_glo_molID, 1, MPI_INT, MPI_MAX, world);
 
+   // double loc_molLengths[max_glo_molID];
    double molLengths[max_glo_molID];
    double delx;
    double dely;
@@ -110,7 +112,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       
    }
 
-   MPI_Allreduce(&molLengths, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
+   MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
 
    erestraint = 0;
    for (n = 0; n < nmols; n++) {

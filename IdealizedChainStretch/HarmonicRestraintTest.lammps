@@ -44,7 +44,8 @@ pair_style lj/cut 0
 pair_coeff * * 0 0
 
 # create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
-create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+# create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+create_atoms 0 single 0 0 0 mol productionIdealized ${seed} rotate 0 0 0 1
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs.data add merge

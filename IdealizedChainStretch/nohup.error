@@ -1,104 +1,11 @@
 Epilog:  walltime=01:30:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
-Abort(671683073) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc804cc780, rbuf=0x7ffc804cc780, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 21 (rank 21 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe35ee5700, rbuf=0x7ffe35ee5700, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(940118529) on node 2 (rank 2 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe51272800, rbuf=0x7ffe51272800, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(269029889) on node 4 (rank 4 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe95369400, rbuf=0x7ffe95369400, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(134812161) on node 6 (rank 6 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fffa2c60600, rbuf=0x7fffa2c60600, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(134812161) on node 7 (rank 7 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffcf3799c80, rbuf=0x7ffcf3799c80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(403247617) on node 8 (rank 8 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fff2cc15f00, rbuf=0x7fff2cc15f00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(134812161) on node 10 (rank 10 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffd8f32e400, rbuf=0x7ffd8f32e400, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 12 (rank 12 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc9c7e6b00, rbuf=0x7ffc9c7e6b00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(403247617) on node 13 (rank 13 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe7e319480, rbuf=0x7ffe7e319480, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(940118529) on node 15 (rank 15 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe1391d780, rbuf=0x7ffe1391d780, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 18 (rank 18 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe95bfce00, rbuf=0x7ffe95bfce00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(403247617) on node 22 (rank 22 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffeab5faf80, rbuf=0x7ffeab5faf80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 24 (rank 24 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fff540bab00, rbuf=0x7fff540bab00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(269029889) on node 29 (rank 29 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffece225380, rbuf=0x7ffece225380, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(403247617) on node 31 (rank 31 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc89adde00, rbuf=0x7ffc89adde00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 1 (rank 1 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fff91ac5c00, rbuf=0x7fff91ac5c00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 3 (rank 3 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffda5763280, rbuf=0x7ffda5763280, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 5 (rank 5 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc66324c80, rbuf=0x7ffc66324c80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 11 (rank 11 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc6344ec80, rbuf=0x7ffc6344ec80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 14 (rank 14 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc95e8cb80, rbuf=0x7ffc95e8cb80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 16 (rank 16 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fffb0053300, rbuf=0x7fffb0053300, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 17 (rank 17 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffcc23c9d00, rbuf=0x7ffcc23c9d00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(269029889) on node 19 (rank 19 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7fffed80b800, rbuf=0x7fffed80b800, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 20 (rank 20 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffe24199e00, rbuf=0x7ffe24199e00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(269029889) on node 23 (rank 23 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffd9608db00, rbuf=0x7ffd9608db00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(537465345) on node 25 (rank 25 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffdc03e9c80, rbuf=0x7ffdc03e9c80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 26 (rank 26 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc13336100, rbuf=0x7ffc13336100, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(671683073) on node 27 (rank 27 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffc8c724a00, rbuf=0x7ffc8c724a00, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(940118529) on node 28 (rank 28 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffd4518ce80, rbuf=0x7ffd4518ce80, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
-Abort(269029889) on node 30 (rank 30 in comm 0): Fatal error in PMPI_Allreduce: Invalid buffer pointer, error stack:
-PMPI_Allreduce(433): MPI_Allreduce(sbuf=0x7ffecd5dc100, rbuf=0x7ffecd5dc100, count=32, datatype=MPI_DOUBLE, op=MPI_SUM, comm=MPI_COMM_WORLD) failed
-PMPI_Allreduce(393): Buffers must not be aliased
 Epilog:  walltime=01:30:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
-Epilog:  cput=00:00:19
-Epilog:  vmem=0kb
-Epilog:  walltime=00:00:01
-Epilog:  mem=0kb
+Epilog:  cput=00:51:05
+Epilog:  vmem=149272924kb
+Epilog:  walltime=00:01:38
+Epilog:  mem=1064620kb
 Epilog:  energy_used=0
