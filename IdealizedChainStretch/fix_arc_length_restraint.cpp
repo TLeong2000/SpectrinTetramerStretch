@@ -11,7 +11,7 @@
    See the README file in the top-level LAMMPS directory.
 ------------------------------------------------------------------------- */
 
-#include "arc_length_restraint.h"
+#include "fix_arc_length_restraint.h"
 
 #include "math.h"
 #include "stdlib.h"

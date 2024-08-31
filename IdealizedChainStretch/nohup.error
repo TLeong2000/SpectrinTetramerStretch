@@ -1,11 +1,12 @@
 Epilog:  walltime=01:30:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
+/var/spool/torque/mom_priv/jobs/1194632.admin.extreme.acer.uic.edu.SC: line 18: lmp: command not found
 Epilog:  walltime=01:30:00
 Epilog:  nodes=1:ppn=32
 Epilog:  neednodes=1:ppn=32
-Epilog:  cput=00:00:19
+Epilog:  cput=00:00:00
 Epilog:  vmem=0kb
-Epilog:  walltime=00:00:02
+Epilog:  walltime=00:00:00
 Epilog:  mem=0kb
 Epilog:  energy_used=0
