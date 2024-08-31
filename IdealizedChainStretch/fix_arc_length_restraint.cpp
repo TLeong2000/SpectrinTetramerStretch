@@ -33,10 +33,13 @@ using namespace FixConst;
 FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) : 
    Fix(lmp, narg, arg) 
 {
+   scalar_flag = 1;
+   extscalar = 1;
+
    if (narg < 6) error->all(FLERR, "Insufficient args for fix bondrestraintharmonic command.");
-   imol = atom->find_molecule(arg[4]);
-   k = utils::numeric(FLERR,arg[5],false,lmp);
-   equiLength = utils::numeric(FLERR,arg[6],false,lmp);
+   imol = atom->find_molecule(arg[3]);
+   k = utils::numeric(FLERR,arg[4],false,lmp);
+   equiLength = utils::numeric(FLERR,arg[5],false,lmp);
    napmol = (atom->molecules[imol])->natoms;
    nbpmol = napmol - 1;
    natoms = atom->natoms;

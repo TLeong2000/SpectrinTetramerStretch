@@ -64,7 +64,7 @@ compute bondDists molOne bond/local dist
 compute arcLength molOne reduce sum c_bondDists inputs local
 
 fix restraint all arclengthrestraint productionIdealized 0.5 ${totLength}
-fix_modify restraint energy yes
+# fix_modify restraint energy yes
 
 # This is keep the endpoints stationary during minimization
 fix stationary endpoints setforce 0.0 0.0 0.0
