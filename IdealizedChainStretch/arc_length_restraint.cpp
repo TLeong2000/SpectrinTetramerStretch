@@ -11,6 +11,8 @@
    See the README file in the top-level LAMMPS directory.
 ------------------------------------------------------------------------- */
 
+#include "arc_length_restraint.h"
+
 #include "math.h"
 #include "stdlib.h"
 #include "atom.h"
@@ -21,6 +23,7 @@
 #include "force.h"
 #include "domain.h"
 #include "memory.h"
+#include "neighbor.h"
 
 using namespace LAMMPS_NS;
 using namespace FixConst;
@@ -32,8 +35,8 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
 {
    if (narg < 6) error->all(FLERR, "Insufficient args for fix bondrestraintharmonic command.");
    imol = atom->find_molecule(arg[4]);
-   k = arg[5];
-   equiLength = arg[6];
+   k = utils::numeric(FLERR,arg[5],false,lmp);
+   equiLength = utils::numeric(FLERR,arg[6],false,lmp);
    napmol = (atom->molecules[imol])->natoms;
    nbpmol = napmol - 1;
    natoms = atom->natoms;
@@ -54,12 +57,12 @@ int FixArcLengthRestraint::setmask()
 
 void FixArcLengthRestraint::post_force(int /*vflag*/)
 {
-   int i1, i2, n, type, typ_i1, typ_i2;
+   int i1, i2, n, typ_i1, typ_i2;
    double ebond, fbond;
 
    double **x = atom->x; // Get double pointer to atom positions
    double **f = atom->f; // Get double pointer to atom forces
-   int **type = atom->type; // Get double pointer to atom types
+   int *type = atom->type; // Get double pointer to atom types
    int **bondlist = neighbor->bondlist;
    int nbondlist = neighbor->nbondlist;
    int nlocal = atom->nlocal;
@@ -112,8 +115,9 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    }
 
    double scale;
-   double scaling_factors[max_glo_molID] = k * (molLengths / equiLength - 1);
+   // std::array<double, max_glo_molID> scaling_factors = k * (molLengths / equiLength - 1);
 
+   double dist = 0;
    // Now that we have the molecule lengths, we can allocate forces
    for (n = 0; n < nbondlist; n++) {
       i1 = bondlist[n][0]; // Get index of first atom in bond index n
@@ -125,8 +129,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          m = atom->molecule[i2]; // Get molecule ID
       }
 
-      // scale = k * (molLengths[m - 1] / equiLength - 1);
-      scale = scaling_factors[m - 1];
+      scale = k * (molLengths[m - 1] / equiLength - 1);
+      // scale = scaling_factors[m - 1];
 
       typ_i1 = type[i1];
       typ_i2 = type[i2];
@@ -166,7 +170,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          }
       }
    }
-
+}
 
 /* ---------------------------------------------------------------------- */
 

@@ -61,7 +61,7 @@ compute molChunks all chunk/atom molecule
 
 group molOne molecule 1
 compute bondDists molOne bond/local dist
-compute arcLength molOne reduce sum c_bondDists local
+compute arcLength molOne reduce sum c_bondDists inputs local
 
 fix restraint all arclengthrestraint productionIdealized 0.5 ${totLength}
 fix_modify restraint energy yes
@@ -85,7 +85,7 @@ fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
 # fix debug internals nve
 
 compute internalsTemp internals temp
-thermo 1000000
+thermo 500000
 # thermo_style custom step temp
 thermo_style custom step c_internalsTemp c_arcLength
 

@@ -30,6 +30,7 @@ namespace LAMMPS_NS
         int setmask() override;
         void post_force(int) override;
         void min_post_force(int) override;
+	double compute_scalar() override;
 
         protected:
         int imol;
