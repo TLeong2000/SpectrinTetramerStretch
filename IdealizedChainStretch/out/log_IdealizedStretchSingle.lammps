@@ -1,5 +1,5 @@
 print "The current dispRatio value is: ${dispRatio}"
-The current dispRatio value is: 0.00
+The current dispRatio value is: 0.90
 
 variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
 variable dispDist equal "v_totLength*v_dispRatio/2"
@@ -26,6 +26,7 @@ Created orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
 
 molecule productionIdealized productionIdealized.txt
 Read molecule template productionIdealized:
+# Molecule File for Single Filament of Idealized Chain of Alpha Spectrin
   1 molecules
   0 fragments
   42 atoms with max type 42
@@ -54,7 +55,7 @@ create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0
 create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 1344 atoms
   using lattice units in orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
-  create_atoms CPU = 0.004 seconds
+  create_atoms CPU = 0.002 seconds
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs.data add merge
@@ -68,8 +69,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.003 seconds
-  read_data CPU = 0.009 seconds
+  special bonds CPU = 0.001 seconds
+  read_data CPU = 0.006 seconds
 
 # Verify that parameters were assigned as intended:
 # write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
@@ -83,10 +84,10 @@ group firstAtoms type 1
 group lastAtoms type 42
 32 atoms in group lastAtoms
 displace_atoms firstAtoms move 0  ${dispDist} 0  units box
-displace_atoms firstAtoms move 0  0 0  units box
+displace_atoms firstAtoms move 0  504.603405 0  units box
 Displacing atoms ...
 displace_atoms lastAtoms move  0 -${dispDist} 0  units box
-displace_atoms lastAtoms move  0 -0 0  units box
+displace_atoms lastAtoms move  0 -504.603405 0  units box
 Displacing atoms ...
 
 group internals type 2:41
@@ -102,8 +103,14 @@ fix stationary endpoints setforce 0.0 0.0 0.0
 
 # Minimize the initial structure for initializing velocities
 minimize 0.0 1.0e-9 100000 100000
+----------------------------------------------------------
+Using INTEL Package without Coprocessor.
+Compiler: Intel Classic C++ 20.21.7 / Intel(R) C++ g++ 12.2 mode
+SIMD compiler directives: Enabled
+Precision: mixed
+----------------------------------------------------------
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:723)
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -111,53 +118,53 @@ Neighbor list info ...
   ghost atom cutoff = 0
   binsize = 48000, bins = 1 1 1
   1 neighbor lists, perpetual/occasional/extra = 1 0 0
-  (1) pair lj/cut, perpetual
-      attributes: half, newton on
-      pair build: half/bin/newton
-      stencil: half/bin/3d
-      bin: standard
-WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2366)
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:723)
+  (1) pair lj/cut/intel, perpetual
+      attributes: half, newton on, intel
+      pair build: half/bin/newton/intel
+      stencil: half/bin/3d/intel
+      bin: intel
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 8.627 | 8.627 | 8.627 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.988 | 8.988 | 8.988 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0              0              250036.7       250036.7      -0.00015920697
-     15026   0              0              1418.9662      1418.9662      5.4870762e-16
-Loop time of 0.499078 on 32 procs for 15026 steps with 1344 atoms
+         0   0              0              53055162       53055162      -0.046136766  
+     15464   0              0              325.09249      325.09249      1.5880711e-06
+Loop time of 0.440243 on 32 procs for 15464 steps with 1344 atoms
 
-99.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
-  Stopping criterion = force tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-      250036.702147237   1418.96620408346   1418.96620408346
-  Force two-norm initial, final = 1823.8264 9.9177344e-10
-  Force max component initial, final = 103.91692 1.0425466e-10
-  Final line search alpha, max atom move = 1 1.0425466e-10
-  Iterations, force evaluations = 15026 24807
+      53055162.4552718   325.092494820274   325.092494820274
+  Force two-norm initial, final = 26883.663 0.18090295
+  Force max component initial, final = 3538.1195 0.014070056
+  Final line search alpha, max atom move = 2.3841858e-07 3.3545628e-09
+  Iterations, force evaluations = 15464 21298
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.0048648  | 0.0052055  | 0.0056999  |   0.3 |  1.04
-Bond    | 0.12858    | 0.13558    | 0.14884    |   1.2 | 27.17
-Neigh   | 0.010122   | 0.010725   | 0.011101   |   0.2 |  2.15
-Comm    | 0.018371   | 0.019379   | 0.024462   |   1.0 |  3.88
+Pair    | 0.019991   | 0.021219   | 0.031098   |   1.4 |  4.82
+Bond    | 0.049305   | 0.05045    | 0.056786   |   0.6 | 11.46
+Neigh   | 0.020583   | 0.021591   | 0.022151   |   0.2 |  4.90
+Comm    | 0.018961   | 0.020192   | 0.02526    |   0.9 |  4.59
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0031489  | 0.0036183  | 0.0044833  |   0.6 |  0.72
-Other   |            | 0.3246     |            |       | 65.03
+Modify  | 0.0069554  | 0.0076204  | 0.01194    |   1.0 |  1.73
+Other   |            | 0.3192     |            |       | 72.50
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
+Neighs:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
-Neighbor list builds = 732
+Neighbor list builds = 1084
 Dangerous builds = 0
 # Remove the stationary fix now the minimization is done
 unfix stationary
@@ -209,15 +216,21 @@ compute sternComp sternAtoms property/atom fy
 compute endForce sternAtoms reduce ave fy
 
 run 0
+----------------------------------------------------------
+Using INTEL Package without Coprocessor.
+Compiler: Intel Classic C++ 20.21.7 / Intel(R) C++ g++ 12.2 mode
+SIMD compiler directives: Enabled
+Precision: mixed
+----------------------------------------------------------
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:723)
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 7.627 | 7.627 | 7.627 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.989 | 7.989 | 7.989 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 3.25194e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 2.96991e-06 on 32 procs for 0 steps with 1344 atoms
 
-156.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+121.0% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -228,123 +241,17 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.252e-06  |            |       |100.00
+Other   |            | 2.97e-06   |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
+Neighs:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
 Neighbor list builds = 0
 Dangerous builds = 0
-velocity internals scale 310.0
-
-fix printCenters all ave/time 100 100000 10000000 c_endForce file out/timeAvg_sternForces.${dispRatio}.txt
-fix printCenters all ave/time 100 100000 10000000 c_endForce file out/timeAvg_sternForces.0.00.txt
-
-# fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
-# fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
-# fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
-
-# Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
-# fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
-# fix sternForces all ave/chunk 10000 1 10000 molChunks c_sternComp norm none # file out/sternForces.${dispRatio}.txt
-
-# Calculate the ensemble average of the bow/stern forces:
-# variable ensBow equal ave(f_bowForces[2])
-# variable ensStern equal ave(f_sternForces[2])
-
-# Time-average the ensemble average of the bow/stern forces
-# Using increments of 10000 steps, we will average over the 100 most recent increments
-# fix timeBow all ave/time 1000 1000 1000000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
-# fix timeStern all ave/time 10000 100 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
-
-# variable netEndForce atom "c_bowComp + c_sternComp"
-
-# Calculate, for every molecule individually, the net endpoint forces
-# fix netEndForces all ave/chunk 100 1 100 molChunks v_netEndForce norm none file out/netEndForces.${dispRatio}.txt
-
-# Calculate the ensemble average of the net endpoint forces
-# variable ens_netEnd equal ave(f_netEndForces[2])
-
-# Time-average the ensemble average of the net endpoint forces
-# We will average over the 100 most recent timesteps in increments of 100 steps
-# fix timeAvg_netEnd all ave/time 100 100 10000 v_ens_netEnd file out/timeAvg_netEndForces.${dispRatio}.txt
-
-
-# variable netTension atom "c_bowComp - c_sternComp"
-
-# Calculate, for every molecule individually, the net tension
-# fix tensions all ave/chunk 100 1 100 molChunks v_netTension norm none file out/tensions.${dispRatio}.txt
-# write_data MultiplePolymerDisplacements.${displacement}.polymer
-
-# Calculate the ensemble average of the net tensions
-# variable ensAvg equal ave(f_tensions[2])
-
-# Time-average the ensemble average of the net tensions
-# We will average over the 100 most recent timesteps in increments of 100 steps
-# fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
-
-neighbor 1.0 bin
-# comm_modify cutoff 100
-neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
-
-run 10000000
-Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 42.024667075. This may lead to errors. (../comm.cpp:723)
-WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 7.627 | 7.627 | 7.627 Mbytes
-   Step     c_internalsTemp
-         0   310          
-   1000000   317.89498    
-   2000000   305.03467    
-   3000000   308.59737    
-   4000000   301.81032    
-   5000000   317.5642     
-   6000000   302.40483    
-   7000000   302.52047    
-   8000000   308.516      
-   9000000   311.88151    
-  10000000   301.66997    
-Loop time of 72.1567 on 32 procs for 10000000 steps with 1344 atoms
-
-Performance: 1197393.568 ns/day, 0.000 hours/ns, 138587.219 timesteps/s, 186.261 Matom-step/s
-99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
-
-MPI task timing breakdown:
-Section |  min time  |  avg time  |  max time  |%varavg| %total
----------------------------------------------------------------
-Pair    | 1.3525     | 1.4467     | 1.5446     |   3.1 |  2.00
-Bond    | 34.682     | 35.529     | 36.879     |  15.3 | 49.24
-Neigh   | 0.00033642 | 0.00034904 | 0.00036529 |   0.0 |  0.00
-Comm    | 1.4925     | 1.5493     | 1.6074     |   2.5 |  2.15
-Output  | 0.00014258 | 0.00016296 | 0.00062692 |   0.0 |  0.00
-Modify  | 30.451     | 31.836     | 32.873     |  15.3 | 44.12
-Other   |            | 1.795      |            |       |  2.49
-
-Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
-Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
-
-Total # of neighbors = 32
-Ave neighs/atom = 0.023809524
-Ave special neighs/atom = 5.7142857
-Neighbor list builds = 10
-Dangerous builds = 10
-
-clear
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
-
-next dispRatio
-Increment via next: value 2 on partition 0
-jump IdealizedStretch.lammps
-Total wall time: 0:01:13
