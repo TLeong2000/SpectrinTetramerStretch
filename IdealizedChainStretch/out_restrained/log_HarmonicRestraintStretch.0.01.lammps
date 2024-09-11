@@ -77,7 +77,7 @@ pair_coeff * * 0 0
  create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 1344 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.090 seconds
+  create_atoms CPU = 0.112 seconds
 
 # create_atoms 0 single 0 0 -1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 -1 mol productionIdealized ${seed} rotate 0 0 0 1
@@ -97,8 +97,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.130 seconds
-  read_data CPU = 0.154 seconds
+  special bonds CPU = 0.109 seconds
+  read_data CPU = 0.168 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -186,9 +186,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
          0   0             -nan            7564.2871     -nan           -nan          
-Loop time of 2.80572e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 6.96841e-06 on 32 procs for 0 steps with 1344 atoms
 
-132.5% CPU use with 32 MPI tasks x 1 OpenMP threads
+115.3% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -199,7 +199,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.806e-06  |            |       |100.00
+Other   |            | 6.968e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -292,9 +292,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 8.398 | 8.398 | 8.398 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 2.83638e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 2.64719e-06 on 32 procs for 0 steps with 1344 atoms
 
-127.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+126.3% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -305,7 +305,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.836e-06  |            |       |100.00
+Other   |            | 2.647e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -345,21 +345,21 @@ Per MPI rank memory allocation (min/avg/max) = 8.414 | 8.414 | 8.414 Mbytes
    Step     c_internalsTemp
          0   310          
          2   310          
-Loop time of 0.119298 on 32 procs for 2 steps with 1344 atoms
+Loop time of 0.0795236 on 32 procs for 2 steps with 1344 atoms
 
-Performance: 0.001 ns/day, 16569.141 hours/ns, 16.765 timesteps/s, 22.532 katom-step/s
-96.5% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 0.002 ns/day, 11044.939 hours/ns, 25.150 timesteps/s, 33.801 katom-step/s
+96.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.192e-06  | 1.0459e-05 | 2.0292e-05 |   0.0 |  0.01
-Bond    | 1.1634e-05 | 1.9658e-05 | 3.6641e-05 |   0.0 |  0.02
+Pair    | 7.809e-06  | 1.0136e-05 | 2.4262e-05 |   0.0 |  0.01
+Bond    | 1.1188e-05 | 1.7079e-05 | 4.072e-05  |   0.0 |  0.02
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.417e-06  | 3.0906e-06 | 8.5e-06    |   0.0 |  0.00
-Output  | 0.030719   | 0.030823   | 0.030948   |   0.0 | 25.84
-Modify  | 0.088309   | 0.088393   | 0.088466   |   0.0 | 74.09
-Other   |            | 4.829e-05  |            |       |  0.04
+Comm    | 2.259e-06  | 2.9511e-06 | 7.986e-06  |   0.0 |  0.00
+Output  | 0.036472   | 0.058613   | 0.059436   |   1.6 | 73.71
+Modify  | 0.02003    | 0.020829   | 0.042976   |   2.8 | 26.19
+Other   |            | 5.101e-05  |            |       |  0.06
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0

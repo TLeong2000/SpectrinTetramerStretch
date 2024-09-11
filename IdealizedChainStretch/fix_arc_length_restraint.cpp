@@ -96,9 +96,15 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    int nlocal = atom->nlocal;
    // int nghost = atom->nghost;
    int newton_bond = force->newton_bond;
+   
+   int rank;
+   MPI_Comm_rank(world, &rank);
 
    int ntimestep = update->ntimestep;
-   printf("The current timestep is: %d\n", ntimestep);
+
+   if (rank == 0) {
+      printf("The current timestep is: %d\n", ntimestep);
+   }
 
 
    int max_glo_molID;   
@@ -127,12 +133,13 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
    double dist = 0;
 
-
+   /*
    int size_Of_Cluster;
    MPI_Comm_size(world, &size_Of_Cluster);
-   int process_Rank;
-   MPI_Comm_rank(world, &process_Rank);
-   tagint *tag = atom->tag;
+   */
+   
+   // tagint *tag = atom->tag;
+   //
 
    for (n = 0; n <nbondlist; n++){
       i1 = bondlist[n][0]; // Get index of first atom in bond index n
@@ -144,7 +151,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          m = atom->molecule[i2]; // Get molecule ID
       }
       
-      printf("Bond with atom IDs (%d, %d) of molecule %d from process %d of %d\n", tag[i1], tag[i2], m, process_Rank, size_Of_Cluster);
+      // printf("Bond with atom IDs (%d, %d) of molecule %d from process %d of %d\n", tag[i1], tag[i2], m, rank, size_Of_Cluster);
 
       // Get components of position difference between atoms i1 and i2
       delx = x[i1][0] - x[i2][0];
@@ -190,12 +197,25 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
 
+   if (rank == 0) {
+
+      for (n = 0; n < nmols; n++) {
+      
+         printf("The length of molecule with ID %d is %f\n", n + 1, molLengths[n]);    
+
+      }
+
+   }
+
    erestraint = 0;
    for (n = 0; n < nmols; n++) {
       erestraint += k/2 * (molLengths[n] / equiLength - 1) * (molLengths[n] / equiLength - 1);
    }
 
    double scale;
+   int fx;
+   int fy;
+   int fz;
 
    // Now that we have the molecule lengths, we can allocate forces
    for (n = 0; n < nbondlist; n++) {
@@ -228,9 +248,74 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
       dist = sqrt(delxsq + delysq + delzsq);
 
-      
       /*
+      fx = 0;
+      fy = 0;
+      fz = 0;
 
+      if (i1 < nlocal) {
+         // typ_i1 = typ_i2 + 1 XOR typ_i2 - 1
+         if (typ_i1 < typ_i2) { // i1 cannot be last atom of mol it belongs to
+            // If the bond distance is equal to 0, we want to restraining force
+            // to be zero to avoid a division by zero - which means that
+            // we will not add or subtract any force from the atom
+            if (dist > 10e-12) {
+               fx += scale * delx / dist;
+               fy += scale * dely / dist;
+               fz += scale * delz / dist;
+            }
+         }
+         else { // i1 cannot be first atom of mol it belongs to
+
+            if (dist > 10e-12) {
+               fx -= scale * delx / dist;
+               fy -= scale * dely / dist;
+               fz -= scale * delz / dist;
+            }
+            
+         }
+         f[i1][0] += fx;
+         f[i1][1] += fy;
+         f[i1][2] += fz;
+
+      }
+      
+
+      fx = 0;
+      fy = 0;
+      fz = 0;
+
+      if (i2 < nlocal) {
+         // typ_i2 = typ_i1 + 1 XOR typ_i1 - 1
+         if (typ_i2 < typ_i1) { // i2 cannot be last atom of mol it belongs to
+
+           if (dist > 10e-12) {
+               fx += scale * delx / dist;
+               fy += scale * dely / dist;
+               fz += scale * delz / dist;
+            } 
+            
+         }
+         else { // i2 cannot be first atom of mol it belongs to
+
+            if (dist > 10e-12) {
+               fx -= scale * delx / dist;
+               fy -= scale * dely / dist;
+               fz -= scale * delz / dist;
+            } 
+            
+         }
+
+         f[i2][0] += fx;
+         f[i2][1] += fy;
+         f[i2][2] += fz;
+
+      }
+      */
+
+
+
+      /*        
       if (i1 < nlocal) {
          // typ_i1 = typ_i2 + 1 XOR typ_i2 - 1
          if (typ_i1 < typ_i2) { // i1 cannot be last atom of mol it belongs to
