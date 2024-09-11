@@ -36,14 +36,37 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
    scalar_flag = 1;
    extscalar = 1;
 
-   if (narg < 6) error->all(FLERR, "Insufficient args for fix bondrestraintharmonic command.");
+   if (narg < 6) error->all(FLERR, "Insufficient args for fix arclengthrestraint command.");
+
+   // arg[3] is supposed to be the name of the molecule template that the user
+   // wants to restrain; see the "ID" section of the molecule command
+   // (which has nothing directly to do with molecule indexing)
+   // atom->find_molecule(arg[3]) returns the molecule template ID associated
+   // with the molecule template name stored in arg[3]
    imol = atom->find_molecule(arg[3]);
+
+   // k is the restraining force proportionality constant
+   // Because all inputs are char arrays, we use utils::numeric
+   // to convert the char array to a double.
    k = utils::numeric(FLERR,arg[4],false,lmp);
+
+   // equiLength is the equilibrium length that we want to restrain
+   // the arc length of the chain to.
    equiLength = utils::numeric(FLERR,arg[5],false,lmp);
+
+   // Get number of atoms for single copy of the molecule
    napmol = (atom->molecules[imol])->natoms;
+
+   // Because the molecule is linear, the number of bonds for a single copy is
+   // equal to the number of atoms minus 1
    nbpmol = napmol - 1;
+
+   // Get total number of atoms in system
    natoms = atom->natoms;
-   nmols = (atom->natoms) / napmol; // Number of molecules in the system
+
+   // Number of molecules in system is equal to number of atoms in system
+   // divided by number of atoms for a single copy of the molecule
+   nmols = natoms / napmol;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -61,32 +84,43 @@ int FixArcLengthRestraint::setmask()
 void FixArcLengthRestraint::post_force(int /*vflag*/)
 {
    int i1, i2, n, typ_i1, typ_i2;
-   double ebond, fbond;
+   // double ebond, fbond;
 
    double **x = atom->x; // Get double pointer to atom positions
    double **f = atom->f; // Get double pointer to atom forces
-   int *type = atom->type; // Get double pointer to atom types
+   int *type = atom->type; // Get pointer to atom types
    int **bondlist = neighbor->bondlist;
    int nbondlist = neighbor->nbondlist;
    int nlocal = atom->nlocal;
-   int nghost = atom->nghost;
+   // int nghost = atom->nghost;
    int newton_bond = force->newton_bond;
 
-   int max_glo_molID;
-   // int max_loc_molID = 0;
+
+   int max_glo_molID;   
+   // For each processor, store the maximum local molecule ID in max_glo_molID
    for (n = 0; n < nlocal; n++) {
-      // max_loc_molID = MAX(max_loc_molID, atom->molecule[n]);
       max_glo_molID = MAX(max_glo_molID, atom->molecule[n]);
    }
+   // We take the highest value of max_glo_molID across all processors, and
+   // distribute that value to max_glo_molID to the rest of the processors
+   // (hence the usage of MPI_IN_PLACE as the send buffer)
    MPI_Allreduce(MPI_IN_PLACE, &max_glo_molID, 1, MPI_INT, MPI_MAX, world);
 
-   // double loc_molLengths[max_glo_molID];
+   // We want to create a double-type array with max_glo_molID elements
+   // to store the arc lengths of each molecule in the system
    double molLengths[max_glo_molID];
+
    double delx;
    double dely;
    double delz;
 
+   double delxsq;
+   double delysq;
+   double delzsq;
+
    int m;
+
+   double dist = 0;
 
    for (n = 0; n <nbondlist; n++){
       i1 = bondlist[n][0]; // Get index of first atom in bond index n
@@ -98,20 +132,49 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          m = atom->molecule[i2]; // Get molecule ID
       }
 
+
+      // Get components of position difference between atoms i1 and i2
       delx = x[i1][0] - x[i2][0];
       dely = x[i1][1] - x[i2][1];
       delz = x[i1][2] - x[i2][2];
 
+      delxsq = delx*delx;
+      delysq = dely*dely;
+      delzsq = delz*delz;
+
+      // Calculate Euclidean distance of bond connecting atoms i1 and i2
+      dist = sqrt(delxsq + delysq + delzsq);
+
+
+      // 
+      // If newton_bond is on (which it is by default, unless one mentions
+      // "newton off" in one's LAMMPS script), each atom in each bond
+      // is mentioned once and only once across all processors' neighborlists.
+      //
+      // To be more specific, let atoms 1 and 2 be bonded with each other:
+      // if atom 1 appears as subelement 0 of some element in the bondlist
+      // of a processor, atom 2 will appear as subelement 1 of the same element
+      // in that processor's bondlist.
+      // If newton_bond is on, neither atom 1 nor atom 2 will appear as the 
+      // subelement of any element of any other processor's bondlist.
+      // If newton_bond is off, AND atom 2 is a ghost atom, then atom 2
+      // will ALSO appear as subelement 0 of some element in the bondlist 
+      // of the processor where atom 2 is local, and atom 1 will ALSO appear
+      // as subelement 1 of the same element in the bondlist of the processor
+      // where atom 2 is local.
+      //
       if (newton_bond || i1 < nlocal) {
          /* Use index m - 1 because molecule ID indexing starts at 1
             but C++ indexing starts at 0 */
-         molLengths[m - 1] += delx*delx + dely*dely + delz*delz;
+         molLengths[m - 1] += dist;
          /* For half neighbor lists, because each bond is only stored once,
             there is no worry of double-counting a bond length */
       }
       
    }
-
+   
+   // Take all of the locally processor-owned arc lengths of each molecule, and 
+   // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
 
    erestraint = 0;
@@ -120,13 +183,15 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    }
 
    double scale;
-   // std::array<double, max_glo_molID> scaling_factors = k * (molLengths / equiLength - 1);
 
-   double dist = 0;
    // Now that we have the molecule lengths, we can allocate forces
    for (n = 0; n < nbondlist; n++) {
       i1 = bondlist[n][0]; // Get index of first atom in bond index n
+      // bondlist[n][0] will always be a local atom
       i2 = bondlist[n][1]; // Get index of second atom in bond index n
+      // bondlist[n][1] may or may not be a local atom
+
+
       if (i1 < nlocal) {
          m = atom->molecule[i1]; // Get molecule ID
       }
@@ -144,34 +209,64 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       dely = x[i1][1] - x[i2][1];
       delz = x[i1][2] - x[i2][2];
 
-      dist = delx*delx + dely*dely + delz*delz;
+      delxsq = delx*delx;
+      delysq = dely*dely;
+      delzsq = delz*delz;
+
+      dist = sqrt(delxsq + delysq + delzsq);
 
       
       if (i1 < nlocal) {
          // typ_i1 = typ_i2 + 1 XOR typ_i2 - 1
          if (typ_i1 < typ_i2) { // i1 cannot be last atom of mol it belongs to
-            f[i1][0] += scale * delx / dist;
-            f[i1][1] += scale * dely / dist;
-            f[i1][2] += scale * delz / dist;
+            /* If the bond distance is equal to 0, we want to restraining force
+               to be zero to avoid a division by zero - which means that
+               we will not add or subtract any force from the atom */
+            if (dist > 10e-12) {
+               f[i1][0] += scale * delx / dist;
+               f[i1][1] += scale * dely / dist;
+               f[i1][2] += scale * delz / dist;
+            }
+            // f[i1][0] += scale * delx / dist;
+            // f[i1][1] += scale * dely / dist;
+            // f[i1][2] += scale * delz / dist;
          }
          else { // i1 cannot be first atom of mol it belongs to
-            f[i1][0] -= scale * delx / dist;
-            f[i1][1] -= scale * dely / dist;
-            f[i1][2] -= scale * delz / dist;
+
+            if (dist > 10e-12) {
+               f[i1][0] -= scale * delx / dist;
+               f[i1][1] -= scale * dely / dist;
+               f[i1][2] -= scale * delz / dist;
+            }
+            // f[i1][0] -= scale * delx / dist;
+            // f[i1][1] -= scale * dely / dist;
+            // f[i1][2] -= scale * delz / dist;
          }
       }
 
       if (i2 < nlocal) {
          // typ_i2 = typ_i1 + 1 XOR typ_i1 - 1
          if (typ_i2 < typ_i1) { // i2 cannot be last atom of mol it belongs to
-            f[i2][0] += scale * delx / dist;
-            f[i2][1] += scale * dely / dist;
-            f[i2][2] += scale * delz / dist;
+
+           if (dist > 10e-12) {
+               f[i2][0] += scale * delx / dist;
+               f[i2][1] += scale * dely / dist;
+               f[i2][2] += scale * delz / dist;
+            } 
+            // f[i2][0] += scale * delx / dist;
+            // f[i2][1] += scale * dely / dist;
+            // f[i2][2] += scale * delz / dist;
          }
          else { // i2 cannot be first atom of mol it belongs to
-            f[i2][0] -= scale * delx / dist;
-            f[i2][1] -= scale * dely / dist;
-            f[i2][2] -= scale * delz / dist;
+
+            if (dist > 10e-12) {
+               f[i2][0] -= scale * delx / dist;
+               f[i2][1] -= scale * dely / dist;
+               f[i2][2] -= scale * delz / dist;
+            } 
+            // f[i2][0] -= scale * delx / dist;
+            // f[i2][1] -= scale * dely / dist;
+            // f[i2][2] -= scale * delz / dist;
          }
       }
    }

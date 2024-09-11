@@ -24,10 +24,26 @@ atom_style molecular
 
 lattice sc 24000
 
-region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+# Use below with 32 processors for 4 x 2 x 4 MPI grid
+# region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
 # region insertionVolume block -1 2 0 1 -1 2 units lattice
-# region insertionVolume block -1 0 0 1 -1 1 units lattice
-region insertionVolume block -1 0 0 0 0 2 units lattice
+#
+
+# Use below with 8 processors for 2 x 2 x 2 MPI grid
+# region main block -1 1 -1 1 -1 1 units lattice
+# region insertionVolume block -0.5 0.5 -0.5 0.5 -0.5 0.5 units lattice
+#
+
+# Use below with 8 processors for 2 x 2 x 2 MPI grid
+# region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
+# region insertionVolume block 0 1 0 1 0 1 units lattice
+#
+
+# Use below with 18 processors for 3 x 2 x 3 MPI grid
+region main block -1.5 1.5 -0.5 1.5 -1.5 1.5 units lattice
+region insertionVolume block -1 1 0 1 -1 1 units lattice
+#
+
 
 # region main block -25000 25000 -25000 25000 -25000 25000
 create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
@@ -130,7 +146,7 @@ reset_timestep 0
 # Set up dynamics
 velocity internals create 310.0 ${seed} dist gaussian
 
-timestep 1
+timestep 0.001
 fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
 
 compute internalsTemp internals temp
