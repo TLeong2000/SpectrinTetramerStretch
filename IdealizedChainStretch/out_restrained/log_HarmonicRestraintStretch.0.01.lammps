@@ -39,7 +39,7 @@ Lattice spacing in x,y,z = 24000 24000 24000
 # region main block -25000 25000 -25000 25000 -25000 25000
 create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
 Created orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  4 by 2 by 4 MPI processor grid
+  3 by 2 by 3 MPI processor grid
 # region insertionVolume block -15000 15000 -15000 15000 -15000 15000
 
 # molecule productionIdealized productionIdealized.txt
@@ -77,7 +77,7 @@ pair_coeff * * 0 0
  create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 1344 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.112 seconds
+  create_atoms CPU = 0.004 seconds
 
 # create_atoms 0 single 0 0 -1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 -1 mol productionIdealized ${seed} rotate 0 0 0 1
@@ -89,7 +89,7 @@ Created 1344 atoms
 read_data IdealizedCoeffs.data add merge
 Reading data file ...
   orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  4 by 2 by 4 MPI processor grid
+  3 by 2 by 3 MPI processor grid
 Finding 1-2 1-3 1-4 neighbors ...
   special bond factors lj:    0        0        0       
   special bond factors coul:  0        0        0       
@@ -97,8 +97,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.109 seconds
-  read_data CPU = 0.168 seconds
+  special bonds CPU = 0.003 seconds
+  read_data CPU = 0.017 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -183,12 +183,12 @@ Neighbor list info ...
 WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
 WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.864 | 8.169 | 9.193 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -nan            7564.2871     -nan           -nan          
-Loop time of 6.96841e-06 on 32 procs for 0 steps with 1344 atoms
+         0   0             -nan            7564.2869     -nan           -nan          
+Loop time of 2.85822e-06 on 18 procs for 0 steps with 1344 atoms
 
-115.3% CPU use with 32 MPI tasks x 1 OpenMP threads
+38.9% CPU use with 18 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -199,14 +199,14 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 6.968e-06  |            |       |100.00
+Other   |            | 2.858e-06  |            |       |100.00
 
-Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Nlocal:        74.6667 ave         168 max          42 min
+Histogram: 8 0 0 8 0 0 0 0 0 2
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:            0.5 ave           1 max           0 min
-Histogram: 16 0 0 0 0 0 0 0 0 16
+Histogram: 18 0 0 0 0 0 0 0 0 0
+Neighs:       0.888889 ave           4 max           0 min
+Histogram: 9 0 4 0 0 4 0 0 0 1
 
 Total # of neighbors = 16
 Ave neighs/atom = 0.011904762
@@ -289,12 +289,12 @@ Precision: mixed
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
 WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 8.398 | 8.398 | 8.398 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.399 | 8.705 | 9.731 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 2.64719e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 2.88667e-06 on 18 procs for 0 steps with 1344 atoms
 
-126.3% CPU use with 32 MPI tasks x 1 OpenMP threads
+55.8% CPU use with 18 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -305,14 +305,14 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.647e-06  |            |       |100.00
+Other   |            | 2.887e-06  |            |       |100.00
 
-Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Nlocal:        74.6667 ave         168 max          42 min
+Histogram: 8 0 0 8 0 0 0 0 0 2
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 18 0 0 0 0 0 0 0 0 0
 Neighs:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 18 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 0
 Ave neighs/atom = 0
@@ -341,32 +341,32 @@ Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
 WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 141.024667075. This may lead to errors. (../comm.cpp:730)
-Per MPI rank memory allocation (min/avg/max) = 8.414 | 8.414 | 8.414 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.415 | 8.721 | 9.747 Mbytes
    Step     c_internalsTemp
          0   310          
          2   310          
-Loop time of 0.0795236 on 32 procs for 2 steps with 1344 atoms
+Loop time of 0.00410093 on 18 procs for 2 steps with 1344 atoms
 
-Performance: 0.002 ns/day, 11044.939 hours/ns, 25.150 timesteps/s, 33.801 katom-step/s
-96.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 0.042 ns/day, 569.573 hours/ns, 487.695 timesteps/s, 655.462 katom-step/s
+87.0% CPU use with 18 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 7.809e-06  | 1.0136e-05 | 2.4262e-05 |   0.0 |  0.01
-Bond    | 1.1188e-05 | 1.7079e-05 | 4.072e-05  |   0.0 |  0.02
+Pair    | 9.347e-06  | 1.2782e-05 | 2.0492e-05 |   0.0 |  0.31
+Bond    | 2.2067e-05 | 4.1334e-05 | 0.00012709 |   0.0 |  1.01
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.259e-06  | 2.9511e-06 | 7.986e-06  |   0.0 |  0.00
-Output  | 0.036472   | 0.058613   | 0.059436   |   1.6 | 73.71
-Modify  | 0.02003    | 0.020829   | 0.042976   |   2.8 | 26.19
-Other   |            | 5.101e-05  |            |       |  0.06
+Comm    | 2.512e-06  | 3.4616e-06 | 7.001e-06  |   0.0 |  0.08
+Output  | 0.0017125  | 0.0017667  | 0.0018422  |   0.1 | 43.08
+Modify  | 0.0021658  | 0.0022449  | 0.0022871  |   0.1 | 54.74
+Other   |            | 3.173e-05  |            |       |  0.77
 
-Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Nlocal:        74.6667 ave         168 max          42 min
+Histogram: 8 0 0 8 0 0 0 0 0 2
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 18 0 0 0 0 0 0 0 0 0
 Neighs:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 18 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 0
 Ave neighs/atom = 0
@@ -383,4 +383,4 @@ package intel 1
 next dispRatio
 Increment via next: value 2 on partition 0
 # jump IdealizedStretch.lammps
-Total wall time: 0:00:02
+Total wall time: 0:00:01

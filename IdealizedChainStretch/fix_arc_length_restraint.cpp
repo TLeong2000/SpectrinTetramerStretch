@@ -193,19 +193,22 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       
    }
    
+   for (n = 0; n < nmols; n++) {
+      printf("Processor %d: the accumulated arc length of molecule with ID %d is %f\n",rank, n + 1, molLengths[n]);
+   }   
+
+
    // Take all of the locally processor-owned arc lengths of each molecule, and 
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
-
+   
+   /*
    if (rank == 0) {
-
       for (n = 0; n < nmols; n++) {
-      
          printf("The length of molecule with ID %d is %f\n", n + 1, molLengths[n]);    
-
       }
-
    }
+   */
 
    erestraint = 0;
    for (n = 0; n < nmols; n++) {
