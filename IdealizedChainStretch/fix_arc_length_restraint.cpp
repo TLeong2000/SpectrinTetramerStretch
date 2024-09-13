@@ -119,7 +119,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
    // We want to create a double-type array with max_glo_molID elements
    // to store the arc lengths of each molecule in the system
-   double molLengths[max_glo_molID];
+   double molLengths[max_glo_molID] = {0};
 
    double delx;
    double dely;
@@ -131,17 +131,18 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
    int m;
 
-   double dist = 0;
+   double dist;
 
    /*
    int size_Of_Cluster;
    MPI_Comm_size(world, &size_Of_Cluster);
    */
    
-   // tagint *tag = atom->tag;
+   tagint *tag = atom->tag;
    //
 
    for (n = 0; n <nbondlist; n++){
+      dist = 0;
       i1 = bondlist[n][0]; // Get index of first atom in bond index n
       i2 = bondlist[n][1]; // Get index of second atom in bond index n
       if (i1 < nlocal) {
@@ -164,7 +165,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
       // Calculate Euclidean distance of bond connecting atoms i1 and i2
       dist = sqrt(delxsq + delysq + delzsq);
-
+      
+      
 
       // 
       // If newton_bond is on (which it is by default, unless one mentions
@@ -190,9 +192,14 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          /* For half neighbor lists, because each bond is only stored once,
             there is no worry of double-counting a bond length */
       }
+
+      if (isnan(molLengths[m - 1])) {
+         printf("atom IDs (%d, %d) of molecule %d from process %d\n", tag[i1], tag[i2], m, rank);
+      }
       
    }
    
+
    for (n = 0; n < nmols; n++) {
       printf("Processor %d: the accumulated arc length of molecule with ID %d is %f\n",rank, n + 1, molLengths[n]);
    }   

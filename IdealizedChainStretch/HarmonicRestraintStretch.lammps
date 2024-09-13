@@ -135,7 +135,7 @@ group lastOne intersect lastAtoms molOne
 # pair_style lj/cut 0
 # pair_coeff * * 0 0
 
-write_dump all custom out_restrained/initPos.${dispRatio}.txt id x y z modify sort id
+write_dump all custom out_restrained/initPos.${dispRatio}.txt id mol x y z modify sort id
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
