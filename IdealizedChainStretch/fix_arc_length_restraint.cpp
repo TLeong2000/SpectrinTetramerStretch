@@ -192,30 +192,33 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          /* For half neighbor lists, because each bond is only stored once,
             there is no worry of double-counting a bond length */
       }
-
+      
+      /*
       if (isnan(molLengths[m - 1])) {
          printf("atom IDs (%d, %d) of molecule %d from process %d\n", tag[i1], tag[i2], m, rank);
       }
+      */
       
    }
    
-
+   /*
    for (n = 0; n < nmols; n++) {
       printf("Processor %d: the accumulated arc length of molecule with ID %d is %f\n",rank, n + 1, molLengths[n]);
-   }   
+   }
+   */  
 
 
    // Take all of the locally processor-owned arc lengths of each molecule, and 
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
    
-   /*
+
    if (rank == 0) {
       for (n = 0; n < nmols; n++) {
          printf("The length of molecule with ID %d is %f\n", n + 1, molLengths[n]);    
       }
    }
-   */
+
 
    erestraint = 0;
    for (n = 0; n < nmols; n++) {
