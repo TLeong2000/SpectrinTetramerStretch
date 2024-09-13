@@ -59,7 +59,10 @@ create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angl
 #
 molecule productionIdealized rest_prod_mds/restrained_production_${dispRatio}.txt
 bond_style harmonic
+bond_coeff * 0 27.34977805
+
 angle_style harmonic
+angle_coeff * 0 180
 # Uncomment below if using dispRatio 0.00 OR if NOT using INTEL package
 # 
 # pair_style none
@@ -143,14 +146,14 @@ write_dump all custom out_restrained/initPos.${dispRatio}.txt id mol x y z modif
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 0.25 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
 
 reset_timestep 0
 
 # Set up dynamics
 velocity internals create 310.0 ${seed} dist gaussian
 
-timestep 0.001
+timestep 100
 fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
 
 compute internalsTemp internals temp
@@ -168,15 +171,15 @@ run 0
 velocity internals scale 310.0
 
 # fix printCenters all ave/time 100 100000 10000000 c_endForce file out_restrained/timeAvg_sternForces.${dispRatio}.txt
- dump diagnoseDist all local 1 out_restrained/diagnoseDist.${dispRatio}.txt c_batomIDs[*] c_distCalc[*]
- dump diagnoseNaN molOne custom 1 out_restrained/diagnose_NaN.${dispRatio}.txt id x y z fx fy fz
- dump_modify diagnoseNaN sort id
+ dump diagnoseDist all local 50 out_restrained/diagnoseDist.${dispRatio}.txt c_batomIDs[*] c_distCalc[*]
+ # dump diagnoseNaN molOne custom 1 out_restrained/diagnose_NaN.${dispRatio}.txt id x y z fx fy fz
+ # dump_modify diagnoseNaN sort id
 
 neighbor 100.0 bin 
 comm_modify cutoff 100
 neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
 
- run 2
+ run 100
 # run 10000000
 
 clear
