@@ -25,8 +25,8 @@ atom_style molecular
 lattice sc 24000
 
 # Use below with 32 processors for 4 x 2 x 4 MPI grid
- region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
- region insertionVolume block -1 2 0 1 -1 2 units lattice
+# region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+# region insertionVolume block -1 2 0 1 -1 2 units lattice
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
@@ -35,14 +35,18 @@ lattice sc 24000
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
-# region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
-# region insertionVolume block 0 1 0 1 0 1 units lattice
+ region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
+ region insertionVolume block 0 1 0 1 0 1 units lattice
 #
 
 # Use below with 18 processors for 3 x 2 x 3 MPI grid
 # region main block -1.5 1.5 -0.5 1.5 -1.5 1.5 units lattice
 # region insertionVolume block -1 1 0 1 -1 1 units lattice
 #
+
+# Use below with 1 processor
+# region main block -0.5 0.5 -0.5 0.5 -0.5 0.5 units lattice
+# region insertionVolume block 0 0 0 0 0 0 units lattice
 
 
 # region main block -25000 25000 -25000 25000 -25000 25000

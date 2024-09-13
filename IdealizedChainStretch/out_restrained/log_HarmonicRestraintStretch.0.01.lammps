@@ -16,8 +16,8 @@ lattice sc 24000
 Lattice spacing in x,y,z = 24000 24000 24000
 
 # Use below with 32 processors for 4 x 2 x 4 MPI grid
- region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
- region insertionVolume block -1 2 0 1 -1 2 units lattice
+# region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+# region insertionVolume block -1 2 0 1 -1 2 units lattice
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
@@ -26,8 +26,8 @@ Lattice spacing in x,y,z = 24000 24000 24000
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
-# region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
-# region insertionVolume block 0 1 0 1 0 1 units lattice
+ region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
+ region insertionVolume block 0 1 0 1 0 1 units lattice
 #
 
 # Use below with 18 processors for 3 x 2 x 3 MPI grid
@@ -35,11 +35,15 @@ Lattice spacing in x,y,z = 24000 24000 24000
 # region insertionVolume block -1 1 0 1 -1 1 units lattice
 #
 
+# Use below with 1 processor
+# region main block -0.5 0.5 -0.5 0.5 -0.5 0.5 units lattice
+# region insertionVolume block 0 0 0 0 0 0 units lattice
+
 
 # region main block -25000 25000 -25000 25000 -25000 25000
 create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
-Created orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  4 by 2 by 4 MPI processor grid
+Created orthogonal box = (-12000 -12000 -12000) to (36000 36000 36000)
+  2 by 2 by 2 MPI processor grid
 # region insertionVolume block -15000 15000 -15000 15000 -15000 15000
 
 # molecule productionIdealized productionIdealized.txt
@@ -75,9 +79,9 @@ pair_coeff * * 0 0
 # is a way to get around that
  create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
  create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
-Created 1344 atoms
-  using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.109 seconds
+Created 336 atoms
+  using lattice units in orthogonal box = (-12000 -12000 -12000) to (36000 36000 36000)
+  create_atoms CPU = 0.003 seconds
 
 # create_atoms 0 single 0 0 -1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 -1 mol productionIdealized ${seed} rotate 0 0 0 1
@@ -88,8 +92,8 @@ Created 1344 atoms
 
 read_data IdealizedCoeffs.data add merge
 Reading data file ...
-  orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  4 by 2 by 4 MPI processor grid
+  orthogonal box = (-12000 -12000 -12000) to (36000 36000 36000)
+  2 by 2 by 2 MPI processor grid
 Finding 1-2 1-3 1-4 neighbors ...
   special bond factors lj:    0        0        0       
   special bond factors coul:  0        0        0       
@@ -97,18 +101,18 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.146 seconds
-  read_data CPU = 0.183 seconds
+  special bonds CPU = 0.002 seconds
+  read_data CPU = 0.004 seconds
 
 group firstAtoms type 1
-32 atoms in group firstAtoms
+8 atoms in group firstAtoms
 group lastAtoms type 42
-32 atoms in group lastAtoms
+8 atoms in group lastAtoms
 
 group endpoints union firstAtoms lastAtoms
-64 atoms in group endpoints
+16 atoms in group endpoints
 group internals subtract all endpoints
-1280 atoms in group internals
+320 atoms in group internals
 
 group molOne molecule 1
 42 atoms in group molOne
@@ -173,7 +177,7 @@ Neighbor list info ...
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 0
   ghost atom cutoff = 0
-  binsize = 96000, bins = 1 1 1
+  binsize = 48000, bins = 1 1 1
   1 neighbor lists, perpetual/occasional/extra = 1 0 0
   (1) pair lj/cut/intel, perpetual
       attributes: half, newton on, intel
@@ -183,12 +187,12 @@ Neighbor list info ...
 WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
 WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.859 | 7.859 | 7.859 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -nan            7564.2871     -nan           -nan          
-Loop time of 2.46372e-06 on 32 procs for 0 steps with 1344 atoms
+         0   0             -nan            1891.015      -nan           -nan          
+Loop time of 1.25618e-05 on 8 procs for 0 steps with 336 atoms
 
-140.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+19.9% CPU use with 8 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -199,16 +203,16 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.464e-06  |            |       |100.00
+Other   |            | 1.256e-05  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Neighs:            0.5 ave           1 max           0 min
-Histogram: 16 0 0 0 0 0 0 0 0 16
+Histogram: 4 0 0 0 0 0 0 0 0 4
 
-Total # of neighbors = 16
+Total # of neighbors = 4
 Ave neighs/atom = 0.011904762
 Ave special neighs/atom = 5.7142857
 Neighbor list builds = 0
@@ -218,19 +222,19 @@ Dangerous builds = 0
 # of the lattice point associated with the molecule it belongs to
 # is the same across all molecules
  variable xcenterOne equal $(c_xsumOne/v_napmol)
- variable xcenterOne equal -24000
+ variable xcenterOne equal -3.2143599951052151453e-15
  variable ycenterOne equal $(c_ysumOne/v_napmol)
  variable ycenterOne equal 5.68857130712699286e-15
  variable zcenterOne equal $(c_zsumOne/v_napmol)
- variable zcenterOne equal -23999.999999999996362
+ variable zcenterOne equal 9.4739031434680019524e-15
 
 
  variable xoffset equal $(v_xcenterOne - c_xfirstOne)
- variable xoffset equal 18.218675214284303365
+ variable xoffset equal 18.21867521428571024
  variable yoffset equal $(v_ycenterOne - c_yfirstOne)
  variable yoffset equal -0.51990549999999713382
  variable zoffset equal $(v_zcenterOne - c_zfirstOne)
- variable zoffset equal 121.96912690476165153
+ variable zoffset equal 121.96912690476190733
 
 # We translate all atoms so that the endpoints, before stretching,
 # are located at the center of each lattice point,
@@ -289,12 +293,12 @@ Precision: mixed
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
 WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:730)
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
-Per MPI rank memory allocation (min/avg/max) = 8.398 | 8.398 | 8.398 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.394 | 8.394 | 8.394 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 5.93469e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 6.12738e-06 on 8 procs for 0 steps with 336 atoms
 
-121.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+18.4% CPU use with 8 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -305,14 +309,14 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 5.935e-06  |            |       |100.00
+Other   |            | 6.127e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Neighs:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 0
 Ave neighs/atom = 0
@@ -341,32 +345,32 @@ Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
 WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 141.024667075. This may lead to errors. (../comm.cpp:730)
-Per MPI rank memory allocation (min/avg/max) = 8.414 | 8.414 | 8.414 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.41 | 8.41 | 8.41 Mbytes
    Step     c_internalsTemp
          0   310          
          2   310          
-Loop time of 0.0982374 on 32 procs for 2 steps with 1344 atoms
+Loop time of 0.00805878 on 8 procs for 2 steps with 336 atoms
 
-Performance: 0.002 ns/day, 13644.083 hours/ns, 20.359 timesteps/s, 27.362 katom-step/s
-96.5% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 0.021 ns/day, 1119.275 hours/ns, 248.177 timesteps/s, 83.387 katom-step/s
+87.8% CPU use with 8 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.317e-06  | 1.6383e-05 | 5.9822e-05 |   0.0 |  0.02
-Bond    | 1.1538e-05 | 2.8942e-05 | 6.4517e-05 |   0.0 |  0.03
+Pair    | 1.011e-05  | 1.3028e-05 | 2.0083e-05 |   0.0 |  0.16
+Bond    | 1.2698e-05 | 1.7859e-05 | 2.7635e-05 |   0.0 |  0.22
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.209e-06  | 3.0476e-06 | 5.095e-06  |   0.0 |  0.00
-Output  | 0.0013283  | 0.069731   | 0.072045   |   4.7 | 70.98
-Modify  | 0.026118   | 0.028409   | 0.096849   |   7.3 | 28.92
-Other   |            | 4.872e-05  |            |       |  0.05
+Comm    | 2.879e-06  | 4.341e-06  | 5.773e-06  |   0.0 |  0.05
+Output  | 0.00071609 | 0.0007383  | 0.00077855 |   0.0 |  9.16
+Modify  | 0.00724    | 0.0072684  | 0.0072823  |   0.0 | 90.19
+Other   |            | 1.687e-05  |            |       |  0.21
 
 Nlocal:             42 ave          42 max          42 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 Neighs:              0 ave           0 max           0 min
-Histogram: 32 0 0 0 0 0 0 0 0 0
+Histogram: 8 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 0
 Ave neighs/atom = 0
@@ -383,4 +387,4 @@ package intel 1
 next dispRatio
 Increment via next: value 2 on partition 0
 # jump IdealizedStretch.lammps
-Total wall time: 0:00:02
+Total wall time: 0:00:00
