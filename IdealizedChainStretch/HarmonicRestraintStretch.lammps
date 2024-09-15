@@ -1,12 +1,9 @@
 #
 #
 
-# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-# variable dispRatio universe 0.05
- variable dispRatio universe 0.01 0.02 0.03 0.04
-# variable dispRatio universe 0.96 0.97 0.98 0.99
-# variable dispRatio universe 0.16 0.17 0.18 0.19
-# variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10 0.05 0.04 0.03 0.02 0.01
+variable dispRatio universe 0.00
 
 log out_restrained/log_HarmonicRestraintStretch.${dispRatio}.lammps
 print "The current dispRatio value is: ${dispRatio}"
@@ -25,8 +22,8 @@ atom_style molecular
 lattice sc 24000
 
 # Use below with 32 processors for 4 x 2 x 4 MPI grid
-# region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
-# region insertionVolume block -1 2 0 1 -1 2 units lattice
+ region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+ region insertionVolume block -1 2 0 1 -1 2 units lattice
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
@@ -35,8 +32,8 @@ lattice sc 24000
 #
 
 # Use below with 8 processors for 2 x 2 x 2 MPI grid
- region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
- region insertionVolume block 0 1 0 1 0 1 units lattice
+# region main block -0.5 1.5 -0.5 1.5 -0.5 1.5 units lattice
+# region insertionVolume block 0 1 0 1 0 1 units lattice
 #
 
 # Use below with 18 processors for 3 x 2 x 3 MPI grid
@@ -59,18 +56,18 @@ create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angl
 #
 molecule productionIdealized rest_prod_mds/restrained_production_${dispRatio}.txt
 bond_style harmonic
-bond_coeff * 0 27.34977805
+# bond_coeff * 0 27.34977805
 
 angle_style harmonic
-angle_coeff * 0 180
+# angle_coeff * 0 180
 # Uncomment below if using dispRatio 0.00 OR if NOT using INTEL package
 # 
-# pair_style none
+ pair_style none
 
 # Uncomment below if using INTEL package AND NOT using dispRatio 0.00
 # 
-pair_style lj/cut 0
-pair_coeff * * 0 0
+# pair_style lj/cut 0
+# pair_coeff * * 0 0
 
 # create_atoms spawns in molecules on each lattice point of region insertionVolume
 # such that the center of geometry of a given molecule is located at the
@@ -142,7 +139,7 @@ group lastOne intersect lastAtoms molOne
 # pair_style lj/cut 0
 # pair_coeff * * 0 0
 
-write_dump all custom out_restrained/initPos.${dispRatio}.txt id mol x y z modify sort id
+# write_dump all custom out_restrained/initPos.${dispRatio}.txt id mol x y z modify sort id
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
@@ -164,14 +161,14 @@ thermo_style custom step c_internalsTemp
 # as the y direction is the direction of displacement
 compute endForce lastAtoms reduce ave fy
 
- compute batomIDs all property/local batom1 batom2
- compute distCalc all bond/local dist dx dy dz
+# compute batomIDs all property/local batom1 batom2
+# compute distCalc all bond/local dist dx dy dz
 
 run 0
 velocity internals scale 310.0
 
-# fix printCenters all ave/time 100 100000 10000000 c_endForce file out_restrained/timeAvg_sternForces.${dispRatio}.txt
- dump diagnoseDist all local 50 out_restrained/diagnoseDist.${dispRatio}.txt c_batomIDs[*] c_distCalc[*]
+ fix printCenters all ave/time 100 100000 10000000 c_endForce file out_restrained/timeAvg_sternForces.${dispRatio}.txt
+# dump diagnoseDist all local 50 out_restrained/diagnoseDist.${dispRatio}.txt c_batomIDs[*] c_distCalc[*]
  # dump diagnoseNaN molOne custom 1 out_restrained/diagnose_NaN.${dispRatio}.txt id x y z fx fy fz
  # dump_modify diagnoseNaN sort id
 
@@ -179,10 +176,10 @@ neighbor 100.0 bin
 comm_modify cutoff 100
 neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
 
- run 100
-# run 10000000
+# run 100
+ run 10000000
 
 clear
 
 next dispRatio
-# jump IdealizedStretch.lammps
+ jump HarmonicRestraintStretch.lammps

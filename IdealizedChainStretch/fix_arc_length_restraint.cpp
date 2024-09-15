@@ -268,7 +268,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
       dist = sqrt(delxsq + delysq + delzsq);
 
-      printf("Atom IDs (%d, %d) types (%d, %d) scale %f delx %f dely %f delz %f dist %f\n", tag[i1], tag[i2], typ_i1, typ_i2, scale, delx, dely, delz, dist);
+      // printf("Atom IDs (%d, %d) types (%d, %d) scale %f delx %f dely %f delz %f dist %f\n", tag[i1], tag[i2], typ_i1, typ_i2, scale, delx, dely, delz, dist);
 
       fx_i1 = 0;
       fy_i1 = 0;
@@ -296,7 +296,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
                fy_i1 -= scale * dely / dist;
                fz_i1 -= scale * delz / dist;
             }
-            printf("%d > %d\n", typ_i1, typ_i2);
+            // printf("%d > %d\n", typ_i1, typ_i2);
             
          }
          f[i1][0] += fx_i1;
@@ -339,65 +339,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
       }
 
-      printf("Atom IDs (%d, %d) fx_i1 %f fx_i2 %f fy_i1 %f fy_i2 %f fz_i1 %f fz_i2 %f\n", tag[i1], tag[i2], fx_i1, fx_i2, fy_i1, fy_i2, fz_i1, fz_i2);
-
-      /*       
-      if (i1 < nlocal) {
-         // typ_i1 = typ_i2 + 1 XOR typ_i2 - 1
-         if (typ_i1 < typ_i2) { // i1 cannot be last atom of mol it belongs to
-            // If the bond distance is equal to 0, we want to restraining force
-            // to be zero to avoid a division by zero - which means that
-            // we will not add or subtract any force from the atom
-            if (dist > 10e-12) {
-               f[i1][0] += scale * delx / dist;
-               f[i1][1] += scale * dely / dist;
-               f[i1][2] += scale * delz / dist;
-            }
-            // f[i1][0] += scale * delx / dist;
-            // f[i1][1] += scale * dely / dist;
-            // f[i1][2] += scale * delz / dist;
-         }
-         else { // i1 cannot be first atom of mol it belongs to
-
-            if (dist > 10e-12) {
-               f[i1][0] -= scale * delx / dist;
-               f[i1][1] -= scale * dely / dist;
-               f[i1][2] -= scale * delz / dist;
-            }
-            // f[i1][0] -= scale * delx / dist;
-            // f[i1][1] -= scale * dely / dist;
-            // f[i1][2] -= scale * delz / dist;
-         }
-      }
-
-      if (i2 < nlocal) {
-         // typ_i2 = typ_i1 + 1 XOR typ_i1 - 1
-         if (typ_i2 < typ_i1) { // i2 cannot be last atom of mol it belongs to
-
-           if (dist > 10e-12) {
-               f[i2][0] += scale * delx / dist;
-               f[i2][1] += scale * dely / dist;
-               f[i2][2] += scale * delz / dist;
-            } 
-            // f[i2][0] += scale * delx / dist;
-            // f[i2][1] += scale * dely / dist;
-            // f[i2][2] += scale * delz / dist;
-         }
-         else { // i2 cannot be first atom of mol it belongs to
-
-            if (dist > 10e-12) {
-               f[i2][0] -= scale * delx / dist;
-               f[i2][1] -= scale * dely / dist;
-               f[i2][2] -= scale * delz / dist;
-            } 
-            // f[i2][0] -= scale * delx / dist;
-            // f[i2][1] -= scale * dely / dist;
-            // f[i2][2] -= scale * delz / dist;
-         }
-
-      }
-      */
-
+      // printf("Atom IDs (%d, %d) fx_i1 %f fx_i2 %f fy_i1 %f fy_i2 %f fz_i1 %f fz_i2 %f\n", tag[i1], tag[i2], fx_i1, fx_i2, fy_i1, fy_i2, fz_i1, fz_i2);  
    }
 
 }
