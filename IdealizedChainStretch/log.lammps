@@ -4,9 +4,10 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 #
 #
 
-# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
-# variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10 0.05 0.04 0.03 0.02 0.01
-variable dispRatio universe 0.00
+# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15
+# variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
+ variable dispRatio universe 0.00
 
-log out_restrained/log_HarmonicRestraintStretch.${dispRatio}.lammps
-log out_restrained/log_HarmonicRestraintStretch.0.00.lammps
+log out_restrained84/log_HarmonicRestraint84Stretch.${dispRatio}.lammps
+log out_restrained84/log_HarmonicRestraint84Stretch.0.00.lammps
