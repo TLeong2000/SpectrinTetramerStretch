@@ -1,12 +1,13 @@
 #
 #
 
- variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
-# variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15
-# variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
-# variable dispRatio universe 0.00
+# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 # 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10
+# variable dispRatio universe 0.05 0.04 0.03 0.02 0.01
+ variable dispRatio universe 0.00
 
-log out_restrained168/log_HarmonicRestraint84Stretch.${dispRatio}.lammps
+log out_restrained168/log_HarmonicRestraint168Stretch.${dispRatio}.lammps
 print "The current dispRatio value is: ${dispRatio}"
 
 variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
@@ -48,14 +49,14 @@ lattice sc 24000
 
 
 # region main block -25000 25000 -25000 25000 -25000 25000
-create_box 84 main bond/types 83 angle/types 82 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+create_box 168 main bond/types 167 angle/types 166 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
 # region insertionVolume block -15000 15000 -15000 15000 -15000 15000
 
 # molecule productionIdealized productionIdealized.txt
 #
 # I am going to use a pre-minimized model for each dispRatio
 #
-molecule productionIdealized rest_prod_mds/restrained_production_84_${dispRatio}.txt
+molecule productionIdealized rest_prod_mds/restrained_production_168_${dispRatio}.txt
 bond_style harmonic
 # bond_coeff * 0 27.34977805
 
@@ -84,10 +85,10 @@ angle_style harmonic
 # create_atoms 0 single 0 0 1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 1 mol productionIdealized ${seed} rotate 0 0 0 1
 
-read_data IdealizedCoeffs84.data add merge
+read_data IdealizedCoeffs168.data add merge
 
 group firstAtoms type 1
-group lastAtoms type 84
+group lastAtoms type 168
 
 group endpoints union firstAtoms lastAtoms
 group internals subtract all endpoints
@@ -168,7 +169,7 @@ compute endForce lastAtoms reduce ave fy
 run 0
 velocity internals scale 310.0
 
- fix printCenters all ave/time 100 100000 10000000 c_endForce file out_restrained84/timeAvg_sternForces.${dispRatio}.txt
+ fix printCenters all ave/time 100 100000 10000000 c_endForce file out_restrained168/timeAvg_sternForces.${dispRatio}.txt
 # dump diagnoseDist all local 50 out_restrained/diagnoseDist.${dispRatio}.txt c_batomIDs[*] c_distCalc[*]
  # dump diagnoseNaN molOne custom 1 out_restrained/diagnose_NaN.${dispRatio}.txt id x y z fx fy fz
  # dump_modify diagnoseNaN sort id
@@ -183,4 +184,4 @@ neigh_modify every 1000000 delay 1000000 check yes exclude molecule/inter all
 clear
 
 next dispRatio
- jump HarmonicRestraint84Stretch.lammps
+ jump HarmonicRestraint168Stretch.lammps
