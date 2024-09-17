@@ -155,20 +155,6 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       
       // printf("Bond with atom IDs (%d, %d) of molecule %d from process %d of %d\n", tag[i1], tag[i2], m, rank, size_Of_Cluster);
 
-      // Get components of position difference between atoms i1 and i2
-      delx = x[i1][0] - x[i2][0];
-      dely = x[i1][1] - x[i2][1];
-      delz = x[i1][2] - x[i2][2];
-
-      delxsq = delx*delx;
-      delysq = dely*dely;
-      delzsq = delz*delz;
-
-      // Calculate Euclidean distance of bond connecting atoms i1 and i2
-      dist = sqrt(delxsq + delysq + delzsq);
-      
-      
-
       // 
       // If newton_bond is on (which it is by default, unless one mentions
       // "newton off" in one's LAMMPS script), each atom in each bond
@@ -187,6 +173,18 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       // where atom 2 is local.
       //
       if (newton_bond || i1 < nlocal) {
+         // Get components of position difference between atoms i1 and i2
+         delx = x[i1][0] - x[i2][0];
+         dely = x[i1][1] - x[i2][1];
+         delz = x[i1][2] - x[i2][2];
+
+         delxsq = delx*delx;
+         delysq = dely*dely;
+         delzsq = delz*delz;
+
+         // Calculate Euclidean distance of bond connecting atoms i1 and i2
+         dist = sqrt(delxsq + delysq + delzsq);
+
          /* Use index m - 1 because molecule ID indexing starts at 1
             but C++ indexing starts at 0 */
          molLengths[m - 1] += dist;
@@ -227,6 +225,11 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       erestraint += k/2 * (molLengths[n] / equiLength - 1) * (molLengths[n] / equiLength - 1);
    }
 
+   double scalingFactors[max_glo_molID];
+   for(n = 0; n < max_glo_molID; n++) {
+      scalingFactors[n] = k * (molLengths[n] / equiLength - 1);
+   }
+
    double scale;
 
    double fx_i1;
@@ -252,8 +255,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          m = atom->molecule[i2]; // Get molecule ID
       }
 
-      scale = k * (molLengths[m - 1] / equiLength - 1);
-      // scale = scaling_factors[m - 1];
+      // scale = k * (molLengths[m - 1] / equiLength - 1);
+      scale = scalingFactors[m - 1];
 
       typ_i1 = type[i1];
       typ_i2 = type[i2];
