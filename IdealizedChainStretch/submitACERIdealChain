@@ -19,6 +19,6 @@ module load intel
 
 # Use below for displacement ratio of 0.00
 #
-# mpirun -np 32 ./lmp_intel_cpu_intelmpi -in Idealized168Stretch.lammps
- mpirun -np 32 ./lmp_intel_cpu_intelmpi -in HarmonicRestraint168Stretch.lammps
+ mpirun -np 32 ./lmp_intel_cpu_intelmpi -in Idealized168Stretch.lammps
+# mpirun -np 32 ./lmp_intel_cpu_intelmpi -in HarmonicRestraint168Stretch.lammps
 # mpirun -np 32 ./lmp_intel_cpu_intelmpi -in HarmonicRestraint168Minimize.lammps

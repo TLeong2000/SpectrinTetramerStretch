@@ -1,5 +1,5 @@
 print "The current dispRatio value is: ${dispRatio}"
-The current dispRatio value is: 0.01
+The current dispRatio value is: 0.00
 
 variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
 variable dispDist equal "v_totLength*v_dispRatio/2"
@@ -26,6 +26,7 @@ Created orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
 
 molecule productionIdealized168 productionIdealized168.txt
 Read molecule template productionIdealized168:
+# Molecule File for Linear Dimer of Idealized Chain of Alpha Spectrin
   1 molecules
   0 fragments
   168 atoms with max type 168
@@ -37,12 +38,12 @@ bond_style harmonic
 angle_style harmonic
 # Uncomment below if using dispRatio 0.00 or if NOT using INTEL package
 #
-# pair_style none
+ pair_style none
 
 # Uncomment below if using INTEL package AND NOT using dispRatio 0.00
 #
-pair_style lj/cut 0
-pair_coeff * * 0 0
+# pair_style lj/cut 0
+# pair_coeff * * 0 0
 
 
 # pair_style zero 54.0
@@ -55,7 +56,7 @@ create_atoms 0 region insertionVolume mol productionIdealized168 ${seed} rotate 
 create_atoms 0 region insertionVolume mol productionIdealized168 1 rotate 0 0 0 1
 Created 5376 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.003 seconds
+  create_atoms CPU = 0.008 seconds
 
 # Load in Idealized Chain Parameters:
 read_data IdealizedCoeffs168.data add merge
@@ -69,8 +70,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.001 seconds
-  read_data CPU = 0.007 seconds
+  special bonds CPU = 0.006 seconds
+  read_data CPU = 0.032 seconds
 
 # Verify that parameters were assigned as intended:
 # write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
@@ -84,10 +85,10 @@ group firstAtoms type 1
 group lastAtoms type 168
 32 atoms in group lastAtoms
 displace_atoms firstAtoms move 0  ${dispDist} 0  units box
-displace_atoms firstAtoms move 0  5.6067045 0  units box
+displace_atoms firstAtoms move 0  0 0  units box
 Displacing atoms ...
 displace_atoms lastAtoms move  0 -${dispDist} 0  units box
-displace_atoms lastAtoms move  0 -5.6067045 0  units box
+displace_atoms lastAtoms move  0 -0 0  units box
 Displacing atoms ...
 
 group internals type 2:167
@@ -103,53 +104,53 @@ fix stationary endpoints setforce 0 0 0
 
 # Minimize the initial structure for initializing velocities
 minimize 0.0 1.0e-9 1000000 1000000
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 14028 mixed pair_coeff terms from geometric mixing rule
-Neighbor list info ...
-  update: every = 1 steps, delay = 0 steps, check = yes
-  max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 0
-  ghost atom cutoff = 0
-  binsize = 96000, bins = 1 1 1
-  1 neighbor lists, perpetual/occasional/extra = 1 0 0
-  (1) pair lj/cut/intel, perpetual
-      attributes: half, newton on, intel
-      pair build: half/bin/newton/intel
-      stencil: half/bin/3d
-      bin: intel
-Per MPI rank memory allocation (min/avg/max) = 10.17 | 10.17 | 10.17 Mbytes
-   Step          Temp          E_pair         E_mol          TotEng         Press     
-WARNING: Too many warnings: 108 vs 100. All future warnings will be suppressed (../thermo.cpp:472)
-         0   0              0              6932.6914      6932.6914     -8.4726485e-07
-      1088   0              0              762.3579       762.3579      -2.8856499e-07
-Loop time of 0.0645809 on 32 procs for 1088 steps with 5376 atoms
 
-99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- Type Label Framework: https://doi.org/10.1021/acs.jpcb.3c08419
+
+@Article{Gissinger24,
+ author = {Jacob R. Gissinger, Ilia Nikiforov, Yaser Afshar, Brendon Waters, Moon-ki Choi, Daniel S. Karls, Alexander Stukowski, Wonpil Im, Hendrik Heinz, Axel Kohlmeyer, and Ellad B. Tadmor},
+ title = {Type Label Framework for Bonded Force Fields in LAMMPS},
+ journal = {J. Phys. Chem. B},
+ year =    2024,
+ volume =  128,
+ number =  13,
+ pages =   {3282–-3297}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
+Per MPI rank memory allocation (min/avg/max) = 8.016 | 8.016 | 8.016 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0              0              1394.0434      1394.0434      6.4463965e-10
+       238   0              0              1393.9237      1393.9237      5.2285669e-10
+Loop time of 0.0256013 on 32 procs for 238 steps with 5376 atoms
+
+97.7% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
-  Stopping criterion = quadratic factors are zero
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-      6932.69144614531   762.357898466702   762.357898466702
-  Force two-norm initial, final = 429.16325 3.0977963
-  Force max component initial, final = 57.144875 0.16205393
-  Final line search alpha, max atom move = 4.1739233e-08 6.7640066e-09
-  Iterations, force evaluations = 1088 2179
+      1394.04342148321   1393.92374106517   1393.92374106517
+  Force two-norm initial, final = 1.4879953 0.021365548
+  Force max component initial, final = 0.0498352 0.0005461959
+  Final line search alpha, max atom move = 1.5258789e-05 8.334288e-09
+  Iterations, force evaluations = 238 507
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.0045295  | 0.0047631  | 0.0066363  |   0.5 |  7.38
-Bond    | 0.015759   | 0.016158   | 0.022831   |   1.0 | 25.02
-Neigh   | 0.002533   | 0.0025772  | 0.0026108  |   0.0 |  3.99
-Comm    | 0.00064463 | 0.00075755 | 0.0011249  |   0.0 |  1.17
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0.0094033  | 0.012122   | 0.016101   |   2.4 | 47.35
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.00012716 | 0.00022841 | 0.00032817 |   0.0 |  0.89
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0016734  | 0.0019755  | 0.002719   |   0.4 |  3.06
-Other   |            | 0.03835    |            |       | 59.38
+Modify  | 0.00013033 | 0.00017379 | 0.00025029 |   0.0 |  0.68
+Other   |            | 0.01308    |            |       | 51.08
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -161,7 +162,7 @@ Histogram: 32 0 0 0 0 0 0 0 0 0
 Total # of neighbors = 0
 Ave neighs/atom = 0
 Ave special neighs/atom = 5.9285714
-Neighbor list builds = 11
+Neighbor list builds = 0
 Dangerous builds = 0
 # Remove the stationary fix now the minimization is done
 unfix stationary
@@ -201,20 +202,12 @@ compute sternComp sternAtoms property/atom fy
 compute endForce sternAtoms reduce ave fy
 
 run 0
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 14028 mixed pair_coeff terms from geometric mixing rule
-Per MPI rank memory allocation (min/avg/max) = 9.176 | 9.176 | 9.176 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.016 | 7.016 | 7.016 Mbytes
    Step     c_internalsTemp
-WARNING: Too many warnings: 110 vs 100. All future warnings will be suppressed (../thermo.cpp:472)
          0   310          
-Loop time of 3.08534e-06 on 32 procs for 0 steps with 5376 atoms
+Loop time of 3.65741e-06 on 32 procs for 0 steps with 5376 atoms
 
-146.9% CPU use with 32 MPI tasks x 1 OpenMP threads
+99.1% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -225,7 +218,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.085e-06  |            |       |100.00
+Other   |            | 3.657e-06  |            |       |100.00
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -242,48 +235,41 @@ Dangerous builds = 0
 velocity internals scale 310.0
 
 fix printCenters all ave/time 100 200000 20000000 c_endForce file out168/timeAvg_sternForces.${dispRatio}.txt
-fix printCenters all ave/time 100 200000 20000000 c_endForce file out168/timeAvg_sternForces.0.01.txt
+fix printCenters all ave/time 100 200000 20000000 c_endForce file out168/timeAvg_sternForces.0.00.txt
 
 neighbor 1.0 bin
 # comm_modify cutoff 100
 neigh_modify every 2000000 delay 2000000 check yes exclude molecule/inter all
 
 run 20000000
-----------------------------------------------------------
-Using INTEL Package without Coprocessor.
-Compiler: Intel Classic C++ 20.21.5 / Intel(R) C++ g++ 11.2 mode
-SIMD compiler directives: Enabled
-Precision: mixed
-----------------------------------------------------------
-Generated 0 of 14028 mixed pair_coeff terms from geometric mixing rule
-Per MPI rank memory allocation (min/avg/max) = 9.176 | 9.176 | 9.176 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 7.016 | 7.016 | 7.016 Mbytes
    Step     c_internalsTemp
          0   310          
-   2000000   304.97484    
-   4000000   312.39805    
-   6000000   304.04232    
-   8000000   308.64303    
-  10000000   309.28042    
-  12000000   311.86826    
-  14000000   308.41589    
-  16000000   318.93529    
-  18000000   315.09656    
-  20000000   308.82412    
-Loop time of 291.45 on 32 procs for 20000000 steps with 5376 atoms
+   2000000   307.12479    
+   4000000   308.65767    
+   6000000   317.23993    
+   8000000   311.85418    
+  10000000   315.23634    
+  12000000   310.09869    
+  14000000   308.926      
+  16000000   310.00707    
+  18000000   311.09491    
+  20000000   314.74999    
+Loop time of 348.6 on 32 procs for 20000000 steps with 5376 atoms
 
-Performance: 296448.657 ns/day, 0.000 hours/ns, 68622.374 timesteps/s, 368.914 Matom-step/s
-99.5% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 247848.588 ns/day, 0.000 hours/ns, 57372.358 timesteps/s, 308.434 Matom-step/s
+99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 35.017     | 36.084     | 44.259     |  25.9 | 12.38
-Bond    | 132.88     | 134        | 137.17     |   8.4 | 45.98
-Neigh   | 0.11553    | 0.11556    | 0.11561    |   0.0 |  0.04
-Comm    | 4.137      | 4.7555     | 5.8968     |  20.4 |  1.63
-Output  | 0.048765   | 0.15377    | 0.15728    |   4.8 |  0.05
-Modify  | 96.064     | 111.04     | 113.66     |  27.9 | 38.10
-Other   |            | 5.298      |            |       |  1.82
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 245.39     | 246        | 247.2      |   3.2 | 70.57
+Neigh   | 0.00024668 | 0.00030849 | 0.00036708 |   0.0 |  0.00
+Comm    | 3.1354     | 3.2708     | 3.6203     |   5.4 |  0.94
+Output  | 0.00019471 | 0.00023402 | 0.0010435  |   0.0 |  0.00
+Modify  | 93.405     | 94.996     | 95.642     |   5.8 | 27.25
+Other   |            | 4.333      |            |       |  1.24
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -301,9 +287,8 @@ Dangerous builds = 10
 clear
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
-package intel 1
 
 next dispRatio
-Increment via next: value 15 on partition 0
+Increment via next: value 2 on partition 0
 jump Idealized168Stretch.lammps
-Total wall time: 1:08:28
+Total wall time: 0:05:49

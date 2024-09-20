@@ -97,16 +97,18 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    // int nghost = atom->nghost;
    int newton_bond = force->newton_bond;
 
-   tagint *tag = atom->tag;
+   // tagint *tag = atom->tag;
    
    int rank;
    MPI_Comm_rank(world, &rank);
 
    int ntimestep = update->ntimestep;
 
+   /*
    if (rank == 0) {
       printf("The current timestep is: %d\n", ntimestep);
    }
+   */
 
 
    int max_glo_molID;   

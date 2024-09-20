@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 6.71461616766
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -84,7 +84,7 @@ angle_style harmonic
  create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 5376 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.001 seconds
+  create_atoms CPU = 0.002 seconds
 
 # create_atoms 0 single 0 0 -1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 -1 mol productionIdealized ${seed} rotate 0 0 0 1
@@ -105,7 +105,7 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.001 seconds
-  read_data CPU = 0.007 seconds
+  read_data CPU = 0.005 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -173,10 +173,10 @@ WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 9.047 | 9.047 | 9.047 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -nan            45791.759     -nan           -nan          
-Loop time of 3.55966e-06 on 32 procs for 0 steps with 5376 atoms
+         0   0             -nan            84622.166     -nan           -nan          
+Loop time of 2.72903e-06 on 32 procs for 0 steps with 5376 atoms
 
-144.9% CPU use with 32 MPI tasks x 1 OpenMP threads
+156.9% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -187,7 +187,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.56e-06   |            |       |100.00
+Other   |            | 2.729e-06  |            |       |100.00
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -242,8 +242,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -279,9 +279,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 9.051 | 9.051 | 9.051 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 2.74266e-06 on 32 procs for 0 steps with 5376 atoms
+Loop time of 2.8425e-06 on 32 procs for 0 steps with 5376 atoms
 
-158.4% CPU use with 32 MPI tasks x 1 OpenMP threads
+149.5% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -292,7 +292,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.743e-06  |            |       |100.00
+Other   |            | 2.843e-06  |            |       |100.00
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -331,31 +331,31 @@ WARNING: Communication cutoff 100 is shorter than a bond length based estimate o
 Per MPI rank memory allocation (min/avg/max) = 9.051 | 9.051 | 9.051 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   310.63813    
-   2000000   308.41675    
-   3000000   310.72842    
-   4000000   321.74963    
-   5000000   314.21975    
-   6000000   314.64304    
-   7000000   311.78285    
-   8000000   308.17022    
-   9000000   305.08733    
-  10000000   305.25161    
-Loop time of 552.645 on 32 procs for 10000000 steps with 5376 atoms
+   1000000   309.90846    
+   2000000   306.86754    
+   3000000   308.92499    
+   4000000   308.84463    
+   5000000   313.4916     
+   6000000   303.23811    
+   7000000   306.11989    
+   8000000   309.42857    
+   9000000   310.03084    
+  10000000   309.04869    
+Loop time of 241.017 on 32 procs for 10000000 steps with 5376 atoms
 
-Performance: 156338.967 ns/day, 0.000 hours/ns, 18094.788 timesteps/s, 97.278 Matom-step/s
-97.7% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 358481.031 ns/day, 0.000 hours/ns, 41490.860 timesteps/s, 223.055 Matom-step/s
+99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 17.649     | 18.521     | 23.966     |  29.7 |  3.35
-Bond    | 66.243     | 66.997     | 68.771     |   7.3 | 12.12
-Neigh   | 0.0018848  | 0.0019074  | 0.0019251  |   0.0 |  0.00
-Comm    | 2.072      | 2.3221     | 3.4077     |  19.3 |  0.42
-Output  | 0.0004822  | 0.0012871  | 0.0013287  |   0.4 |  0.00
-Modify  | 452.87     | 462.32     | 464.1      |  10.4 | 83.66
-Other   |            | 2.481      |            |       |  0.45
+Pair    | 16.75      | 17.614     | 21.854     |  19.7 |  7.31
+Bond    | 66.184     | 67.034     | 69.017     |   7.1 | 27.81
+Neigh   | 0.0017536  | 0.0017683  | 0.0017767  |   0.0 |  0.00
+Comm    | 2.0716     | 2.3331     | 2.9647     |  12.8 |  0.97
+Output  | 0.0010397  | 0.0030244  | 0.0031059  |   0.6 |  0.00
+Modify  | 145.25     | 151.65     | 153.28     |  11.1 | 62.92
+Other   |            | 2.379      |            |       |  0.99
 
 Nlocal:            168 ave         168 max         168 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -376,15 +376,15 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 package intel 1
 
 next dispRatio
-Increment via next: value 5 on partition 0
+Increment via next: value 6 on partition 0
  jump HarmonicRestraint168Stretch.lammps
 #
 #
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 # 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
-# variable dispRatio universe 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.99 0.98 0.97 0.96 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.15
 # variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10
- variable dispRatio universe 0.05 0.04 0.03 0.02 0.01
+ variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
 # variable dispRatio universe 0.00
 
 log out_restrained168/log_HarmonicRestraint168Stretch.${dispRatio}.lammps

@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 27.34977805
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -72,8 +72,8 @@ angle_style harmonic
 
 # Uncomment below if using INTEL package AND NOT using dispRatio 0.00
 #
-pair_style lj/cut 0
-pair_coeff * * 0 0
+ pair_style lj/cut 0
+ pair_coeff * * 0 0
 
 # create_atoms spawns in molecules on each lattice point of region insertionVolume
 # such that the center of geometry of a given molecule is located at the
@@ -174,9 +174,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
          0   0             -nan            521044.99     -nan           -nan          
-Loop time of 4.05672e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 3.52984e-06 on 32 procs for 0 steps with 1344 atoms
 
-120.9% CPU use with 32 MPI tasks x 1 OpenMP threads
+121.3% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -187,7 +187,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 4.057e-06  |            |       |100.00
+Other   |            | 3.53e-06   |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -242,8 +242,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -279,9 +279,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 3.60841e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 4.05513e-06 on 32 procs for 0 steps with 1344 atoms
 
-123.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+120.2% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -292,7 +292,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.608e-06  |            |       |100.00
+Other   |            | 4.055e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -331,31 +331,31 @@ WARNING: Communication cutoff 100 is shorter than a bond length based estimate o
 Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   308.52844    
-   2000000   301.00979    
-   3000000   306.11763    
-   4000000   312.63816    
-   5000000   308.44593    
-   6000000   316.36858    
-   7000000   309.05954    
-   8000000   314.56474    
-   9000000   304.87404    
-  10000000   311.96896    
-Loop time of 320.264 on 32 procs for 10000000 steps with 1344 atoms
+   1000000   318.67082    
+   2000000   309.81483    
+   3000000   310.78257    
+   4000000   312.96111    
+   5000000   319.96126    
+   6000000   302.28257    
+   7000000   315.42234    
+   8000000   310.00911    
+   9000000   319.9053     
+  10000000   308.56414    
+Loop time of 312.572 on 32 procs for 10000000 steps with 1344 atoms
 
-Performance: 269777.358 ns/day, 0.000 hours/ns, 31224.231 timesteps/s, 41.965 Matom-step/s
+Performance: 276416.528 ns/day, 0.000 hours/ns, 31992.654 timesteps/s, 42.998 Matom-step/s
 97.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.3319     | 9.2293     | 14.136     |  39.2 |  2.88
-Bond    | 21.012     | 21.741     | 23.79      |  12.2 |  6.79
-Neigh   | 0.00041222 | 0.00043133 | 0.00046173 |   0.0 |  0.00
-Comm    | 1.9503     | 2.1215     | 2.4606     |   8.9 |  0.66
-Output  | 0.00034985 | 0.00092085 | 0.00096418 |   0.0 |  0.00
-Modify  | 277.83     | 285.33     | 287.19     |  11.0 | 89.09
-Other   |            | 1.836      |            |       |  0.57
+Pair    | 8.5073     | 9.3012     | 12.515     |  27.5 |  2.98
+Bond    | 21.036     | 21.721     | 23.108     |   8.5 |  6.95
+Neigh   | 0.00047466 | 0.00050065 | 0.0005341  |   0.0 |  0.00
+Comm    | 1.919      | 2.2367     | 3.2032     |  17.0 |  0.72
+Output  | 0.00039297 | 0.00050467 | 0.00053187 |   0.0 |  0.00
+Modify  | 272.29     | 277.47     | 278.63     |   8.1 | 88.77
+Other   |            | 1.842      |            |       |  0.59
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -383,6 +383,7 @@ Increment via next: value 8 on partition 0
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
  variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10 0.05 0.04 0.03 0.02 0.01
+# variable dispRatio universe 0.00
 
 log out_restrained/log_HarmonicRestraintStretch.${dispRatio}.lammps
 log out_restrained/log_HarmonicRestraintStretch.0.16.lammps

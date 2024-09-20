@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 27.34977805
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -105,7 +105,7 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.001 seconds
-  read_data CPU = 0.007 seconds
+  read_data CPU = 0.006 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -147,7 +147,6 @@ Displacing atoms ...
  compute zfirstOne firstOne reduce sum z
 
  run 0
-WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
 ----------------------------------------------------------
 Using INTEL Package without Coprocessor.
 Compiler: Intel Classic C++ 20.21.7 / Intel(R) C++ g++ 12.2 mode
@@ -155,7 +154,6 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -168,15 +166,13 @@ Neighbor list info ...
       pair build: half/bin/newton/intel
       stencil: half/bin/3d/intel
       bin: intel
-WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
-WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 8.244 | 8.244 | 8.244 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
+WARNING: Too many warnings: 117 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
          0   0             -nan            99276.421     -nan           -nan          
-Loop time of 2.87613e-06 on 32 procs for 0 steps with 2688 atoms
+Loop time of 3.92631e-06 on 32 procs for 0 steps with 2688 atoms
 
-132.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+121.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -187,7 +183,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.876e-06  |            |       |100.00
+Other   |            | 3.926e-06  |            |       |100.00
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -242,8 +238,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -274,14 +270,13 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
-WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 8.246 | 8.246 | 8.246 Mbytes
    Step     c_internalsTemp
+WARNING: Too many warnings: 119 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
          0   310          
-Loop time of 2.81778e-06 on 32 procs for 0 steps with 2688 atoms
+Loop time of 3.34603e-06 on 32 procs for 0 steps with 2688 atoms
 
-129.8% CPU use with 32 MPI tasks x 1 OpenMP threads
+119.5% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -292,7 +287,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 2.818e-06  |            |       |100.00
+Other   |            | 3.346e-06  |            |       |100.00
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -327,35 +322,34 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 120.265196995. This may lead to errors. (../comm.cpp:730)
 Per MPI rank memory allocation (min/avg/max) = 8.246 | 8.246 | 8.246 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   317.2345     
-   2000000   304.24322    
-   3000000   311.93912    
-   4000000   306.12161    
-   5000000   316.45747    
-   6000000   304.44693    
-   7000000   305.34812    
-   8000000   315.38422    
-   9000000   309.25621    
-  10000000   309.73096    
-Loop time of 390.263 on 32 procs for 10000000 steps with 2688 atoms
+   1000000   312.36044    
+   2000000   311.7017     
+   3000000   307.92641    
+   4000000   310.01587    
+   5000000   308.82765    
+   6000000   304.05553    
+   7000000   311.80648    
+   8000000   308.90611    
+   9000000   305.64365    
+  10000000   316.39784    
+Loop time of 170.554 on 32 procs for 10000000 steps with 2688 atoms
 
-Performance: 221389.033 ns/day, 0.000 hours/ns, 25623.731 timesteps/s, 68.877 Matom-step/s
-97.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 506585.377 ns/day, 0.000 hours/ns, 58632.567 timesteps/s, 157.604 Matom-step/s
+99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 11.63      | 12.308     | 16.168     |  28.8 |  3.15
-Bond    | 36.211     | 36.772     | 38.151     |   6.2 |  9.42
-Neigh   | 0.0008538  | 0.00087283 | 0.00090793 |   0.0 |  0.00
-Comm    | 1.9038     | 2.1471     | 3.1367     |  20.8 |  0.55
-Output  | 0.00052668 | 0.00095149 | 0.00098657 |   0.0 |  0.00
-Modify  | 330.03     | 336.96     | 338.47     |   9.2 | 86.34
-Other   |            | 2.073      |            |       |  0.53
+Pair    | 11.283     | 11.905     | 14.863     |  16.8 |  6.98
+Bond    | 36.189     | 36.911     | 38.473     |   7.7 | 21.64
+Neigh   | 0.00054915 | 0.00056105 | 0.00057509 |   0.0 |  0.00
+Comm    | 1.8695     | 2.2004     | 2.8299     |  17.1 |  1.29
+Output  | 0.0004163  | 0.00044216 | 0.00097724 |   0.0 |  0.00
+Modify  | 112.36     | 117.5      | 118.73     |  10.5 | 68.89
+Other   |            | 2.037      |            |       |  1.19
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -376,14 +370,14 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 package intel 1
 
 next dispRatio
-Increment via next: value 3 on partition 0
+Increment via next: value 16 on partition 0
  jump HarmonicRestraint84Stretch.lammps
 #
 #
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
-# variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15
- variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
+ variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15 0.10 0.05 0.04 0.03 0.02 0.01
+# variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
 # variable dispRatio universe 0.00
 
 log out_restrained84/log_HarmonicRestraint84Stretch.${dispRatio}.lammps

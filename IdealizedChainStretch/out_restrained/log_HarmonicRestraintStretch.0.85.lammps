@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 27.34977805
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -72,8 +72,8 @@ angle_style harmonic
 
 # Uncomment below if using INTEL package AND NOT using dispRatio 0.00
 #
-pair_style lj/cut 0
-pair_coeff * * 0 0
+ pair_style lj/cut 0
+ pair_coeff * * 0 0
 
 # create_atoms spawns in molecules on each lattice point of region insertionVolume
 # such that the center of geometry of a given molecule is located at the
@@ -105,7 +105,7 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.001 seconds
-  read_data CPU = 0.006 seconds
+  read_data CPU = 0.007 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -173,10 +173,10 @@ WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 
 WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -nan            40613424      -nan           -nan          
-Loop time of 3.64494e-06 on 32 procs for 0 steps with 1344 atoms
+         0   0              0              40832549       40832549      -0.0044850719 
+Loop time of 3.97453e-06 on 32 procs for 0 steps with 1344 atoms
 
-122.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+125.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -187,17 +187,17 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.645e-06  |            |       |100.00
+Other   |            | 3.975e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
 Nghost:              0 ave           0 max           0 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
-Neighs:            0.5 ave           1 max           0 min
-Histogram: 16 0 0 0 0 0 0 0 0 16
+Neighs:              0 ave           0 max           0 min
+Histogram: 32 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 16
-Ave neighs/atom = 0.011904762
+Total # of neighbors = 0
+Ave neighs/atom = 0
 Ave special neighs/atom = 5.7142857
 Neighbor list builds = 0
 Dangerous builds = 0
@@ -206,19 +206,19 @@ Dangerous builds = 0
 # of the lattice point associated with the molecule it belongs to
 # is the same across all molecules
  variable xcenterOne equal $(c_xsumOne/v_napmol)
- variable xcenterOne equal -24000.000000000003638
+ variable xcenterOne equal -24000
  variable ycenterOne equal $(c_ysumOne/v_napmol)
- variable ycenterOne equal -2.0301221021717148619e-14
+ variable ycenterOne equal 4.0602442043434294082e-15
  variable zcenterOne equal $(c_zsumOne/v_napmol)
- variable zcenterOne equal -24000
+ variable zcenterOne equal -24000.000000000007276
 
 
  variable xoffset equal $(v_xcenterOne - c_xfirstOne)
- variable xoffset equal 7.9839930952366557904
+ variable xoffset equal 32.689034285715024453
  variable yoffset equal $(v_ycenterOne - c_yfirstOne)
- variable yoffset equal 24.110597499999961713
+ variable yoffset equal 13.278278928571413786
  variable zoffset equal $(v_zcenterOne - c_zfirstOne)
- variable zoffset equal 69.408597619047213811
+ variable zoffset equal 155.14848380952389562
 
 # We translate all atoms so that the endpoints, before stretching,
 # are located at the center of each lattice point,
@@ -242,8 +242,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -279,9 +279,9 @@ WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms ma
 Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
          0   310          
-Loop time of 3.57428e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 3.49147e-06 on 32 procs for 0 steps with 1344 atoms
 
-111.0% CPU use with 32 MPI tasks x 1 OpenMP threads
+114.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -292,7 +292,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.574e-06  |            |       |100.00
+Other   |            | 3.491e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -331,31 +331,31 @@ WARNING: Communication cutoff 100 is shorter than a bond length based estimate o
 Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   317.58659    
-   2000000   310.27351    
-   3000000   313.69535    
-   4000000   304.14719    
-   5000000   307.6457     
-   6000000   318.25594    
-   7000000   307.5639     
-   8000000   321.91339    
-   9000000   321.81519    
-  10000000   295.62125    
-Loop time of 316.042 on 32 procs for 10000000 steps with 1344 atoms
+   1000000   307.55296    
+   2000000   306.95535    
+   3000000   323.87457    
+   4000000   300.07266    
+   5000000   305.06583    
+   6000000   310.66539    
+   7000000   306.96514    
+   8000000   300.83896    
+   9000000   304.02394    
+  10000000   305.89606    
+Loop time of 306.243 on 32 procs for 10000000 steps with 1344 atoms
 
-Performance: 273381.700 ns/day, 0.000 hours/ns, 31641.400 timesteps/s, 42.526 Matom-step/s
+Performance: 282129.026 ns/day, 0.000 hours/ns, 32653.822 timesteps/s, 43.887 Matom-step/s
 97.6% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.3071     | 9.1387     | 13.321     |  34.4 |  2.89
-Bond    | 21.002     | 21.754     | 24.279     |  12.6 |  6.88
-Neigh   | 0.00044675 | 0.00047056 | 0.00049773 |   0.0 |  0.00
-Comm    | 1.8898     | 2.0842     | 2.7862     |  14.7 |  0.66
-Output  | 0.00054349 | 0.0013508  | 0.0014107  |   0.4 |  0.00
-Modify  | 273.09     | 281.21     | 283.08     |  11.0 | 88.98
-Other   |            | 1.85       |            |       |  0.59
+Pair    | 8.6441     | 9.2813     | 12.382     |  26.6 |  3.03
+Bond    | 21.154     | 21.73      | 22.893     |   9.5 |  7.10
+Neigh   | 0.00044362 | 0.00046905 | 0.00049528 |   0.0 |  0.00
+Comm    | 1.9382     | 2.1851     | 2.7685     |  13.7 |  0.71
+Output  | 0.00035599 | 0.0030599  | 0.0031693  |   0.9 |  0.00
+Modify  | 266.72     | 271.27     | 272.44     |   7.9 | 88.58
+Other   |            | 1.776      |            |       |  0.58
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -376,18 +376,14 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 package intel 1
 
 next dispRatio
-Increment via next: value 4 on partition 0
+Increment via next: value 5 on partition 0
  jump HarmonicRestraintStretch.lammps
 #
 #
 
-# variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
- variable dispRatio universe 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15 0.10 0.05
-# variable dispRatio universe 0.05
-# variable dispRatio universe 0.01 0.02 0.03 0.04
-# variable dispRatio universe 0.96 0.97 0.98 0.99
-# variable dispRatio universe 0.16 0.17 0.18 0.19
-# variable dispRatio universe 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.0
+ variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 0.35 0.30 0.25 0.20 0.15
+# variable dispRatio universe 0.99 0.98 0.97 0.96 0.19 0.18 0.17 0.16 0.10 0.05 0.04 0.03 0.02 0.01
+# variable dispRatio universe 0.00
 
 log out_restrained/log_HarmonicRestraintStretch.${dispRatio}.lammps
 log out_restrained/log_HarmonicRestraintStretch.0.80.lammps

@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 27.34977805
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -147,7 +147,6 @@ Displacing atoms ...
  compute zfirstOne firstOne reduce sum z
 
  run 0
-WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
 ----------------------------------------------------------
 Using INTEL Package without Coprocessor.
 Compiler: Intel Classic C++ 20.21.7 / Intel(R) C++ g++ 12.2 mode
@@ -155,7 +154,6 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -168,15 +166,13 @@ Neighbor list info ...
       pair build: half/bin/newton/intel
       stencil: half/bin/3d/intel
       bin: intel
-WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2438)
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
-WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 8.244 | 8.244 | 8.244 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
+WARNING: Too many warnings: 141 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
          0   0              0              21567.022      21567.022     -2.232248e-06 
-Loop time of 4.12259e-06 on 32 procs for 0 steps with 2688 atoms
+Loop time of 3.59066e-06 on 32 procs for 0 steps with 2688 atoms
 
-123.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+121.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -187,7 +183,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 4.123e-06  |            |       |100.00
+Other   |            | 3.591e-06  |            |       |100.00
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -242,8 +238,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -274,14 +270,13 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 22.265196995. This may lead to errors. (../comm.cpp:730)
-WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Atoms may get lost. (../comm_brick.cpp:210)
 Per MPI rank memory allocation (min/avg/max) = 8.246 | 8.246 | 8.246 Mbytes
    Step     c_internalsTemp
+WARNING: Too many warnings: 143 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
          0   310          
-Loop time of 3.16619e-06 on 32 procs for 0 steps with 2688 atoms
+Loop time of 3.38469e-06 on 32 procs for 0 steps with 2688 atoms
 
-119.4% CPU use with 32 MPI tasks x 1 OpenMP threads
+118.2% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -292,7 +287,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.166e-06  |            |       |100.00
+Other   |            | 3.385e-06  |            |       |100.00
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -327,35 +322,34 @@ SIMD compiler directives: Enabled
 Precision: mixed
 ----------------------------------------------------------
 Generated 0 of 3486 mixed pair_coeff terms from geometric mixing rule
-WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 120.265196995. This may lead to errors. (../comm.cpp:730)
 Per MPI rank memory allocation (min/avg/max) = 8.246 | 8.246 | 8.246 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   312.15623    
-   2000000   304.90651    
-   3000000   318.77981    
-   4000000   309.32756    
-   5000000   294.55534    
-   6000000   312.70998    
-   7000000   302.57103    
-   8000000   307.90178    
-   9000000   298.78864    
-  10000000   311.565      
-Loop time of 394.94 on 32 procs for 10000000 steps with 2688 atoms
+   1000000   314.0237     
+   2000000   313.0522     
+   3000000   308.18078    
+   4000000   311.84107    
+   5000000   311.55112    
+   6000000   321.19845    
+   7000000   306.89663    
+   8000000   310.85903    
+   9000000   310.66071    
+  10000000   306.06651    
+Loop time of 172.765 on 32 procs for 10000000 steps with 2688 atoms
 
-Performance: 218767.566 ns/day, 0.000 hours/ns, 25320.320 timesteps/s, 68.061 Matom-step/s
-97.7% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 500102.551 ns/day, 0.000 hours/ns, 57882.240 timesteps/s, 155.587 Matom-step/s
+99.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 11.685     | 12.317     | 16.064     |  28.6 |  3.12
-Bond    | 36.166     | 36.762     | 38.212     |   6.5 |  9.31
-Neigh   | 0.00075123 | 0.00077324 | 0.00079377 |   0.0 |  0.00
-Comm    | 1.9518     | 2.2292     | 3.2346     |  19.0 |  0.56
-Output  | 0.00042166 | 0.00095085 | 0.00098703 |   0.0 |  0.00
-Modify  | 334.68     | 341.62     | 343.02     |   9.1 | 86.50
-Other   |            | 2.008      |            |       |  0.51
+Pair    | 11.214     | 11.93      | 14.919     |  17.1 |  6.91
+Bond    | 36.059     | 36.8       | 38.538     |   7.9 | 21.30
+Neigh   | 0.00055981 | 0.00057086 | 0.00058409 |   0.0 |  0.00
+Comm    | 1.978      | 2.3087     | 3.0205     |  15.7 |  1.34
+Output  | 0.00042285 | 0.00044988 | 0.00096363 |   0.0 |  0.00
+Modify  | 114.23     | 119.7      | 120.78     |  10.7 | 69.29
+Other   |            | 2.023      |            |       |  1.17
 
 Nlocal:             84 ave          84 max          84 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -376,14 +370,14 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:98)
 package intel 1
 
 next dispRatio
-Increment via next: value 6 on partition 0
+Increment via next: value 19 on partition 0
  jump HarmonicRestraint84Stretch.lammps
 #
 #
 
 # variable dispRatio universe 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 # 0.35 0.30 0.25 0.20 0.15
-# variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15
- variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
+ variable dispRatio universe 0.35 0.30 0.25 0.20 0.19 0.18 0.17 0.16 0.99 0.98 0.97 0.96 0.15 0.10 0.05 0.04 0.03 0.02 0.01
+# variable dispRatio universe 0.10 0.05 0.04 0.03 0.02 0.01
 # variable dispRatio universe 0.00
 
 log out_restrained84/log_HarmonicRestraint84Stretch.${dispRatio}.lammps

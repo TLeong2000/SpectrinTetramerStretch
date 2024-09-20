@@ -62,7 +62,7 @@ Read molecule template productionIdealized:
   0 dihedrals with max type 0
   0 impropers with max type 0
 bond_style harmonic
-# bond_coeff * 0 27.34977805
+ bond_coeff * 0 27.34977805
 
 angle_style harmonic
 # angle_coeff * 0 180
@@ -72,8 +72,8 @@ angle_style harmonic
 
 # Uncomment below if using INTEL package AND NOT using dispRatio 0.00
 #
-pair_style lj/cut 0
-pair_coeff * * 0 0
+ pair_style lj/cut 0
+ pair_coeff * * 0 0
 
 # create_atoms spawns in molecules on each lattice point of region insertionVolume
 # such that the center of geometry of a given molecule is located at the
@@ -84,7 +84,7 @@ pair_coeff * * 0 0
  create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
 Created 1344 atoms
   using lattice units in orthogonal box = (-36000 -12000 -36000) to (60000 36000 60000)
-  create_atoms CPU = 0.003 seconds
+  create_atoms CPU = 0.016 seconds
 
 # create_atoms 0 single 0 0 -1 mol productionIdealized ${seed} rotate 0 0 0 1
 # create_atoms 0 single 0 1 -1 mol productionIdealized ${seed} rotate 0 0 0 1
@@ -104,8 +104,8 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.003 seconds
-  read_data CPU = 0.009 seconds
+  special bonds CPU = 0.005 seconds
+  read_data CPU = 0.023 seconds
 
 group firstAtoms type 1
 32 atoms in group firstAtoms
@@ -169,10 +169,10 @@ Neighbor list info ...
 Per MPI rank memory allocation (min/avg/max) = 7.863 | 7.863 | 7.863 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
 WARNING: Too many warnings: 109 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
-         0   0             -nan            7564.2871     -nan           -nan          
-Loop time of 3.45737e-06 on 32 procs for 0 steps with 1344 atoms
+         0   0             -nan            2017.155      -nan           -nan          
+Loop time of 3.69181e-06 on 32 procs for 0 steps with 1344 atoms
 
-111.2% CPU use with 32 MPI tasks x 1 OpenMP threads
+120.2% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -183,7 +183,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.457e-06  |            |       |100.00
+Other   |            | 3.692e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -202,19 +202,19 @@ Dangerous builds = 0
 # of the lattice point associated with the molecule it belongs to
 # is the same across all molecules
  variable xcenterOne equal $(c_xsumOne/v_napmol)
- variable xcenterOne equal -24000
+ variable xcenterOne equal -24000.000000000003638
  variable ycenterOne equal $(c_ysumOne/v_napmol)
- variable ycenterOne equal 5.68857130712699286e-15
+ variable ycenterOne equal 2.8760063114099293613e-15
  variable zcenterOne equal $(c_zsumOne/v_napmol)
- variable zcenterOne equal -23999.999999999996362
+ variable zcenterOne equal -24000
 
 
  variable xoffset equal $(v_xcenterOne - c_xfirstOne)
- variable xoffset equal 18.218675214284303365
+ variable xoffset equal -11.214023809523496311
  variable yoffset equal $(v_ycenterOne - c_yfirstOne)
- variable yoffset equal -0.51990549999999713382
+ variable yoffset equal 61.138908785714285443
  variable zoffset equal $(v_zcenterOne - c_zfirstOne)
- variable zoffset equal 121.96912690476165153
+ variable zoffset equal 219.59625023809348932
 
 # We translate all atoms so that the endpoints, before stretching,
 # are located at the center of each lattice point,
@@ -238,8 +238,8 @@ Displacing atoms ...
 # write_dump all image images/init_restrained.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 
 
- fix restraint all arclengthrestraint productionIdealized 3.0 ${totLength}
- fix restraint all arclengthrestraint productionIdealized 3.0 1121.3409
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 ${totLength}
+ fix restraint all arclengthrestraint productionIdealized 3.443097561 1121.3409
 
 reset_timestep 0
 
@@ -274,9 +274,9 @@ Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
 WARNING: Too many warnings: 111 vs 100. All future warnings will be suppressed (../thermo.cpp:478)
          0   310          
-Loop time of 4.02159e-06 on 32 procs for 0 steps with 1344 atoms
+Loop time of 2.89178e-06 on 32 procs for 0 steps with 1344 atoms
 
-122.0% CPU use with 32 MPI tasks x 1 OpenMP threads
+130.8% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -287,7 +287,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 4.022e-06  |            |       |100.00
+Other   |            | 2.892e-06  |            |       |100.00
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -325,31 +325,31 @@ Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
 Per MPI rank memory allocation (min/avg/max) = 7.864 | 7.864 | 7.864 Mbytes
    Step     c_internalsTemp
          0   310          
-   1000000   309.00372    
-   2000000   302.86448    
-   3000000   317.58095    
-   4000000   310.55112    
-   5000000   303.63604    
-   6000000   304.54275    
-   7000000   301.18916    
-   8000000   305.65452    
-   9000000   317.91653    
-  10000000   304.04138    
-Loop time of 314.935 on 32 procs for 10000000 steps with 1344 atoms
+   1000000   301.6532     
+   2000000   300.21627    
+   3000000   306.25181    
+   4000000   309.68673    
+   5000000   310.09328    
+   6000000   308.46294    
+   7000000   311.82225    
+   8000000   323.83772    
+   9000000   299.56021    
+  10000000   298.38412    
+Loop time of 304.554 on 32 procs for 10000000 steps with 1344 atoms
 
-Performance: 274342.353 ns/day, 0.000 hours/ns, 31752.587 timesteps/s, 42.675 Matom-step/s
-97.6% CPU use with 32 MPI tasks x 1 OpenMP threads
+Performance: 283693.723 ns/day, 0.000 hours/ns, 32834.922 timesteps/s, 44.130 Matom-step/s
+97.5% CPU use with 32 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 8.1573     | 9.1663     | 14.086     |  38.6 |  2.91
-Bond    | 20.829     | 21.772     | 23.824     |  12.6 |  6.91
-Neigh   | 0.00038839 | 0.00040954 | 0.00042919 |   0.0 |  0.00
-Comm    | 1.8916     | 2.0807     | 2.4868     |  10.8 |  0.66
-Output  | 0.00044571 | 0.00093379 | 0.00097731 |   0.0 |  0.00
-Modify  | 272.33     | 280.04     | 282.25     |  11.2 | 88.92
-Other   |            | 1.874      |            |       |  0.60
+Pair    | 8.7078     | 9.395      | 12.645     |  29.3 |  3.08
+Bond    | 21.025     | 21.584     | 22.758     |   8.6 |  7.09
+Neigh   | 0.00038164 | 0.00040541 | 0.00042978 |   0.0 |  0.00
+Comm    | 1.9319     | 2.2132     | 3.2797     |  17.5 |  0.73
+Output  | 0.00026878 | 0.00068573 | 0.00072341 |   0.0 |  0.00
+Modify  | 264.59     | 269.58     | 270.91     |   9.0 | 88.52
+Other   |            | 1.78       |            |       |  0.58
 
 Nlocal:             42 ave          42 max          42 min
 Histogram: 32 0 0 0 0 0 0 0 0 0
@@ -372,4 +372,4 @@ package intel 1
 next dispRatio
 Increment via next: value 15 on partition 0
  jump HarmonicRestraintStretch.lammps
-Total wall time: 1:14:26
+Total wall time: 1:12:38
