@@ -1,0 +1,51 @@
+#!/bin/sh
+#PBS -l select=1:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=1:00:00
+#PBS -l filesystems=home:eagle:grand
+#PBS -q debug
+#PBS -A ModelingCoronaVirus
+#PBS -N Raw_WLC_Relaxation
+#PBS -o Out.relaxation/nohup.out
+#PBS -e Out.relaxation/nohup.err
+
+cd $PBS_O_WORKDIR
+
+> Out.relaxation/nohup.out
+> Out.relaxation/nohup.err
+
+echo "PWD = $PWD"
+
+# export MPICH_GPU_SUPPORT_ENABLED=1
+
+NNODES=`wc -l < $PBS_NODEFILE`
+
+# per-node settings
+NRANKS=4
+NDEPTH=8
+NTHREADS=1
+
+NTOTRANKS=$(( NNODES * NRANKS ))
+
+#. ./setup_lammps_gnu.sh
+
+# EXE=/home/knight/bin/lmp_polaris_gnu_kokkos
+# EXE_ARG="-in in.reaxc.hns -k on g ${NGPUS} -sf kk -pk kokkos neigh half neigh/qeq full newton on "
+
+# OMP settings mostly to quiet Kokkos messages
+
+
+EXE="../IdealizedChainStretch/lmp_polaris_gnu"
+echo "EXE directory = $EXE"
+
+EXE_ARG="-in RawWLC11Relaxation.lammps -in RawWLC21Relaxation.lammps -in RawWLC41Relaxation.lammps"
+
+
+MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth "
+# --cpu-bind is apparently unrecognized by mpirun here
+# MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} "
+OMP_ARG=" --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PROC_BIND=spread --env OMP_PLACES=cores "
+
+COMMAND="mpiexec ${MPI_ARG} ${OMP_ARG} $EXE ${EXE_ARG}"
+echo "COMMAND= ${COMMAND}"
+${COMMAND}

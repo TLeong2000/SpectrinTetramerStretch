@@ -1,0 +1,103 @@
+log Out.relaxation/logs/log_Raw.WLC.21.Relaxation.lammps
+
+variable totLength equal 10
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -50 50 -50 50 -50 50
+
+create_box 21 main bond/types 20 angle/types 19 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+
+molecule raw_WLC_21 Structures/Raw/raw.WLC.21.txt
+bond_style 
+bond_coeff * 0 1
+angle_style harmonic
+
+create_atoms 0 single 0 0 0 mol raw_WLC_21 ${seed} rotate 0 0 0 1
+
+read_data Structures/Coeffs/coeffs.WLC.21.txt add merge
+
+
+group internals type 2:20
+group endpoints subtract all internals
+
+
+compute bondID all property/local btype batom1 batom2
+compute angleID all property/local atype aatom1 aatom2 aatom3
+
+fix restraint all arclengthrestraint raw_WLC_21 10 ${totLength}
+
+fix stationary endpoints setforce 0.0 0.0 0.0
+
+comm_modify cutoff 100
+
+minimize 0.0 1.0e-9 100000 100000
+
+unfix stationary
+
+
+reset_timestep 0
+
+run 0
+
+
+compute blen all bond/local dist
+compute end2end all reduce sum c_blen
+variable validationFile string "Out.relaxation/validation.WLC.21.txt"
+write_dump all custom ${validationFile} c_end2end modify append yes header no 
+
+
+variable natoms equal count(all)
+
+variable productionFile string "Out.relaxation/relaxed.WLC.21.txt"
+
+print "# Relaxed Production Model for Worm-Like Chain" file ${productionFile}
+
+print """
+$(count(all)) atoms
+$(count(all)-1) bonds
+$(count(all)-2) angles
+0 dihedrals
+0 impropers
+""" append ${productionFile}
+
+print """
+
+Coords
+
+""" append ${productionFile}
+write_dump all custom ${productionFile} id x y z modify append yes header no sort id
+
+print """
+
+Types
+
+""" append ${productionFile}
+write_dump all custom ${productionFile} id type modify append yes header no sort id
+
+print """
+
+Molecules
+
+""" append ${productionFile}
+write_dump all custom ${productionFile} id mol modify append yes header no sort id
+
+print """
+
+Bonds
+
+""" append ${productionFile}
+write_dump all local ${productionFile} index c_bondID[*] modify append yes header no
+# write_dump all local ${productionFile} index c_bondID[0] c_bondID[1] c_bondID[2] modify append yes header no sort 2 
+
+print """
+
+Angles
+
+""" append ${productionFile}
+# write_dump all local ${productionFile} index c_angleID[0] c_angleID[1] c_angleID[2] c_angleID[3] modify append yes header no sort 2
+write_dump all local ${productionFile} index c_angleID[*] modify append yes header no
