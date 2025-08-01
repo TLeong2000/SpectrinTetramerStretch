@@ -1,0 +1,449 @@
+print "The current dispRatio value is: ${dispRatio}"
+The current dispRatio value is: 0.01
+
+variable totLength equal 1121.3409 # Sum of all bond equilibrium lengths
+variable dispDist equal "v_totLength*v_dispRatio/2"
+variable commDist equal "v_dispDist*2"
+# Displacement distance is divided by two because I want to displace both the bow and stern atoms of each chain.
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+lattice sc 12000
+Lattice spacing in x,y,z = 12000 12000 12000
+
+region main block -1.5 2.5 -0.5 1.5 -1.5 2.5 units lattice
+region insertionVolume block -1 2 0 1 -1 2 units lattice
+
+# region main block -25000 25000 -25000 25000 -25000 25000
+create_box 42 main bond/types 41 angle/types 40 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+Created orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
+  2 by 1 by 2 MPI processor grid
+# region insertionVolume block -15000 15000 -15000 15000 -15000 15000
+
+molecule productionIdealized productionIdealized.txt
+Read molecule template productionIdealized:
+# Molecule File for Single Filament of Idealized Chain of Alpha Spectrin
+  1 molecules
+  0 fragments
+  42 atoms with max type 42
+  41 bonds with max type 41
+  40 angles with max type 40
+  0 dihedrals with max type 0
+  0 impropers with max type 0
+bond_style harmonic
+angle_style harmonic
+# Uncomment below if using dispRatio 0.00 or if NOT using INTEL package
+#
+# pair_style none
+
+# Uncomment below if using INTEL package AND NOT using dispRatio 0.00
+#
+pair_style lj/cut 0
+pair_coeff * * 0 0
+
+# pair_style zero 54.0
+# pair_coeff * *
+# pair_style dpd 1.0 20.0 23454
+# pair_coeff * * 0.0 0.0
+
+# create_atoms 0 random 20 ${seed} insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+create_atoms 0 region insertionVolume mol productionIdealized ${seed} rotate 0 0 0 1
+create_atoms 0 region insertionVolume mol productionIdealized 1 rotate 0 0 0 1
+Created 1344 atoms
+  using lattice units in orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
+  create_atoms CPU = 0.001 seconds
+
+# Load in Idealized Chain Parameters:
+read_data IdealizedCoeffs.data add merge
+Reading data file ...
+  orthogonal box = (-18000 -6000 -18000) to (30000 18000 30000)
+  2 by 1 by 2 MPI processor grid
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0       
+  special bond factors coul:  0        0        0       
+     3 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+    18 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.001 seconds
+  read_data CPU = 0.019 seconds
+
+# Verify that parameters were assigned as intended:
+# write_dump all custom debug/massCheck.${dispRatio}.dump mol id type mass
+# write_coeff debug/coeffCheck.${dispRatio}.data
+
+# write_dump all image images/beforeDisplacement.${dispRatio}.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+
+
+group firstAtoms type 1
+32 atoms in group firstAtoms
+group lastAtoms type 42
+32 atoms in group lastAtoms
+displace_atoms firstAtoms move 0  ${dispDist} 0  units box
+displace_atoms firstAtoms move 0  5.6067045 0  units box
+Displacing atoms ...
+displace_atoms lastAtoms move  0 -${dispDist} 0  units box
+displace_atoms lastAtoms move  0 -5.6067045 0  units box
+Displacing atoms ...
+
+group internals type 2:41
+1280 atoms in group internals
+group endpoints subtract all internals
+64 atoms in group endpoints
+# Change communication cutoff distance
+# comm_modify mode single cutoff ${commDist} vel yes
+
+# write_dump all image images/min.${dispRatio}.before.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# This is keep the endpoints stationary during minimization
+fix stationary endpoints setforce 0.0 0.0 0.0
+
+# Minimize the initial structure for initializing velocities
+minimize 0.0 1.0e-9 100000 100000
+Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:744)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 0
+  ghost atom cutoff = 0
+  binsize = 48000, bins = 1 1 1
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton
+      stencil: half/bin/3d
+      bin: standard
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2446)
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:744)
+WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Energies and forces may be wrong and atoms may get lost. (../comm_brick.cpp:212)
+Per MPI rank memory allocation (min/avg/max) = 10.33 | 10.33 | 10.33 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0              0              268085.45      268085.45     -0.00018023039
+     37666   0              0              1397.357       1397.357       8.8745297e-09
+Loop time of 2.39505 on 4 procs for 37666 steps with 1344 atoms
+
+99.7% CPU use with 4 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = force tolerance
+  Energy initial, next-to-last, final = 
+       268085.45276015   1397.35697243847   1397.35697243847
+  Force two-norm initial, final = 1858.962 8.5409627e-10
+  Force max component initial, final = 128.46605 1.2250577e-10
+  Final line search alpha, max atom move = 1 1.2250577e-10
+  Iterations, force evaluations = 37666 70531
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.023513   | 0.024039   | 0.024755   |   0.3 |  1.00
+Bond    | 1.4004     | 1.4149     | 1.4406     |   1.3 | 59.08
+Neigh   | 0.13495    | 0.13533    | 0.13569    |   0.1 |  5.65
+Comm    | 0.019754   | 0.02058    | 0.021514   |   0.5 |  0.86
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.012237   | 0.013647   | 0.016934   |   1.6 |  0.57
+Other   |            | 0.7866     |            |       | 32.84
+
+Nlocal:            336 ave         336 max         336 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7142857
+Neighbor list builds = 1060
+Dangerous builds = 0
+# Remove the stationary fix now the minimization is done
+unfix stationary
+
+# Change communication cutoff dist back to default
+# comm_modify mode single cutoff 0.0
+
+# write_dump all image images/min.${dispRatio}.post.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
+# write_dump endpoints custom out/afterMinCoords.${dispRatio}.dump mol id type x y z
+
+reset_timestep 0
+
+velocity internals create 310.0 ${seed} dist gaussian
+velocity internals create 310.0 1 dist gaussian
+
+timestep 100
+fix integrate internals nvt temp 310.0 310.0 $(25.0*dt)
+fix integrate internals nvt temp 310.0 310.0 2500
+
+# fix debug internals nve
+
+compute internalsTemp internals temp
+thermo 1000000
+# thermo_style custom step temp
+thermo_style custom step c_internalsTemp
+
+# dump coordsDump all atom 1000 coords_dump.lammpstrj
+# dump_modify coordsDump time yes sort id
+# dump thermoDump internals yaml 100 thermo_dump.${displacement}.yaml mol id vx vy vz
+# dump_modify thermoDump time yes thermo yes sort id
+# dump coordsDCD all dcd 100 trajectory.${displacement}.dcd
+# dump movie all movie 100 ForcedPolymerStretching.${displacement}.mp4 type type size 1280 720
+
+# dump forceDump all yaml 100 force_dump.${displacement}.yaml mol id fx fy fz
+# dump_modify forceDump time yes thermo yes sort id
+
+# dump forceDump all custom 100 out/force_dump.${dispRatio}.dump id mol type fx fy fz
+
+compute molChunks all chunk/atom molecule
+
+group bowAtoms type 1
+32 atoms in group bowAtoms
+group sternAtoms type 42
+32 atoms in group sternAtoms
+
+# compute bowComp bowAtoms property/atom fy
+compute sternComp sternAtoms property/atom fy
+
+compute endForce sternAtoms reduce ave fy
+
+run 0
+Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 43.024667075. This may lead to errors. (../comm.cpp:744)
+WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Energies and forces may be wrong and atoms may get lost. (../comm_brick.cpp:212)
+Per MPI rank memory allocation (min/avg/max) = 9.329 | 9.329 | 9.329 Mbytes
+   Step     c_internalsTemp
+         0   310          
+Loop time of 2.124e-06 on 4 procs for 0 steps with 1344 atoms
+
+58.9% CPU use with 4 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 2.124e-06  |            |       |100.00
+
+Nlocal:            336 ave         336 max         336 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7142857
+Neighbor list builds = 0
+Dangerous builds = 0
+velocity internals scale 310.0
+
+# fix printCenters all ave/time 100 100000 10000000 c_endForce file out/timeAvg_sternForces.${dispRatio}.txt
+
+variable btwnSamps equal 10000
+fix printCenters all ave/time ${btwnSamps} ${btwnSamps} $((v_btwnSamps)^2) c_endForce file diagnostics/timeAvg_sternForces.${dispRatio}.txt
+fix printCenters all ave/time 10000 ${btwnSamps} $((v_btwnSamps)^2) c_endForce file diagnostics/timeAvg_sternForces.${dispRatio}.txt
+fix printCenters all ave/time 10000 10000 $((v_btwnSamps)^2) c_endForce file diagnostics/timeAvg_sternForces.${dispRatio}.txt
+fix printCenters all ave/time 10000 10000 100000000 c_endForce file diagnostics/timeAvg_sternForces.${dispRatio}.txt
+fix printCenters all ave/time 10000 10000 100000000 c_endForce file diagnostics/timeAvg_sternForces.0.01.txt
+
+# fix printTemp internals print 100 "$(step) $(c_internalsTemp)" file out/internalsTemp.${dispRatio}.txt
+# fix printCenters all ave/time 100 1 100 c_netForces[*] file massCenters.${displacement}.txt mode vector
+# fix netForces all ave/chunk 100 1 100 molChunks fx fy fz norm none file netForces.${displacement}.txt
+
+# Calculate, for every molecule individually, the y force on the bow and (separately) stern atoms:
+# fix bowForces all ave/chunk 100 1 100 molChunks c_bowComp norm none file out/bowForces.${dispRatio}.txt
+# fix sternForces all ave/chunk 10000 1 10000 molChunks c_sternComp norm none # file out/sternForces.${dispRatio}.txt
+
+# Calculate the ensemble average of the bow/stern forces:
+# variable ensBow equal ave(f_bowForces[2])
+# variable ensStern equal ave(f_sternForces[2])
+
+# Time-average the ensemble average of the bow/stern forces
+# Using increments of 10000 steps, we will average over the 100 most recent increments
+# fix timeBow all ave/time 1000 1000 1000000 v_ensBow file out/timeAvg_bowForces.${dispRatio}.txt
+# fix timeStern all ave/time 10000 100 1000000 v_ensStern file out/timeAvg_sternForces.${dispRatio}.txt
+
+# variable netEndForce atom "c_bowComp + c_sternComp"
+
+# Calculate, for every molecule individually, the net endpoint forces
+# fix netEndForces all ave/chunk 100 1 100 molChunks v_netEndForce norm none file out/netEndForces.${dispRatio}.txt
+
+# Calculate the ensemble average of the net endpoint forces
+# variable ens_netEnd equal ave(f_netEndForces[2])
+
+# Time-average the ensemble average of the net endpoint forces
+# We will average over the 100 most recent timesteps in increments of 100 steps
+# fix timeAvg_netEnd all ave/time 100 100 10000 v_ens_netEnd file out/timeAvg_netEndForces.${dispRatio}.txt
+
+
+# variable netTension atom "c_bowComp - c_sternComp"
+
+# Calculate, for every molecule individually, the net tension
+# fix tensions all ave/chunk 100 1 100 molChunks v_netTension norm none file out/tensions.${dispRatio}.txt
+# write_data MultiplePolymerDisplacements.${displacement}.polymer
+
+# Calculate the ensemble average of the net tensions
+# variable ensAvg equal ave(f_tensions[2])
+
+# Time-average the ensemble average of the net tensions
+# We will average over the 100 most recent timesteps in increments of 100 steps
+# fix timeAvg all ave/time 100 100 10000 v_ensAvg file out/timeAvg_tensions.${dispRatio}.txt
+
+neighbor 1.0 bin
+# comm_modify cutoff 100
+neigh_modify every $((v_btwnSamps)^2) delay $((v_btwnSamps)^2) check yes exclude molecule/inter all
+neigh_modify every 100000000 delay $((v_btwnSamps)^2) check yes exclude molecule/inter all
+neigh_modify every 100000000 delay 100000000 check yes exclude molecule/inter all
+
+run $((v_btwnSamps)^2)
+run 100000000
+Generated 0 of 861 mixed pair_coeff terms from geometric mixing rule
+WARNING: Communication cutoff 0 is shorter than a bond length based estimate of 42.024667075. This may lead to errors. (../comm.cpp:744)
+WARNING: Communication cutoff is 0.0. No ghost atoms will be generated. Energies and forces may be wrong and atoms may get lost. (../comm_brick.cpp:212)
+Per MPI rank memory allocation (min/avg/max) = 9.329 | 9.329 | 9.329 Mbytes
+   Step     c_internalsTemp
+         0   310          
+   1000000   308.74631    
+   2000000   311.17213    
+   3000000   318.39001    
+   4000000   312.471      
+   5000000   316.06225    
+   6000000   308.84224    
+   7000000   314.97115    
+   8000000   302.11829    
+   9000000   299.14298    
+  10000000   311.31868    
+  11000000   310.72792    
+  12000000   312.54502    
+  13000000   318.1635     
+  14000000   291.61732    
+  15000000   316.83006    
+  16000000   298.84862    
+  17000000   304.09038    
+  18000000   312.69782    
+  19000000   312.83356    
+  20000000   308.11274    
+  21000000   309.63098    
+  22000000   309.63667    
+  23000000   324.01272    
+  24000000   312.53297    
+  25000000   308.45817    
+  26000000   307.83853    
+  27000000   311.9755     
+  28000000   311.63107    
+  29000000   316.24832    
+  30000000   308.99401    
+  31000000   315.35723    
+  32000000   317.90473    
+  33000000   318.25675    
+  34000000   312.47901    
+  35000000   313.31742    
+  36000000   313.03129    
+  37000000   307.82059    
+  38000000   313.30847    
+  39000000   315.75784    
+  40000000   315.24527    
+  41000000   298.71712    
+  42000000   306.78182    
+  43000000   316.09708    
+  44000000   321.03299    
+  45000000   310.47229    
+  46000000   320.47729    
+  47000000   307.24681    
+  48000000   321.46786    
+  49000000   305.68018    
+  50000000   293.42229    
+  51000000   304.40094    
+  52000000   300.12975    
+  53000000   325.69031    
+  54000000   302.79615    
+  55000000   303.38272    
+  56000000   308.74356    
+  57000000   317.95658    
+  58000000   293.5932     
+  59000000   312.54347    
+  60000000   317.03372    
+  61000000   305.45385    
+  62000000   318.3475     
+  63000000   315.4452     
+  64000000   307.40047    
+  65000000   312.14935    
+  66000000   304.47181    
+  67000000   318.21683    
+  68000000   309.46553    
+  69000000   318.88298    
+  70000000   304.73663    
+  71000000   306.2864     
+  72000000   308.33159    
+  73000000   317.98826    
+  74000000   315.52547    
+  75000000   316.37909    
+  76000000   319.04341    
+  77000000   300.59159    
+  78000000   314.94245    
+  79000000   316.28299    
+  80000000   311.80098    
+  81000000   303.87385    
+  82000000   324.9903     
+  83000000   324.75104    
+  84000000   319.63154    
+  85000000   306.93098    
+  86000000   317.44717    
+  87000000   302.71179    
+  88000000   308.53133    
+  89000000   294.81061    
+  90000000   309.34311    
+  91000000   313.44445    
+  92000000   309.31988    
+  93000000   316.17077    
+  94000000   307.18309    
+  95000000   316.96074    
+  96000000   307.64014    
+  97000000   309.39347    
+  98000000   304.11536    
+  99000000   316.05939    
+ 100000000   298.05656    
+Loop time of 2370.69 on 4 procs for 100000000 steps with 1344 atoms
+
+Performance: 364450.339 ns/day, 0.000 hours/ns, 42181.752 timesteps/s, 56.692 Matom-step/s
+100.0% CPU use with 4 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 32.432     | 32.842     | 33.388     |   6.0 |  1.39
+Bond    | 1549.9     | 1642.6     | 1805.8     | 239.8 | 69.29
+Neigh   | 0.00049036 | 0.00049171 | 0.00049278 |   0.0 |  0.00
+Comm    | 11.929     | 12.393     | 13.273     |  14.8 |  0.52
+Output  | 0.001924   | 0.006501   | 0.0081266  |   3.3 |  0.00
+Modify  | 499.44     | 661.9      | 751.8      | 374.7 | 27.92
+Other   |            | 20.96      |            |       |  0.88
+
+Nlocal:            336 ave         336 max         336 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 4 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7142857
+Neighbor list builds = 1
+Dangerous builds = 1
+
+clear
+  using 1 OpenMP thread(s) per MPI task
+
+next dispRatio
+Increment via next: value 2 on partition 0
+jump IdealizedStretch.lammps
+Total wall time: 0:39:34
