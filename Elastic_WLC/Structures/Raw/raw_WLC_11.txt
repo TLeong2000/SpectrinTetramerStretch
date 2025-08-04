@@ -1,0 +1,80 @@
+# Molecule File for a Worm-Like Chain with 11 atoms
+# This is a molecule template file; coeffs are not defined here
+11 atoms
+10 bonds # For any chain that has 0 closed loops, the # of bonds is always equal to # of atoms - 1
+9 angles # For any open linear chain, the # of angles is always equal to max(0, # of atoms - 2)
+0 dihedrals # The WLC has no explicit dependence on dihedral angles.
+0 impropers # Because this is a linear chain, there cannot be any improper dihedral angles
+
+
+# The line immediately succeeding the keyword of any section is always skipped
+
+Coords
+# Define the coordinates of each atom in a molecule
+1  0	0	0
+2  -0.355644084	-1.329586625	-0.224104549
+3  -0.552094039	-0.476480997	0.363130644
+4  1.891424846	0.23	        -0.83749
+5  0.184005512	0.707665765	-0.785347492
+6  -0.785059406	-0.07826106	-0.567857343
+7  -0.252898441	-0.117652841	0.319238
+8  -0.526289025	0.069607881	-0.008317168
+9  0.660550774	-0.2934	        0.23494
+10 0.20557839	0.0452	-0.56938291
+11 0    0   0
+
+Types
+# Define the atom type of each atom in molecule
+1	1
+2	2
+3	3
+4	4
+5	5
+6	6
+7	7
+8	8
+9	9
+10	10
+11  11
+
+
+Molecules
+# What molecule ID should each atom defined in this template belong to
+1   1
+2   1
+3   1
+4   1
+5   1
+6   1
+7   1
+8   1
+9   1
+10  1
+11  1
+
+
+Bonds
+# Define Bonds
+1	1	1	2
+2	2	2	3
+3	3	3	4
+4	4	4	5
+5	5	5	6
+6	6	6	7
+7	7	7	8
+8	8	8	9
+9	9	9	10
+10  10  10  11
+
+
+Angles
+# Define Angles
+1	1	1	2	3
+2	2	2	3	4
+3	3	3	4	5
+4	4	4	5	6
+5	5	5	6	7
+6	6	6	7	8
+7	7	7	8	9
+8	8	8	9	10
+9   9   9   10  11
