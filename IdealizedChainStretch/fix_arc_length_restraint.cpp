@@ -53,9 +53,13 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
    // to convert the char array to a double.
    k = utils::numeric(FLERR,arg[4],false,lmp);
 
+   printf("Restraining force constant: %f\n", k);
+
    // equiLength is the equilibrium length that we want to restrain
    // the arc length of the chain to.
    equiLength = utils::numeric(FLERR,arg[5],false,lmp);
+
+   printf("equiLength: %f\n\n", equiLength);
 
    // Get number of atoms for single copy of the molecule
    napmol = (atom->molecules[imol])->natoms;
@@ -74,6 +78,13 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
 
 /* ---------------------------------------------------------------------- */
 
+void FixArcLengthRestraint::init()
+{
+   neighbor->add_request(this);
+}
+
+/* ---------------------------------------------------------------------- */
+
 int FixArcLengthRestraint::setmask()
 {
    int mask = 0;
@@ -85,9 +96,7 @@ int FixArcLengthRestraint::setmask()
 /* ---------------------------------------------------------------------- */
 
 void FixArcLengthRestraint::post_force(int /*vflag*/)
-{
-   neighbor->build(); // We need up-to-date neighbor list info
-   
+{  
    int i1, i2, n, typ_i1, typ_i2;
    // double ebond, fbond;
 
@@ -100,7 +109,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    // int nghost = atom->nghost;
    int newton_bond = force->newton_bond;
 
-   // tagint *tag = atom->tag;
+   tagint *tag = atom->tag;
    
    int rank;
    MPI_Comm_rank(world, &rank);
@@ -116,9 +125,17 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
    int max_glo_molID;   
    // For each processor, store the maximum local molecule ID in max_glo_molID
+   /*
    for (n = 0; n < nlocal; n++) {
       max_glo_molID = MAX(max_glo_molID, atom->molecule[n]);
    }
+   */
+
+   for (n = 0; n < nbondlist; n++) {
+      i1 = bondlist[n][0];
+      max_glo_molID = MAX(max_glo_molID, atom->molecule[i1]);
+   }
+
    // We take the highest value of max_glo_molID across all processors, and
    // distribute that value to max_glo_molID to the rest of the processors
    // (hence the usage of MPI_IN_PLACE as the send buffer)
@@ -145,6 +162,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    int size_Of_Cluster;
    MPI_Comm_size(world, &size_Of_Cluster);
    */
+
+   printf("Begin calculation of end-to-end distances per molecule.\n");
    
    for (n = 0; n < nbondlist; n++) {
       dist = 0;
@@ -158,8 +177,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       if (mol1 != mol2) error->all(FLERR, "There is a bond whose atoms belong to different molecules");
 
       delx = x[i1][0] - x[i2][0];
-      dely = y[i1][0] - x[i2][0];
-      delz = z[i1][0] - x[i2][0];
+      dely = x[i1][0] - x[i2][0];
+      delz = x[i1][0] - x[i2][0];
 
       delxsq = delx*delx;
       delysq = dely*dely;
@@ -173,6 +192,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
        molLengths[mol1 - 1] += dist;
       /* For half neighbor lists, because each bond is only stored once,
          there is no worry of double-counting a bond length */
+
+      printf("Atom IDs (%d, %d) delx %f dely %f delz %f delxsq %f delysq %f delzsq %f dist %f\n", tag[i1], tag[i2], delx, dely, delz, delxsq, delysq, delzsq, dist);
 
       /*
       if (isnan(molLengths[m - 1])) {
@@ -193,13 +214,13 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
    
-   /*
+   
    if (rank == 0) {
       for (n = 0; n < nmols; n++) {
-         printf("The length of molecule with ID %d is %f\n", n + 1, molLengths[n]);    
+         printf("The length of molecule with ID %d is %f\n\n", n + 1, molLengths[n]);    
       }
    }
-   */
+   
 
 
    erestraint = 0;
@@ -217,10 +238,6 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    double fx_i1;
    double fy_i1;
    double fz_i1;
-
-   double fx_i2;
-   double fy_i2;
-   double fz_i2;
 
    //Now that we have the molecule lengths, we can allocate forces
    for (n = 0; n < nbondlist; n++){
@@ -244,7 +261,7 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
 
       dist = sqrt(delxsq + delysq + delzsq);
 
-      // printf("Atom IDs (%d, %d) types (%d, %d) scale %f delx %f dely %f delz %f dist %f\n", tag[i1], tag[i2], typ_i1, typ_i2, scale, delx, dely, delz, dist);
+      printf("Atom IDs (%d, %d) types (%d, %d) scale %f delx %f dely %f delz %f dist %f\n", tag[i1], tag[i2], typ_i1, typ_i2, scale, delx, dely, delz, dist);
 
       fx_i1 = 0;
       fy_i1 = 0;
@@ -279,8 +296,12 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
          f[i2][2] -= fz_i1;
       }
 
-      // printf("Atom IDs (%d, %d) fx_i1 %f fx_i2 %f fy_i1 %f fy_i2 %f fz_i1 %f fz_i2 %f\n", tag[i1], tag[i2], fx_i1, fx_i2, fy_i1, fy_i2, fz_i1, fz_i2);
+      // printf("Atom IDs (%d, %d) fx_i1 %f fy_i1 %f fz_i1 %f\n", tag[i1], tag[i2], fx_i1, fy_i1, fz_i1);
+
+      // printf("Atom IDs (%d, %d) fx_i1 %f fy_i1 %f fz_i1 %f fx_i2 %f fy_i2 %f fz_i2 %f\n", tag[i1], tag[i2], f[i1][0], f[i1][1], f[i1][2], f[i2][0], f[i2][1], f[i2][2]);
    }
+
+   printf("This iteration of calculating restraint forces is now complete.\n\n");
 
 }
 

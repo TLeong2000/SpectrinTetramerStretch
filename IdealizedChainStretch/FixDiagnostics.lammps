@@ -71,6 +71,8 @@ group endpoints subtract all internals
 # Change communication cutoff distance
 # comm_modify mode single cutoff ${commDist} vel yes
 
+fix restraint all arclengthrestraint productionIdealized 10 ${totLength}
+
 # write_dump all image images/min.${dispRatio}.before.png type type zoom 4 adiam 15.0 bond atom 5.0 size 1280 1280
 # This is keep the endpoints stationary during minimization
 fix stationary endpoints setforce 0.0 0.0 0.0

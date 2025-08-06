@@ -51,14 +51,15 @@ unfix stationary
 # is performed only on the internal atoms
 #
 
-reset_timestep 0
-timestep 1e-9
-# fix integrator internals nve/limit 0.01
-fix integrator all nve/limit 0.01
-fix damper internals viscous 10000
-velocity all set 0 0 0
-run 0
-run 500000000
+# reset_timestep 0
+# timestep 1e-9
+# fix integrator internals nve/limit 0.001
+# fix integrator all nve/limit 0.001
+# fix damper internals viscous 100
+# fix damper all viscous 100
+# velocity all set 0 0 0
+# run 0
+# run 100000000
 
 
 reset_timestep 0

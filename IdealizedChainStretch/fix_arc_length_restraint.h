@@ -27,6 +27,7 @@ namespace LAMMPS_NS
         public:
         FixArcLengthRestraint(class LAMMPS *, int, char **);
         int setmask() override;
+	void init() override;
         void post_force(int) override;
         void min_post_force(int) override;
 	double compute_scalar() override;
