@@ -36,6 +36,7 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
    Fix(lmp, narg, arg) 
 {
    scalar_flag = 1;
+   energy_global_flag = 1;
    extscalar = 1;
 
    if (narg < 6) error->all(FLERR, "Insufficient args for fix arclengthrestraint command.");
@@ -85,6 +86,8 @@ int FixArcLengthRestraint::setmask()
 
 void FixArcLengthRestraint::post_force(int /*vflag*/)
 {
+   neighbor->build(); // We need up-to-date neighbor list info
+   
    int i1, i2, n, typ_i1, typ_i2;
    // double ebond, fbond;
 
@@ -133,7 +136,8 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    double delysq;
    double delzsq;
 
-   int m;
+   int mol1;
+   int mol2;
 
    double dist;
 
@@ -142,64 +146,40 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    MPI_Comm_size(world, &size_Of_Cluster);
    */
    
-   
-
-   for (n = 0; n <nbondlist; n++){
+   for (n = 0; n < nbondlist; n++) {
       dist = 0;
-      i1 = bondlist[n][0]; // Get index of first atom in bond index n
-      i2 = bondlist[n][1]; // Get index of second atom in bond index n
-      if (i1 < nlocal) {
-         m = atom->molecule[i1]; // Get molecule ID
-      }
-      if (i2 < nlocal) {
-         m = atom->molecule[i2]; // Get molecule ID
-      }
-      
-      // printf("Bond with atom IDs (%d, %d) of molecule %d from process %d of %d\n", tag[i1], tag[i2], m, rank, size_Of_Cluster);
+      i1 = bondlist[n][0]; // Get proc index of first atom in bond index n
+      i2 = bondlist[n][1]; // Get proc index of second atom in bond index n
 
-      // 
-      // If newton_bond is on (which it is by default, unless one mentions
-      // "newton off" in one's LAMMPS script), each atom in each bond
-      // is mentioned once and only once across all processors' neighborlists.
-      //
-      // To be more specific, let atoms 1 and 2 be bonded with each other:
-      // if atom 1 appears as subelement 0 of some element in the bondlist
-      // of a processor, atom 2 will appear as subelement 1 of the same element
-      // in that processor's bondlist.
-      // If newton_bond is on, neither atom 1 nor atom 2 will appear as the 
-      // subelement of any element of any other processor's bondlist.
-      // If newton_bond is off, AND atom 2 is a ghost atom, then atom 2
-      // will ALSO appear as subelement 0 of some element in the bondlist 
-      // of the processor where atom 2 is local, and atom 1 will ALSO appear
-      // as subelement 1 of the same element in the bondlist of the processor
-      // where atom 2 is local.
-      //
-      if (newton_bond || i1 < nlocal) {
-         // Get components of position difference between atoms i1 and i2
-         delx = x[i1][0] - x[i2][0];
-         dely = x[i1][1] - x[i2][1];
-         delz = x[i1][2] - x[i2][2];
+      // Each processor appears in the bondlist of one and only one proc
+      // Therefore, we do not need to worry about under- or over- counting
+      mol1 = atom->molecule[i1];
+      mol2 = atom->molecule[i2];
+      if (mol1 != mol2) error->all(FLERR, "There is a bond whose atoms belong to different molecules");
 
-         delxsq = delx*delx;
-         delysq = dely*dely;
-         delzsq = delz*delz;
+      delx = x[i1][0] - x[i2][0];
+      dely = y[i1][0] - x[i2][0];
+      delz = z[i1][0] - x[i2][0];
 
-         // Calculate Euclidean distance of bond connecting atoms i1 and i2
-         dist = sqrt(delxsq + delysq + delzsq);
+      delxsq = delx*delx;
+      delysq = dely*dely;
+      delzsq = delz*delz;
 
-         /* Use index m - 1 because molecule ID indexing starts at 1
-            but C++ indexing starts at 0 */
-         molLengths[m - 1] += dist;
-         /* For half neighbor lists, because each bond is only stored once,
-            there is no worry of double-counting a bond length */
-      }
-      
+      // Calculate Euclidean distance of bond connecting atoms i1 and i2
+      dist = sqrt(delxsq + delysq + delzsq);
+
+      /* Use index mol1 - 1 because molecule ID indexing starts at 1
+         but C++ indexing starts at 0 */
+       molLengths[mol1 - 1] += dist;
+      /* For half neighbor lists, because each bond is only stored once,
+         there is no worry of double-counting a bond length */
+
       /*
       if (isnan(molLengths[m - 1])) {
          printf("atom IDs (%d, %d) of molecule %d from process %d\n", tag[i1], tag[i2], m, rank);
       }
       */
-      
+
    }
    
    /*
@@ -242,23 +222,14 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
    double fy_i2;
    double fz_i2;
 
-   // Now that we have the molecule lengths, we can allocate forces
-   for (n = 0; n < nbondlist; n++) {
-      i1 = bondlist[n][0]; // Get index of first atom in bond index n
-      // bondlist[n][0] will always be a local atom
-      i2 = bondlist[n][1]; // Get index of second atom in bond index n
-      // bondlist[n][1] may or may not be a local atom
+   //Now that we have the molecule lengths, we can allocate forces
+   for (n = 0; n < nbondlist; n++){
+      i1 = bondlist[n][0];
+      i2 = bondlist[n][1];
 
+      mol1 = atom->molecule[i1];
 
-      if (i1 < nlocal) {
-         m = atom->molecule[i1]; // Get molecule ID
-      }
-      if (i2 < nlocal) {
-         m = atom->molecule[i2]; // Get molecule ID
-      }
-
-      // scale = k * (molLengths[m - 1] / equiLength - 1);
-      scale = scalingFactors[m - 1];
+      scale = scalingFactors[mol1 - 1];
 
       typ_i1 = type[i1];
       typ_i2 = type[i2];
@@ -279,72 +250,36 @@ void FixArcLengthRestraint::post_force(int /*vflag*/)
       fy_i1 = 0;
       fz_i1 = 0;
 
-      if (i1 < nlocal) {
-         // typ_i1 = typ_i2 + 1 XOR typ_i2 - 1
-         if (typ_i1 < typ_i2) { // i1 cannot be last atom of mol it belongs to
-            // If the bond distance is equal to 0, we want to restraining force
-            // to be zero to avoid a division by zero - which means that
-            // we will not add or subtract any force from the atom
-            if (dist > 10e-12) {
-               fx_i1 += scale * delx / dist;
-               fy_i1 += scale * dely / dist;
-               fz_i1 += scale * delz / dist;
-
-            }
-            // printf("%d < %d\n", typ_i1, typ_i2);
-
-         }
-         else { // i1 cannot be first atom of mol it belongs to
-
-            if (dist > 10e-12) {
-               fx_i1 -= scale * delx / dist;
-               fy_i1 -= scale * dely / dist;
-               fz_i1 -= scale * delz / dist;
-            }
-            // printf("%d > %d\n", typ_i1, typ_i2);
-            
-         }
-         f[i1][0] += fx_i1;
-         f[i1][1] += fy_i1;
-         f[i1][2] += fz_i1;
-
-      }
-      
-
-      fx_i2 = 0;
-      fy_i2 = 0;
-      fz_i2 = 0;
-
-      if (i2 < nlocal) {
-         // typ_i2 = typ_i1 + 1 XOR typ_i1 - 1
-         if (typ_i1 < typ_i2) { // i2 cannot be first atom of mol it belongs to
-
-            if (dist > 10e-12) {
-               fx_i2 -= scale * delx / dist;
-               fy_i2 -= scale * dely / dist;
-               fz_i2 -= scale * delz / dist;
-            }
-            // printf("%d < %d\n", typ_i1, typ_i2);
-            
-         }
-         else { // i2 cannot be last atom of mol it belongs to
-
-            if (dist > 10e-12) {
-               fx_i2 += scale * delx / dist;
-               fy_i2 += scale * dely / dist;
-               fz_i2 += scale * delz / dist;
-            }
-            // printf("%d > %d\n", typ_i1, typ_i2);
-            
-         }
-
-         f[i2][0] += fx_i2;
-         f[i2][1] += fy_i2;
-         f[i2][2] += fz_i2;
-
+      // This check is to avoid a division by zero error.
+      if (dist > 10e-18) {
+         fx_i1 += scale * delx / dist;
+         fy_i1 += scale * dely / dist;
+         fz_i1 += scale * delz / dist;
       }
 
-      // printf("Atom IDs (%d, %d) fx_i1 %f fx_i2 %f fy_i1 %f fy_i2 %f fz_i1 %f fz_i2 %f\n", tag[i1], tag[i2], fx_i1, fx_i2, fy_i1, fy_i2, fz_i1, fz_i2);  
+      // This is for standardization, because we assume that
+      // the global type IDs for the atom of a molecule 
+      // are sequentially-ordered.
+      if (typ_i1 > typ_i2) {
+         fx_i1 *= -1;
+         fy_i1 *= -1;
+         fz_i1 *= -1;
+      }
+
+      f[i1][0] += fx_i1;
+      f[i1][1] += fy_i1;
+      f[i1][2] += fz_i1;
+
+      // If newton_bond == 1, then LAMMPS automatically adds
+      // -1*fx_i1 to f[i2][0], -1*fy_i1 to f[i2][1], -1*fz_1 to f[i2][2]
+      // Otherwise, we need to do this manually:
+      if (newton_bond == 0) {
+         f[i2][0] -= fx_i1;
+         f[i2][1] -= fy_i1;
+         f[i2][2] -= fz_i1;
+      }
+
+      // printf("Atom IDs (%d, %d) fx_i1 %f fx_i2 %f fy_i1 %f fy_i2 %f fz_i1 %f fz_i2 %f\n", tag[i1], tag[i2], fx_i1, fx_i2, fy_i1, fy_i2, fz_i1, fz_i2);
    }
 
 }
