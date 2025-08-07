@@ -28,12 +28,13 @@ Finding 1-2 1-3 1-4 neighbors ...
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
   special bonds CPU = 0.000 seconds
-  read_data CPU = 0.001 seconds
+  read_data CPU = 0.003 seconds
 9 atoms in group internals
 2 atoms in group endpoints
-Restraining force constant: 100.000000
+Restraining force constant: 1.000000
 equiLength: 10.000000
 
+WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -46,1086 +47,36 @@ Neighbor list info ...
       pair build: half/bin/newton
       stencil: half/bin/3d
       bin: standard
-Setting up cg style minimization ...
-  Unit style    : si
-  Current step  : 0
-WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2442)
-Per MPI rank memory allocation (min/avg/max) = 9.308 | 9.308 | 9.308 Mbytes
-   Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0              0              48.625378      48.625378     -6.0700678e-07
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 1.167738 dely 1.167738 delz 1.167738 delxsq 1.363612 delysq 1.363612 delzsq 1.363612 dist 2.022582
-Atom IDs (2, 3) delx -2.216356 dely -2.216356 delz -2.216356 delxsq 4.912234 delysq 4.912234 delzsq 4.912234 dist 3.838841
-Atom IDs (3, 4) delx 1.770766 dely 1.770766 delz 1.770766 delxsq 3.135613 delysq 3.135613 delzsq 3.135613 dist 3.067057
-Atom IDs (4, 5) delx -1.497862 dely -1.497862 delz -1.497862 delxsq 2.243591 delysq 2.243591 delzsq 2.243591 dist 2.594373
-Atom IDs (5, 6) delx -0.423332 dely -0.423332 delz -0.423332 delxsq 0.179210 delysq 0.179210 delzsq 0.179210 dist 0.733232
-Atom IDs (6, 7) delx 6.451944 dely 6.451944 delz 6.451944 delxsq 41.627580 delysq 41.627580 delzsq 41.627580 dist 11.175095
-Atom IDs (7, 8) delx -7.239671 dely -7.239671 delz -7.239671 delxsq 52.412838 delysq 52.412838 delzsq 52.412838 dist 12.539478
-Atom IDs (8, 9) delx 0.749246 dely 0.749246 delz 0.749246 delxsq 0.561369 delysq 0.561369 delzsq 0.561369 dist 1.297732
-Atom IDs (9, 10) delx -2.214952 dely -2.214952 delz -2.214952 delxsq 4.906011 delysq 4.906011 delzsq 4.906011 dist 3.836409
-Atom IDs (10, 11) delx 3.452479 dely 3.452479 delz 3.452479 delxsq 11.919609 delysq 11.919609 delzsq 11.919609 dist 5.979868
-The length of molecule with ID 1 is 47.084667
-
-Atom IDs (1, 2) types (1, 2) scale 370.846670 delx 1.167738 dely 0.379093 delz -0.472225 dist 1.315416
-Atom IDs (2, 3) types (2, 3) scale 370.846670 delx -2.216356 dely 1.294712 delz 0.127311 dist 2.569965
-Atom IDs (3, 4) types (3, 4) scale 370.846670 delx 1.770766 dely -2.308722 delz -0.166596 dist 2.914372
-Atom IDs (4, 5) types (4, 5) scale 370.846670 delx -1.497862 dely 0.092471 delz 3.142749 dist 3.482674
-Atom IDs (5, 6) types (5, 6) scale 370.846670 delx -0.423332 dely 1.409482 delz -2.070235 dist 2.540024
-Atom IDs (6, 7) types (6, 7) scale 370.846670 delx 6.451944 dely 3.037747 delz -2.477220 dist 7.549312
-Atom IDs (7, 8) types (7, 8) scale 370.846670 delx -7.239671 dely -8.066006 delz -0.874535 dist 10.873735
-Atom IDs (8, 9) types (8, 9) scale 370.846670 delx 0.749246 dely 3.771822 delz 5.880414 dist 7.026186
-Atom IDs (9, 10) types (9, 10) scale 370.846670 delx -2.214952 dely 1.380660 delz -3.175030 dist 4.110116
-Atom IDs (10, 11) types (10, 11) scale 370.846670 delx 3.452479 dely -0.991259 delz 0.085368 dist 3.592978
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.761691 dely 0.761691 delz 0.761691 delxsq 0.580173 delysq 0.580173 delzsq 0.580173 dist 1.319288
-Atom IDs (2, 3) delx -1.009953 dely -1.009953 delz -1.009953 delxsq 1.020005 delysq 1.020005 delzsq 1.020005 dist 1.749290
-Atom IDs (3, 4) delx -0.336376 dely -0.336376 delz -0.336376 delxsq 0.113149 delysq 0.113149 delzsq 0.113149 dist 0.582621
-Atom IDs (4, 5) delx 0.104779 dely 0.104779 delz 0.104779 delxsq 0.010979 delysq 0.010979 delzsq 0.010979 dist 0.181482
-Atom IDs (5, 6) delx 0.272867 dely 0.272867 delz 0.272867 delxsq 0.074456 delysq 0.074456 delzsq 0.074456 dist 0.472619
-Atom IDs (6, 7) delx 2.959891 dely 2.959891 delz 2.959891 delxsq 8.760958 delysq 8.760958 delzsq 8.760958 dist 5.126682
-Atom IDs (7, 8) delx -3.483140 dely -3.483140 delz -3.483140 delxsq 12.132266 delysq 12.132266 delzsq 12.132266 dist 6.032976
-Atom IDs (8, 9) delx -0.218797 dely -0.218797 delz -0.218797 delxsq 0.047872 delysq 0.047872 delzsq 0.047872 dist 0.378968
-Atom IDs (9, 10) delx -0.879990 dely -0.879990 delz -0.879990 delxsq 0.774382 delysq 0.774382 delzsq 0.774382 dist 1.524187
-Atom IDs (10, 11) delx 1.829029 dely 1.829029 delz 1.829029 delxsq 3.345345 delysq 3.345345 delzsq 3.345345 dist 3.167970
-The length of molecule with ID 1 is 20.536082
-
-Atom IDs (1, 2) types (1, 2) scale 105.360821 delx 0.761691 dely 0.854340 delz -0.124060 dist 1.151287
-Atom IDs (2, 3) types (2, 3) scale 105.360821 delx -1.009953 dely 0.220803 delz -0.229962 dist 1.059076
-Atom IDs (3, 4) types (3, 4) scale 105.360821 delx -0.336376 dely -1.507602 delz 0.517012 dist 1.628899
-Atom IDs (4, 5) types (4, 5) scale 105.360821 delx 0.104779 dely -0.192597 delz 1.545303 dist 1.560780
-Atom IDs (5, 6) types (5, 6) scale 105.360821 delx 0.272867 dely 1.097704 delz -1.143863 dist 1.608674
-Atom IDs (6, 7) types (6, 7) scale 105.360821 delx 2.959891 dely 1.538569 delz -1.682158 dist 3.736015
-Atom IDs (7, 8) types (7, 8) scale 105.360821 delx -3.483140 dely -4.126633 delz -0.273490 dist 5.407048
-Atom IDs (8, 9) types (8, 9) scale 105.360821 delx -0.218797 dely 2.067415 delz 2.818579 dist 3.502351
-Atom IDs (9, 10) types (9, 10) scale 105.360821 delx -0.879990 dely 0.521030 delz -1.185354 dist 1.565541
-Atom IDs (10, 11) types (10, 11) scale 105.360821 delx 1.829029 dely -0.473030 delz -0.242008 dist 1.904644
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.558668 dely 0.558668 delz 0.558668 delxsq 0.312109 delysq 0.312109 delzsq 0.312109 dist 0.967641
-Atom IDs (2, 3) delx -0.406752 dely -0.406752 delz -0.406752 delxsq 0.165447 delysq 0.165447 delzsq 0.165447 dist 0.704514
-Atom IDs (3, 4) delx -1.389948 dely -1.389948 delz -1.389948 delxsq 1.931954 delysq 1.931954 delzsq 1.931954 dist 2.407460
-Atom IDs (4, 5) delx 0.906099 dely 0.906099 delz 0.906099 delxsq 0.821015 delysq 0.821015 delzsq 0.821015 dist 1.569409
-Atom IDs (5, 6) delx 0.620966 dely 0.620966 delz 0.620966 delxsq 0.385598 delysq 0.385598 delzsq 0.385598 dist 1.075544
-Atom IDs (6, 7) delx 1.213865 dely 1.213865 delz 1.213865 delxsq 1.473469 delysq 1.473469 delzsq 1.473469 dist 2.102476
-Atom IDs (7, 8) delx -1.604875 dely -1.604875 delz -1.604875 delxsq 2.575623 delysq 2.575623 delzsq 2.575623 dist 2.779725
-Atom IDs (8, 9) delx -0.702818 dely -0.702818 delz -0.702818 delxsq 0.493954 delysq 0.493954 delzsq 0.493954 dist 1.217317
-Atom IDs (9, 10) delx -0.212509 dely -0.212509 delz -0.212509 delxsq 0.045160 delysq 0.045160 delzsq 0.045160 dist 0.368076
-Atom IDs (10, 11) delx 1.017303 dely 1.017303 delz 1.017303 delxsq 1.034906 delysq 1.034906 delzsq 1.034906 dist 1.762021
-The length of molecule with ID 1 is 14.954184
-
-Atom IDs (1, 2) types (1, 2) scale 49.541838 delx 0.558668 dely 1.091963 delz 0.050022 dist 1.227597
-Atom IDs (2, 3) types (2, 3) scale 49.541838 delx -0.406752 dely -0.316151 delz -0.408599 dist 0.657534
-Atom IDs (3, 4) types (3, 4) scale 49.541838 delx -1.389948 dely -1.107041 delz 0.858816 dist 1.973591
-Atom IDs (4, 5) types (4, 5) scale 49.541838 delx 0.906099 dely -0.335132 delz 0.746580 dist 1.220947
-Atom IDs (5, 6) types (5, 6) scale 49.541838 delx 0.620966 dely 0.941816 delz -0.680676 dist 1.317549
-Atom IDs (6, 7) types (6, 7) scale 49.541838 delx 1.213865 dely 0.788981 delz -1.284626 dist 1.935517
-Atom IDs (7, 8) types (7, 8) scale 49.541838 delx -1.604875 dely -2.156947 delz 0.027033 dist 2.688638
-Atom IDs (8, 9) types (8, 9) scale 49.541838 delx -0.702818 dely 1.215212 delz 1.287661 dist 1.904931
-Atom IDs (9, 10) types (9, 10) scale 49.541838 delx -0.212509 dely 0.091215 delz -0.190515 dist 0.299627
-Atom IDs (10, 11) types (10, 11) scale 49.541838 delx 1.017303 dely -0.213915 delz -0.405695 dist 1.115910
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 1.379141 dely 1.379141 delz 1.379141 delxsq 1.902029 delysq 1.902029 delzsq 1.902029 dist 2.388742
-Atom IDs (2, 3) delx -1.667343 dely -1.667343 delz -1.667343 delxsq 2.780031 delysq 2.780031 delzsq 2.780031 dist 2.887922
-Atom IDs (3, 4) delx 0.167623 dely 0.167623 delz 0.167623 delxsq 0.028097 delysq 0.028097 delzsq 0.028097 dist 0.290331
-Atom IDs (4, 5) delx -1.476137 dely -1.476137 delz -1.476137 delxsq 2.178982 delysq 2.178982 delzsq 2.178982 dist 2.556745
-Atom IDs (5, 6) delx 0.137228 dely 0.137228 delz 0.137228 delxsq 0.018831 delysq 0.018831 delzsq 0.018831 dist 0.237686
-Atom IDs (6, 7) delx 7.337387 dely 7.337387 delz 7.337387 delxsq 53.837255 delysq 53.837255 delzsq 53.837255 dist 12.708728
-Atom IDs (7, 8) delx -7.128154 dely -7.128154 delz -7.128154 delxsq 50.810581 delysq 50.810581 delzsq 50.810581 dist 12.346325
-Atom IDs (8, 9) delx -0.533135 dely -0.533135 delz -0.533135 delxsq 0.284233 delysq 0.284233 delzsq 0.284233 dist 0.923418
-Atom IDs (9, 10) delx -2.567057 dely -2.567057 delz -2.567057 delxsq 6.589784 delysq 6.589784 delzsq 6.589784 dist 4.446274
-Atom IDs (10, 11) delx 4.350449 dely 4.350449 delz 4.350449 delxsq 18.926403 delysq 18.926403 delzsq 18.926403 dist 7.535198
-The length of molecule with ID 1 is 46.321368
-
-Atom IDs (1, 2) types (1, 2) scale 363.213679 delx 1.379141 dely 1.117960 delz 0.225043 dist 1.789555
-Atom IDs (2, 3) types (2, 3) scale 363.213679 delx -1.667343 dely 1.135528 delz -1.160440 dist 2.327247
-Atom IDs (3, 4) types (3, 4) scale 363.213679 delx 0.167623 dely -2.591453 delz 0.043792 dist 2.597238
-Atom IDs (4, 5) types (4, 5) scale 363.213679 delx -1.476137 dely -0.924278 delz 3.996350 dist 4.359367
-Atom IDs (5, 6) types (5, 6) scale 363.213679 delx 0.137228 dely 1.767988 delz -1.500696 dist 2.323080
-Atom IDs (6, 7) types (6, 7) scale 363.213679 delx 7.337387 dely 4.251153 delz -3.609504 dist 9.216186
-Atom IDs (7, 8) types (7, 8) scale 363.213679 delx -7.128154 dely -9.421154 delz -1.457889 dist 11.903536
-Atom IDs (8, 9) types (8, 9) scale 363.213679 delx -0.533135 dely 4.406903 delz 5.628560 dist 7.168384
-Atom IDs (9, 10) types (9, 10) scale 363.213679 delx -2.567057 dely 1.584156 delz -1.624693 dist 3.426217
-Atom IDs (10, 11) types (10, 11) scale 363.213679 delx 4.350449 dely -1.326804 delz -0.540523 dist 4.580281
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.918148 dely 0.918148 delz 0.918148 delxsq 0.842996 delysq 0.842996 delzsq 0.842996 dist 1.590279
-Atom IDs (2, 3) delx -0.886247 dely -0.886247 delz -0.886247 delxsq 0.785433 delysq 0.785433 delzsq 0.785433 dist 1.535024
-Atom IDs (3, 4) delx -0.874555 dely -0.874555 delz -0.874555 delxsq 0.764847 delysq 0.764847 delzsq 0.764847 dist 1.514774
-Atom IDs (4, 5) delx -0.084689 dely -0.084689 delz -0.084689 delxsq 0.007172 delysq 0.007172 delzsq 0.007172 dist 0.146686
-Atom IDs (5, 6) delx 0.466122 dely 0.466122 delz 0.466122 delxsq 0.217269 delysq 0.217269 delzsq 0.217269 dist 0.807346
-Atom IDs (6, 7) delx 3.839120 dely 3.839120 delz 3.839120 delxsq 14.738841 delysq 14.738841 delzsq 14.738841 dist 6.649551
-Atom IDs (7, 8) delx -3.896948 dely -3.896948 delz -3.896948 delxsq 15.186205 delysq 15.186205 delzsq 15.186205 dist 6.749712
-Atom IDs (8, 9) delx -0.738982 dely -0.738982 delz -0.738982 delxsq 0.546095 delysq 0.546095 delzsq 0.546095 dist 1.279955
-Atom IDs (9, 10) delx -1.222913 dely -1.222913 delz -1.222913 delxsq 1.495516 delysq 1.495516 delzsq 1.495516 dist 2.118147
-Atom IDs (10, 11) delx 2.480945 dely 2.480945 delz 2.480945 delxsq 6.155087 delysq 6.155087 delzsq 6.155087 dist 4.297122
-The length of molecule with ID 1 is 26.688597
-
-Atom IDs (1, 2) types (1, 2) scale 166.885973 delx 0.918148 dely 1.164368 delz 0.181053 dist 1.493830
-Atom IDs (2, 3) types (2, 3) scale 166.885973 delx -0.886247 dely 0.275450 delz -0.829179 dist 1.244525
-Atom IDs (3, 4) types (3, 4) scale 166.885973 delx -0.874555 dely -1.749107 delz 0.536755 dist 2.027888
-Atom IDs (4, 5) types (4, 5) scale 166.885973 delx -0.084689 dely -0.665338 delz 2.171784 dist 2.272992
-Atom IDs (5, 6) types (5, 6) scale 166.885973 delx 0.466122 dely 1.315929 delz -0.974889 dist 1.702748
-Atom IDs (6, 7) types (6, 7) scale 166.885973 delx 3.839120 dely 2.332670 delz -2.347683 dist 5.068708
-Atom IDs (7, 8) types (7, 8) scale 166.885973 delx -3.896948 dely -5.296629 delz -0.640298 dist 6.606850
-Atom IDs (8, 9) types (8, 9) scale 166.885973 delx -0.738982 dely 2.598007 delz 3.075381 dist 4.093129
-Atom IDs (9, 10) types (9, 10) scale 166.885973 delx -1.222913 dely 0.730232 delz -0.658894 dist 1.569362
-Atom IDs (10, 11) types (10, 11) scale 166.885973 delx 2.480945 dely -0.705581 delz -0.514031 dist 2.630049
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.687652 dely 0.687652 delz 0.687652 delxsq 0.472865 delysq 0.472865 delzsq 0.472865 dist 1.191048
-Atom IDs (2, 3) delx -0.495699 dely -0.495699 delz -0.495699 delxsq 0.245717 delysq 0.245717 delzsq 0.245717 dist 0.858575
-Atom IDs (3, 4) delx -1.395644 dely -1.395644 delz -1.395644 delxsq 1.947823 delysq 1.947823 delzsq 1.947823 dist 2.417327
-Atom IDs (4, 5) delx 0.611035 dely 0.611035 delz 0.611035 delxsq 0.373364 delysq 0.373364 delzsq 0.373364 dist 1.058344
-Atom IDs (5, 6) delx 0.630568 dely 0.630568 delz 0.630568 delxsq 0.397617 delysq 0.397617 delzsq 0.397617 dist 1.092177
-Atom IDs (6, 7) delx 2.089986 dely 2.089986 delz 2.089986 delxsq 4.368041 delysq 4.368041 delzsq 4.368041 dist 3.619962
-Atom IDs (7, 8) delx -2.281345 dely -2.281345 delz -2.281345 delxsq 5.204536 delysq 5.204536 delzsq 5.204536 dist 3.951406
-Atom IDs (8, 9) delx -0.841906 dely -0.841906 delz -0.841906 delxsq 0.708805 delysq 0.708805 delzsq 0.708805 dist 1.458223
-Atom IDs (9, 10) delx -0.550840 dely -0.550840 delz -0.550840 delxsq 0.303425 delysq 0.303425 delzsq 0.303425 dist 0.954084
-Atom IDs (10, 11) delx 1.546193 dely 1.546193 delz 1.546193 delxsq 2.390712 delysq 2.390712 delzsq 2.390712 dist 2.678085
-The length of molecule with ID 1 is 19.279230
-
-Atom IDs (1, 2) types (1, 2) scale 92.792300 delx 0.687652 dely 1.187571 delz 0.159058 dist 1.381481
-Atom IDs (2, 3) types (2, 3) scale 92.792300 delx -0.495699 dely -0.154589 delz -0.663548 dist 0.842562
-Atom IDs (3, 4) types (3, 4) scale 92.792300 delx -1.395644 dely -1.327934 delz 0.783237 dist 2.079589
-Atom IDs (4, 5) types (4, 5) scale 92.792300 delx 0.611035 dely -0.535868 delz 1.259502 dist 1.498954
-Atom IDs (5, 6) types (5, 6) scale 92.792300 delx 0.630568 dely 1.089900 delz -0.711986 dist 1.446521
-Atom IDs (6, 7) types (6, 7) scale 92.792300 delx 2.089986 dely 1.373428 delz -1.716772 dist 3.033422
-Atom IDs (7, 8) types (7, 8) scale 92.792300 delx -2.281345 dely -3.234366 delz -0.231502 dist 3.964752
-Atom IDs (8, 9) types (8, 9) scale 92.792300 delx -0.841906 dely 1.693558 delz 1.798791 dist 2.610095
-Atom IDs (9, 10) types (9, 10) scale 92.792300 delx -0.550840 dely 0.303270 delz -0.175995 dist 0.652972
-Atom IDs (10, 11) types (10, 11) scale 92.792300 delx 1.546193 dely -0.394969 delz -0.500785 dist 1.672572
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.572404 dely 0.572404 delz 0.572404 delxsq 0.327646 delysq 0.327646 delzsq 0.327646 dist 0.991433
-Atom IDs (2, 3) delx -0.300425 dely -0.300425 delz -0.300425 delxsq 0.090255 delysq 0.090255 delzsq 0.090255 dist 0.520351
-Atom IDs (3, 4) delx -1.656189 dely -1.656189 delz -1.656189 delxsq 2.742961 delysq 2.742961 delzsq 2.742961 dist 2.868603
-Atom IDs (4, 5) delx 0.958897 dely 0.958897 delz 0.958897 delxsq 0.919484 delysq 0.919484 delzsq 0.919484 dist 1.660858
-Atom IDs (5, 6) delx 0.712792 dely 0.712792 delz 0.712792 delxsq 0.508072 delysq 0.508072 delzsq 0.508072 dist 1.234592
-Atom IDs (6, 7) delx 1.215419 dely 1.215419 delz 1.215419 delxsq 1.477243 delysq 1.477243 delzsq 1.477243 dist 2.105168
-Atom IDs (7, 8) delx -1.473544 dely -1.473544 delz -1.473544 delxsq 2.171331 delysq 2.171331 delzsq 2.171331 dist 2.552252
-Atom IDs (8, 9) delx -0.893367 dely -0.893367 delz -0.893367 delxsq 0.798105 delysq 0.798105 delzsq 0.798105 dist 1.547358
-Atom IDs (9, 10) delx -0.214804 dely -0.214804 delz -0.214804 delxsq 0.046141 delysq 0.046141 delzsq 0.046141 dist 0.372052
-Atom IDs (10, 11) delx 1.078817 dely 1.078817 delz 1.078817 delxsq 1.163846 delysq 1.163846 delzsq 1.163846 dist 1.868566
-The length of molecule with ID 1 is 15.721232
-
-Atom IDs (1, 2) types (1, 2) scale 57.212323 delx 0.572404 dely 1.199173 delz 0.148061 dist 1.337006
-Atom IDs (2, 3) types (2, 3) scale 57.212323 delx -0.300425 dely -0.369609 delz -0.580732 dist 0.751076
-Atom IDs (3, 4) types (3, 4) scale 57.212323 delx -1.656189 dely -1.117348 delz 0.906478 dist 2.193884
-Atom IDs (4, 5) types (4, 5) scale 57.212323 delx 0.958897 dely -0.471134 delz 0.803360 dist 1.336727
-Atom IDs (5, 6) types (5, 6) scale 57.212323 delx 0.712792 dely 0.976886 delz -0.580535 dist 1.341417
-Atom IDs (6, 7) types (6, 7) scale 57.212323 delx 1.215419 dely 0.893807 delz -1.401316 dist 2.059083
-Atom IDs (7, 8) types (7, 8) scale 57.212323 delx -1.473544 dely -2.203235 delz -0.027104 dist 2.650719
-Atom IDs (8, 9) types (8, 9) scale 57.212323 delx -0.893367 dely 1.241334 delz 1.160497 dist 1.919835
-Atom IDs (9, 10) types (9, 10) scale 57.212323 delx -0.214804 dely 0.089789 delz 0.065454 dist 0.241841
-Atom IDs (10, 11) types (10, 11) scale 57.212323 delx 1.078817 dely -0.239663 delz -0.494162 dist 1.210570
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.514780 dely 0.514780 delz 0.514780 delxsq 0.264998 delysq 0.264998 delzsq 0.264998 dist 0.891625
-Atom IDs (2, 3) delx -0.202788 dely -0.202788 delz -0.202788 delxsq 0.041123 delysq 0.041123 delzsq 0.041123 dist 0.351239
-Atom IDs (3, 4) delx -1.786461 dely -1.786461 delz -1.786461 delxsq 3.191443 delysq 3.191443 delzsq 3.191443 dist 3.094241
-Atom IDs (4, 5) delx 1.132828 dely 1.132828 delz 1.132828 delxsq 1.283300 delysq 1.283300 delzsq 1.283300 dist 1.962116
-Atom IDs (5, 6) delx 0.753904 dely 0.753904 delz 0.753904 delxsq 0.568371 delysq 0.568371 delzsq 0.568371 dist 1.305799
-Atom IDs (6, 7) delx 0.778136 dely 0.778136 delz 0.778136 delxsq 0.605495 delysq 0.605495 delzsq 0.605495 dist 1.347770
-Atom IDs (7, 8) delx -1.069643 dely -1.069643 delz -1.069643 delxsq 1.144136 delysq 1.144136 delzsq 1.144136 dist 1.852676
-Atom IDs (8, 9) delx -0.919098 dely -0.919098 delz -0.919098 delxsq 0.844742 delysq 0.844742 delzsq 0.844742 dist 1.591925
-Atom IDs (9, 10) delx -0.046786 dely -0.046786 delz -0.046786 delxsq 0.002189 delysq 0.002189 delzsq 0.002189 dist 0.081036
-Atom IDs (10, 11) delx 0.845129 dely 0.845129 delz 0.845129 delxsq 0.714243 delysq 0.714243 delzsq 0.714243 dist 1.463806
-The length of molecule with ID 1 is 13.942233
-
-Atom IDs (1, 2) types (1, 2) scale 39.422335 delx 0.514780 dely 1.204974 delz 0.142562 dist 1.318061
-Atom IDs (2, 3) types (2, 3) scale 39.422335 delx -0.202788 dely -0.477119 delz -0.539325 dist 0.748088
-Atom IDs (3, 4) types (3, 4) scale 39.422335 delx -1.786461 dely -1.012054 delz 0.968098 dist 2.270002
-Atom IDs (4, 5) types (4, 5) scale 39.422335 delx 1.132828 dely -0.438766 delz 0.575290 dist 1.344163
-Atom IDs (5, 6) types (5, 6) scale 39.422335 delx 0.753904 dely 0.920379 delz -0.514809 dist 1.296339
-Atom IDs (6, 7) types (6, 7) scale 39.422335 delx 0.778136 dely 0.653997 delz -1.243589 dist 1.606150
-Atom IDs (7, 8) types (7, 8) scale 39.422335 delx -1.069643 dely -1.687670 delz 0.075095 dist 1.999501
-Atom IDs (8, 9) types (8, 9) scale 39.422335 delx -0.919098 dely 1.015222 delz 0.841349 dist 1.607260
-Atom IDs (9, 10) types (9, 10) scale 39.422335 delx -0.046786 dely -0.016952 delz 0.186179 dist 0.192715
-Atom IDs (10, 11) types (10, 11) scale 39.422335 delx 0.845129 dely -0.162010 delz -0.490851 dist 0.990669
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.485968 dely 0.485968 delz 0.485968 delxsq 0.236165 delysq 0.236165 delzsq 0.236165 dist 0.841721
-Atom IDs (2, 3) delx -0.153969 dely -0.153969 delz -0.153969 delxsq 0.023707 delysq 0.023707 delzsq 0.023707 dist 0.266683
-Atom IDs (3, 4) delx -1.851597 dely -1.851597 delz -1.851597 delxsq 3.428412 delysq 3.428412 delzsq 3.428412 dist 3.207060
-Atom IDs (4, 5) delx 1.219794 dely 1.219794 delz 1.219794 delxsq 1.487896 delysq 1.487896 delzsq 1.487896 dist 2.112745
-Atom IDs (5, 6) delx 0.774459 dely 0.774459 delz 0.774459 delxsq 0.599787 delysq 0.599787 delzsq 0.599787 dist 1.341403
-Atom IDs (6, 7) delx 0.559494 dely 0.559494 delz 0.559494 delxsq 0.313033 delysq 0.313033 delzsq 0.313033 dist 0.969072
-Atom IDs (7, 8) delx -0.867693 dely -0.867693 delz -0.867693 delxsq 0.752890 delysq 0.752890 delzsq 0.752890 dist 1.502888
-Atom IDs (8, 9) delx -0.931964 dely -0.931964 delz -0.931964 delxsq 0.868556 delysq 0.868556 delzsq 0.868556 dist 1.614208
-Atom IDs (9, 10) delx 0.037223 dely 0.037223 delz 0.037223 delxsq 0.001386 delysq 0.001386 delzsq 0.001386 dist 0.064472
-Atom IDs (10, 11) delx 0.728285 dely 0.728285 delz 0.728285 delxsq 0.530399 delysq 0.530399 delzsq 0.530399 dist 1.261426
-The length of molecule with ID 1 is 13.181678
-
-Atom IDs (1, 2) types (1, 2) scale 31.816777 delx 0.485968 dely 1.207874 delz 0.139813 dist 1.309455
-Atom IDs (2, 3) types (2, 3) scale 31.816777 delx -0.153969 dely -0.530874 delz -0.518621 dist 0.757958
-Atom IDs (3, 4) types (3, 4) scale 31.816777 delx -1.851597 dely -0.959408 delz 0.998908 dist 2.312292
-Atom IDs (4, 5) types (4, 5) scale 31.816777 delx 1.219794 dely -0.422582 delz 0.461254 dist 1.370849
-Atom IDs (5, 6) types (5, 6) scale 31.816777 delx 0.774459 dely 0.892125 delz -0.481946 dist 1.275910
-Atom IDs (6, 7) types (6, 7) scale 31.816777 delx 0.559494 dely 0.534091 delz -1.164725 dist 1.398167
-Atom IDs (7, 8) types (7, 8) scale 31.816777 delx -0.867693 dely -1.429887 delz 0.126194 dist 1.677317
-Atom IDs (8, 9) types (8, 9) scale 31.816777 delx -0.931964 dely 0.902166 delz 0.681775 dist 1.465359
-Atom IDs (9, 10) types (9, 10) scale 31.816777 delx 0.037223 dely -0.070322 delz 0.246541 dist 0.259063
-Atom IDs (10, 11) types (10, 11) scale 31.816777 delx 0.728285 dely -0.123184 delz -0.489195 dist 0.885937
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.471562 dely 0.471562 delz 0.471562 delxsq 0.222371 delysq 0.222371 delzsq 0.222371 dist 0.816769
-Atom IDs (2, 3) delx -0.129560 dely -0.129560 delz -0.129560 delxsq 0.016786 delysq 0.016786 delzsq 0.016786 dist 0.224405
-Atom IDs (3, 4) delx -1.884165 dely -1.884165 delz -1.884165 delxsq 3.550078 delysq 3.550078 delzsq 3.550078 dist 3.263470
-Atom IDs (4, 5) delx 1.263276 dely 1.263276 delz 1.263276 delxsq 1.595867 delysq 1.595867 delzsq 1.595867 dist 2.188059
-Atom IDs (5, 6) delx 0.784737 dely 0.784737 delz 0.784737 delxsq 0.615813 delysq 0.615813 delzsq 0.615813 dist 1.359205
-Atom IDs (6, 7) delx 0.450173 dely 0.450173 delz 0.450173 delxsq 0.202656 delysq 0.202656 delzsq 0.202656 dist 0.779723
-Atom IDs (7, 8) delx -0.766717 dely -0.766717 delz -0.766717 delxsq 0.587855 delysq 0.587855 delzsq 0.587855 dist 1.327993
-Atom IDs (8, 9) delx -0.938396 dely -0.938396 delz -0.938396 delxsq 0.880588 delysq 0.880588 delzsq 0.880588 dist 1.625350
-Atom IDs (9, 10) delx 0.079227 dely 0.079227 delz 0.079227 delxsq 0.006277 delysq 0.006277 delzsq 0.006277 dist 0.137226
-Atom IDs (10, 11) delx 0.669863 dely 0.669863 delz 0.669863 delxsq 0.448716 delysq 0.448716 delzsq 0.448716 dist 1.160237
-The length of molecule with ID 1 is 12.882436
-
-Atom IDs (1, 2) types (1, 2) scale 28.824360 delx 0.471562 dely 1.209325 delz 0.138438 dist 1.305374
-Atom IDs (2, 3) types (2, 3) scale 28.824360 delx -0.129560 dely -0.557751 delz -0.508269 dist 0.765643
-Atom IDs (3, 4) types (3, 4) scale 28.824360 delx -1.884165 dely -0.933084 delz 1.014313 dist 2.334429
-Atom IDs (4, 5) types (4, 5) scale 28.824360 delx 1.263276 dely -0.414491 delz 0.404237 dist 1.389632
-Atom IDs (5, 6) types (5, 6) scale 28.824360 delx 0.784737 dely 0.877998 delz -0.465515 dist 1.266253
-Atom IDs (6, 7) types (6, 7) scale 28.824360 delx 0.450173 dely 0.474139 delz -1.125293 dist 1.301440
-Atom IDs (7, 8) types (7, 8) scale 28.824360 delx -0.766717 dely -1.300995 delz 0.151744 dist 1.517719
-Atom IDs (8, 9) types (8, 9) scale 28.824360 delx -0.938396 dely 0.845638 delz 0.601989 dist 1.399315
-Atom IDs (9, 10) types (9, 10) scale 28.824360 delx 0.079227 dely -0.097007 delz 0.276723 dist 0.303748
-Atom IDs (10, 11) types (10, 11) scale 28.824360 delx 0.669863 dely -0.103771 delz -0.488367 dist 0.835456
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.464359 dely 0.464359 delz 0.464359 delxsq 0.215629 delysq 0.215629 delzsq 0.215629 dist 0.804293
-Atom IDs (2, 3) delx -0.117355 dely -0.117355 delz -0.117355 delxsq 0.013772 delysq 0.013772 delzsq 0.013772 dist 0.203266
-Atom IDs (3, 4) delx -1.900449 dely -1.900449 delz -1.900449 delxsq 3.611707 delysq 3.611707 delzsq 3.611707 dist 3.291675
-Atom IDs (4, 5) delx 1.285018 dely 1.285018 delz 1.285018 delxsq 1.651271 delysq 1.651271 delzsq 1.651271 dist 2.225716
-Atom IDs (5, 6) delx 0.789876 dely 0.789876 delz 0.789876 delxsq 0.623905 delysq 0.623905 delzsq 0.623905 dist 1.368106
-Atom IDs (6, 7) delx 0.395513 dely 0.395513 delz 0.395513 delxsq 0.156430 delysq 0.156430 delzsq 0.156430 dist 0.685048
-Atom IDs (7, 8) delx -0.716230 dely -0.716230 delz -0.716230 delxsq 0.512985 delysq 0.512985 delzsq 0.512985 dist 1.240546
-Atom IDs (8, 9) delx -0.941613 dely -0.941613 delz -0.941613 delxsq 0.886635 delysq 0.886635 delzsq 0.886635 dist 1.630921
-Atom IDs (9, 10) delx 0.100230 dely 0.100230 delz 0.100230 delxsq 0.010046 delysq 0.010046 delzsq 0.010046 dist 0.173603
-Atom IDs (10, 11) delx 0.640652 dely 0.640652 delz 0.640652 delxsq 0.410435 delysq 0.410435 delzsq 0.410435 dist 1.109642
-The length of molecule with ID 1 is 12.732815
-
-Atom IDs (1, 2) types (1, 2) scale 27.328151 delx 0.464359 dely 1.210050 delz 0.137751 dist 1.303390
-Atom IDs (2, 3) types (2, 3) scale 27.328151 delx -0.117355 dely -0.571190 delz -0.503093 dist 0.770151
-Atom IDs (3, 4) types (3, 4) scale 27.328151 delx -1.900449 dely -0.919923 delz 1.022016 dist 2.345737
-Atom IDs (4, 5) types (4, 5) scale 27.328151 delx 1.285018 dely -0.410445 delz 0.375728 dist 1.400324
-Atom IDs (5, 6) types (5, 6) scale 27.328151 delx 0.789876 dely 0.870935 delz -0.457299 dist 1.261568
-Atom IDs (6, 7) types (6, 7) scale 27.328151 delx 0.395513 dely 0.444163 delz -1.105577 dist 1.255393
-Atom IDs (7, 8) types (7, 8) scale 27.328151 delx -0.716230 dely -1.236550 delz 0.164519 dist 1.438439
-Atom IDs (8, 9) types (8, 9) scale 27.328151 delx -0.941613 dely 0.817374 delz 0.562095 dist 1.367730
-Atom IDs (9, 10) types (9, 10) scale 27.328151 delx 0.100230 dely -0.110350 delz 0.291813 dist 0.327686
-Atom IDs (10, 11) types (10, 11) scale 27.328151 delx 0.640652 dely -0.094064 delz -0.487953 dist 0.810790
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.460757 dely 0.460757 delz 0.460757 delxsq 0.212297 delysq 0.212297 delzsq 0.212297 dist 0.798055
-Atom IDs (2, 3) delx -0.111253 dely -0.111253 delz -0.111253 delxsq 0.012377 delysq 0.012377 delzsq 0.012377 dist 0.192696
-Atom IDs (3, 4) delx -1.908591 dely -1.908591 delz -1.908591 delxsq 3.642720 delysq 3.642720 delzsq 3.642720 dist 3.305777
-Atom IDs (4, 5) delx 1.295888 dely 1.295888 delz 1.295888 delxsq 1.679327 delysq 1.679327 delzsq 1.679327 dist 2.244545
-Atom IDs (5, 6) delx 0.792446 dely 0.792446 delz 0.792446 delxsq 0.627970 delysq 0.627970 delzsq 0.627970 dist 1.372556
-Atom IDs (6, 7) delx 0.368182 dely 0.368182 delz 0.368182 delxsq 0.135558 delysq 0.135558 delzsq 0.135558 dist 0.637711
-Atom IDs (7, 8) delx -0.690986 dely -0.690986 delz -0.690986 delxsq 0.477462 delysq 0.477462 delzsq 0.477462 dist 1.196823
-Atom IDs (8, 9) delx -0.943221 dely -0.943221 delz -0.943221 delxsq 0.889666 delysq 0.889666 delzsq 0.889666 dist 1.633707
-Atom IDs (9, 10) delx 0.110731 dely 0.110731 delz 0.110731 delxsq 0.012261 delysq 0.012261 delzsq 0.012261 dist 0.191791
-Atom IDs (10, 11) delx 0.626046 dely 0.626046 delz 0.626046 delxsq 0.391934 delysq 0.391934 delzsq 0.391934 dist 1.084344
-The length of molecule with ID 1 is 12.658005
-
-Atom IDs (1, 2) types (1, 2) scale 26.580046 delx 0.460757 dely 1.210412 delz 0.137407 dist 1.302412
-Atom IDs (2, 3) types (2, 3) scale 26.580046 delx -0.111253 dely -0.577909 delz -0.500505 dist 0.772568
-Atom IDs (3, 4) types (3, 4) scale 26.580046 delx -1.908591 dely -0.913342 delz 1.025867 dist 2.351450
-Atom IDs (4, 5) types (4, 5) scale 26.580046 delx 1.295888 dely -0.408422 delz 0.361473 dist 1.405987
-Atom IDs (5, 6) types (5, 6) scale 26.580046 delx 0.792446 dely 0.867403 delz -0.453191 dist 1.259262
-Atom IDs (6, 7) types (6, 7) scale 26.580046 delx 0.368182 dely 0.429174 delz -1.095719 dist 1.233024
-Atom IDs (7, 8) types (7, 8) scale 26.580046 delx -0.690986 dely -1.204327 delz 0.170906 dist 1.398954
-Atom IDs (8, 9) types (8, 9) scale 26.580046 delx -0.943221 dely 0.803242 delz 0.542148 dist 1.352327
-Atom IDs (9, 10) types (9, 10) scale 26.580046 delx 0.110731 dely -0.117021 delz 0.299358 dist 0.339957
-Atom IDs (10, 11) types (10, 11) scale 26.580046 delx 0.626046 dely -0.089211 delz -0.487746 dist 0.798617
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.458957 dely 0.458957 delz 0.458957 delxsq 0.210641 delysq 0.210641 delzsq 0.210641 dist 0.794936
-Atom IDs (2, 3) delx -0.108202 dely -0.108202 delz -0.108202 delxsq 0.011708 delysq 0.011708 delzsq 0.011708 dist 0.187411
-Atom IDs (3, 4) delx -1.912662 dely -1.912662 delz -1.912662 delxsq 3.658277 delysq 3.658277 delzsq 3.658277 dist 3.312828
-Atom IDs (4, 5) delx 1.301324 dely 1.301324 delz 1.301324 delxsq 1.693444 delysq 1.693444 delzsq 1.693444 dist 2.253959
-Atom IDs (5, 6) delx 0.793731 dely 0.793731 delz 0.793731 delxsq 0.630008 delysq 0.630008 delzsq 0.630008 dist 1.374782
-Atom IDs (6, 7) delx 0.354517 dely 0.354517 delz 0.354517 delxsq 0.125682 delysq 0.125682 delzsq 0.125682 dist 0.614042
-Atom IDs (7, 8) delx -0.678364 dely -0.678364 delz -0.678364 delxsq 0.460178 delysq 0.460178 delzsq 0.460178 dist 1.174961
-Atom IDs (8, 9) delx -0.944025 dely -0.944025 delz -0.944025 delxsq 0.891183 delysq 0.891183 delzsq 0.891183 dist 1.635099
-Atom IDs (9, 10) delx 0.115981 dely 0.115981 delz 0.115981 delxsq 0.013452 delysq 0.013452 delzsq 0.013452 dist 0.200886
-Atom IDs (10, 11) delx 0.618744 dely 0.618744 delz 0.618744 delxsq 0.382844 delysq 0.382844 delzsq 0.382844 dist 1.071695
-The length of molecule with ID 1 is 12.620599
-
-Atom IDs (1, 2) types (1, 2) scale 26.205994 delx 0.458957 dely 1.210594 delz 0.137235 dist 1.301926
-Atom IDs (2, 3) types (2, 3) scale 26.205994 delx -0.108202 dely -0.581269 delz -0.499211 dist 0.773817
-Atom IDs (3, 4) types (3, 4) scale 26.205994 delx -1.912662 dely -0.910052 delz 1.027793 dist 2.354321
-Atom IDs (4, 5) types (4, 5) scale 26.205994 delx 1.301324 dely -0.407410 delz 0.354346 dist 1.408896
-Atom IDs (5, 6) types (5, 6) scale 26.205994 delx 0.793731 dely 0.865637 delz -0.451137 dist 1.258118
-Atom IDs (6, 7) types (6, 7) scale 26.205994 delx 0.354517 dely 0.421680 delz -1.090790 dist 1.222014
-Atom IDs (7, 8) types (7, 8) scale 26.205994 delx -0.678364 dely -1.188215 delz 0.174100 dist 1.379255
-Atom IDs (8, 9) types (8, 9) scale 26.205994 delx -0.944025 dely 0.796176 delz 0.532175 dist 1.344726
-Atom IDs (9, 10) types (9, 10) scale 26.205994 delx 0.115981 dely -0.120357 delz 0.303131 dist 0.346159
-Atom IDs (10, 11) types (10, 11) scale 26.205994 delx 0.618744 dely -0.086784 delz -0.487643 dist 0.792572
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.458056 dely 0.458056 delz 0.458056 delxsq 0.209815 delysq 0.209815 delzsq 0.209815 dist 0.793377
-Atom IDs (2, 3) delx -0.106676 dely -0.106676 delz -0.106676 delxsq 0.011380 delysq 0.011380 delzsq 0.011380 dist 0.184769
-Atom IDs (3, 4) delx -1.914698 dely -1.914698 delz -1.914698 delxsq 3.666067 delysq 3.666067 delzsq 3.666067 dist 3.316354
-Atom IDs (4, 5) delx 1.304041 dely 1.304041 delz 1.304041 delxsq 1.700524 delysq 1.700524 delzsq 1.700524 dist 2.258666
-Atom IDs (5, 6) delx 0.794373 dely 0.794373 delz 0.794373 delxsq 0.631028 delysq 0.631028 delzsq 0.631028 dist 1.375894
-Atom IDs (6, 7) delx 0.347685 dely 0.347685 delz 0.347685 delxsq 0.120885 delysq 0.120885 delzsq 0.120885 dist 0.602208
-Atom IDs (7, 8) delx -0.672053 dely -0.672053 delz -0.672053 delxsq 0.451655 delysq 0.451655 delzsq 0.451655 dist 1.164030
-Atom IDs (8, 9) delx -0.944427 dely -0.944427 delz -0.944427 delxsq 0.891942 delysq 0.891942 delzsq 0.891942 dist 1.635796
-Atom IDs (9, 10) delx 0.118607 dely 0.118607 delz 0.118607 delxsq 0.014068 delysq 0.014068 delzsq 0.014068 dist 0.205433
-Atom IDs (10, 11) delx 0.615092 dely 0.615092 delz 0.615092 delxsq 0.378339 delysq 0.378339 delzsq 0.378339 dist 1.065371
-The length of molecule with ID 1 is 12.601897
-
-Atom IDs (1, 2) types (1, 2) scale 26.018968 delx 0.458056 dely 1.210684 delz 0.137149 dist 1.301684
-Atom IDs (2, 3) types (2, 3) scale 26.018968 delx -0.106676 dely -0.582949 delz -0.498564 dist 0.774451
-Atom IDs (3, 4) types (3, 4) scale 26.018968 delx -1.914698 dely -0.908406 delz 1.028756 dist 2.355761
-Atom IDs (4, 5) types (4, 5) scale 26.018968 delx 1.304041 dely -0.406904 delz 0.350783 dist 1.410370
-Atom IDs (5, 6) types (5, 6) scale 26.018968 delx 0.794373 dely 0.864754 delz -0.450110 dist 1.257548
-Atom IDs (6, 7) types (6, 7) scale 26.018968 delx 0.347685 dely 0.417933 delz -1.088325 dist 1.216555
-Atom IDs (7, 8) types (7, 8) scale 26.018968 delx -0.672053 dely -1.180160 delz 0.175697 dist 1.369416
-Atom IDs (8, 9) types (8, 9) scale 26.018968 delx -0.944427 dely 0.792643 delz 0.527188 dist 1.340952
-Atom IDs (9, 10) types (9, 10) scale 26.018968 delx 0.118607 dely -0.122025 delz 0.305017 dist 0.349275
-Atom IDs (10, 11) types (10, 11) scale 26.018968 delx 0.615092 dely -0.085571 delz -0.487591 dist 0.789560
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457606 dely 0.457606 delz 0.457606 delxsq 0.209403 delysq 0.209403 delzsq 0.209403 dist 0.792597
-Atom IDs (2, 3) delx -0.105914 dely -0.105914 delz -0.105914 delxsq 0.011218 delysq 0.011218 delzsq 0.011218 dist 0.183448
-Atom IDs (3, 4) delx -1.915715 dely -1.915715 delz -1.915715 delxsq 3.669966 delysq 3.669966 delzsq 3.669966 dist 3.318117
-Atom IDs (4, 5) delx 1.305400 dely 1.305400 delz 1.305400 delxsq 1.704070 delysq 1.704070 delzsq 1.704070 dist 2.261020
-Atom IDs (5, 6) delx 0.794694 dely 0.794694 delz 0.794694 delxsq 0.631539 delysq 0.631539 delzsq 0.631539 dist 1.376451
-Atom IDs (6, 7) delx 0.344268 dely 0.344268 delz 0.344268 delxsq 0.118521 delysq 0.118521 delzsq 0.118521 dist 0.596290
-Atom IDs (7, 8) delx -0.668898 dely -0.668898 delz -0.668898 delxsq 0.447424 delysq 0.447424 delzsq 0.447424 dist 1.158565
-Atom IDs (8, 9) delx -0.944628 dely -0.944628 delz -0.944628 delxsq 0.892322 delysq 0.892322 delzsq 0.892322 dist 1.636144
-Atom IDs (9, 10) delx 0.119919 dely 0.119919 delz 0.119919 delxsq 0.014381 delysq 0.014381 delzsq 0.014381 dist 0.207706
-Atom IDs (10, 11) delx 0.613267 dely 0.613267 delz 0.613267 delxsq 0.376096 delysq 0.376096 delzsq 0.376096 dist 1.062209
-The length of molecule with ID 1 is 12.592545
-
-Atom IDs (1, 2) types (1, 2) scale 25.925455 delx 0.457606 dely 1.210730 delz 0.137106 dist 1.301564
-Atom IDs (2, 3) types (2, 3) scale 25.925455 delx -0.105914 dely -0.583789 delz -0.498240 dist 0.774771
-Atom IDs (3, 4) types (3, 4) scale 25.925455 delx -1.915715 dely -0.907584 delz 1.029237 dist 2.356481
-Atom IDs (4, 5) types (4, 5) scale 25.925455 delx 1.305400 dely -0.406652 delz 0.349001 dist 1.411112
-Atom IDs (5, 6) types (5, 6) scale 25.925455 delx 0.794694 dely 0.864313 delz -0.449597 dist 1.257264
-Atom IDs (6, 7) types (6, 7) scale 25.925455 delx 0.344268 dely 0.416060 delz -1.087093 dist 1.213836
-Atom IDs (7, 8) types (7, 8) scale 25.925455 delx -0.668898 dely -1.176132 delz 0.176495 dist 1.364500
-Atom IDs (8, 9) types (8, 9) scale 25.925455 delx -0.944628 dely 0.790876 delz 0.524695 dist 1.339071
-Atom IDs (9, 10) types (9, 10) scale 25.925455 delx 0.119919 dely -0.122859 delz 0.305961 dist 0.350837
-Atom IDs (10, 11) types (10, 11) scale 25.925455 delx 0.613267 dely -0.084964 delz -0.487565 dist 0.788057
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457381 dely 0.457381 delz 0.457381 delxsq 0.209197 delysq 0.209197 delzsq 0.209197 dist 0.792207
-Atom IDs (2, 3) delx -0.105532 dely -0.105532 delz -0.105532 delxsq 0.011137 delysq 0.011137 delzsq 0.011137 dist 0.182787
-Atom IDs (3, 4) delx -1.916224 dely -1.916224 delz -1.916224 delxsq 3.671916 delysq 3.671916 delzsq 3.671916 dist 3.318998
-Atom IDs (4, 5) delx 1.306080 dely 1.306080 delz 1.306080 delxsq 1.705844 delysq 1.705844 delzsq 1.705844 dist 2.262196
-Atom IDs (5, 6) delx 0.794855 dely 0.794855 delz 0.794855 delxsq 0.631794 delysq 0.631794 delzsq 0.631794 dist 1.376729
-Atom IDs (6, 7) delx 0.342560 dely 0.342560 delz 0.342560 delxsq 0.117348 delysq 0.117348 delzsq 0.117348 dist 0.593332
-Atom IDs (7, 8) delx -0.667320 dely -0.667320 delz -0.667320 delxsq 0.445316 delysq 0.445316 delzsq 0.445316 dist 1.155832
-Atom IDs (8, 9) delx -0.944729 dely -0.944729 delz -0.944729 delxsq 0.892512 delysq 0.892512 delzsq 0.892512 dist 1.636318
-Atom IDs (9, 10) delx 0.120576 dely 0.120576 delz 0.120576 delxsq 0.014538 delysq 0.014538 delzsq 0.014538 dist 0.208843
-Atom IDs (10, 11) delx 0.612354 dely 0.612354 delz 0.612354 delxsq 0.374977 delysq 0.374977 delzsq 0.374977 dist 1.060628
-The length of molecule with ID 1 is 12.587870
-
-Atom IDs (1, 2) types (1, 2) scale 25.878698 delx 0.457381 dely 1.210752 delz 0.137085 dist 1.301503
-Atom IDs (2, 3) types (2, 3) scale 25.878698 delx -0.105532 dely -0.584208 delz -0.498079 dist 0.774932
-Atom IDs (3, 4) types (3, 4) scale 25.878698 delx -1.916224 dely -0.907172 delz 1.029478 dist 2.356842
-Atom IDs (4, 5) types (4, 5) scale 25.878698 delx 1.306080 dely -0.406525 delz 0.348110 dist 1.411484
-Atom IDs (5, 6) types (5, 6) scale 25.878698 delx 0.794855 dely 0.864092 delz -0.449340 dist 1.257122
-Atom IDs (6, 7) types (6, 7) scale 25.878698 delx 0.342560 dely 0.415123 delz -1.086477 dist 1.212480
-Atom IDs (7, 8) types (7, 8) scale 25.878698 delx -0.667320 dely -1.174118 delz 0.176895 dist 1.362043
-Atom IDs (8, 9) types (8, 9) scale 25.878698 delx -0.944729 dely 0.789993 delz 0.523448 dist 1.338133
-Atom IDs (9, 10) types (9, 10) scale 25.878698 delx 0.120576 dely -0.123276 delz 0.306432 dist 0.351619
-Atom IDs (10, 11) types (10, 11) scale 25.878698 delx 0.612354 dely -0.084661 delz -0.487552 dist 0.787307
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457268 dely 0.457268 delz 0.457268 delxsq 0.209094 delysq 0.209094 delzsq 0.209094 dist 0.792012
-Atom IDs (2, 3) delx -0.105341 dely -0.105341 delz -0.105341 delxsq 0.011097 delysq 0.011097 delzsq 0.011097 dist 0.182457
-Atom IDs (3, 4) delx -1.916479 dely -1.916479 delz -1.916479 delxsq 3.672891 delysq 3.672891 delzsq 3.672891 dist 3.319439
-Atom IDs (4, 5) delx 1.306419 dely 1.306419 delz 1.306419 delxsq 1.706732 delysq 1.706732 delzsq 1.706732 dist 2.262785
-Atom IDs (5, 6) delx 0.794935 dely 0.794935 delz 0.794935 delxsq 0.631922 delysq 0.631922 delzsq 0.631922 dist 1.376868
-Atom IDs (6, 7) delx 0.341706 dely 0.341706 delz 0.341706 delxsq 0.116763 delysq 0.116763 delzsq 0.116763 dist 0.591853
-Atom IDs (7, 8) delx -0.666531 dely -0.666531 delz -0.666531 delxsq 0.444264 delysq 0.444264 delzsq 0.444264 dist 1.154466
-Atom IDs (8, 9) delx -0.944779 dely -0.944779 delz -0.944779 delxsq 0.892607 delysq 0.892607 delzsq 0.892607 dist 1.636405
-Atom IDs (9, 10) delx 0.120904 dely 0.120904 delz 0.120904 delxsq 0.014618 delysq 0.014618 delzsq 0.014618 dist 0.209411
-Atom IDs (10, 11) delx 0.611897 dely 0.611897 delz 0.611897 delxsq 0.374418 delysq 0.374418 delzsq 0.374418 dist 1.059837
-The length of molecule with ID 1 is 12.585532
-
-Atom IDs (1, 2) types (1, 2) scale 25.855320 delx 0.457268 dely 1.210764 delz 0.137074 dist 1.301473
-Atom IDs (2, 3) types (2, 3) scale 25.855320 delx -0.105341 dely -0.584418 delz -0.497998 dist 0.775012
-Atom IDs (3, 4) types (3, 4) scale 25.855320 delx -1.916479 dely -0.906967 delz 1.029598 dist 2.357022
-Atom IDs (4, 5) types (4, 5) scale 25.855320 delx 1.306419 dely -0.406462 delz 0.347664 dist 1.411670
-Atom IDs (5, 6) types (5, 6) scale 25.855320 delx 0.794935 dely 0.863982 delz -0.449212 dist 1.257051
-Atom IDs (6, 7) types (6, 7) scale 25.855320 delx 0.341706 dely 0.414655 delz -1.086169 dist 1.211802
-Atom IDs (7, 8) types (7, 8) scale 25.855320 delx -0.666531 dely -1.173111 delz 0.177094 dist 1.360814
-Atom IDs (8, 9) types (8, 9) scale 25.855320 delx -0.944779 dely 0.789551 delz 0.522825 dist 1.337664
-Atom IDs (9, 10) types (9, 10) scale 25.855320 delx 0.120904 dely -0.123484 delz 0.306668 dist 0.352010
-Atom IDs (10, 11) types (10, 11) scale 25.855320 delx 0.611897 dely -0.084509 delz -0.487546 dist 0.786931
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457212 dely 0.457212 delz 0.457212 delxsq 0.209043 delysq 0.209043 delzsq 0.209043 dist 0.791915
-Atom IDs (2, 3) delx -0.105246 dely -0.105246 delz -0.105246 delxsq 0.011077 delysq 0.011077 delzsq 0.011077 dist 0.182292
-Atom IDs (3, 4) delx -1.916606 dely -1.916606 delz -1.916606 delxsq 3.673379 delysq 3.673379 delzsq 3.673379 dist 3.319659
-Atom IDs (4, 5) delx 1.306589 dely 1.306589 delz 1.306589 delxsq 1.707176 delysq 1.707176 delzsq 1.707176 dist 2.263079
-Atom IDs (5, 6) delx 0.794975 dely 0.794975 delz 0.794975 delxsq 0.631986 delysq 0.631986 delzsq 0.631986 dist 1.376937
-Atom IDs (6, 7) delx 0.341279 dely 0.341279 delz 0.341279 delxsq 0.116471 delysq 0.116471 delzsq 0.116471 dist 0.591113
-Atom IDs (7, 8) delx -0.666137 dely -0.666137 delz -0.666137 delxsq 0.443738 delysq 0.443738 delzsq 0.443738 dist 1.153782
-Atom IDs (8, 9) delx -0.944804 dely -0.944804 delz -0.944804 delxsq 0.892655 delysq 0.892655 delzsq 0.892655 dist 1.636449
-Atom IDs (9, 10) delx 0.121068 dely 0.121068 delz 0.121068 delxsq 0.014657 delysq 0.014657 delzsq 0.014657 dist 0.209696
-Atom IDs (10, 11) delx 0.611669 dely 0.611669 delz 0.611669 delxsq 0.374139 delysq 0.374139 delzsq 0.374139 dist 1.059442
-The length of molecule with ID 1 is 12.584363
-
-Atom IDs (1, 2) types (1, 2) scale 25.843631 delx 0.457212 dely 1.210769 delz 0.137069 dist 1.301458
-Atom IDs (2, 3) types (2, 3) scale 25.843631 delx -0.105246 dely -0.584523 delz -0.497957 dist 0.775052
-Atom IDs (3, 4) types (3, 4) scale 25.843631 delx -1.916606 dely -0.906864 delz 1.029658 dist 2.357112
-Atom IDs (4, 5) types (4, 5) scale 25.843631 delx 1.306589 dely -0.406430 delz 0.347442 dist 1.411764
-Atom IDs (5, 6) types (5, 6) scale 25.843631 delx 0.794975 dely 0.863926 delz -0.449147 dist 1.257015
-Atom IDs (6, 7) types (6, 7) scale 25.843631 delx 0.341279 dely 0.414420 delz -1.086015 dist 1.211464
-Atom IDs (7, 8) types (7, 8) scale 25.843631 delx -0.666137 dely -1.172607 delz 0.177194 dist 1.360200
-Atom IDs (8, 9) types (8, 9) scale 25.843631 delx -0.944804 dely 0.789331 delz 0.522513 dist 1.337429
-Atom IDs (9, 10) types (9, 10) scale 25.843631 delx 0.121068 dely -0.123588 delz 0.306786 dist 0.352206
-Atom IDs (10, 11) types (10, 11) scale 25.843631 delx 0.611669 dely -0.084433 delz -0.487542 dist 0.786744
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457184 dely 0.457184 delz 0.457184 delxsq 0.209017 delysq 0.209017 delzsq 0.209017 dist 0.791866
-Atom IDs (2, 3) delx -0.105198 dely -0.105198 delz -0.105198 delxsq 0.011067 delysq 0.011067 delzsq 0.011067 dist 0.182209
-Atom IDs (3, 4) delx -1.916670 dely -1.916670 delz -1.916670 delxsq 3.673622 delysq 3.673622 delzsq 3.673622 dist 3.319769
-Atom IDs (4, 5) delx 1.306674 dely 1.306674 delz 1.306674 delxsq 1.707398 delysq 1.707398 delzsq 1.707398 dist 2.263226
-Atom IDs (5, 6) delx 0.794995 dely 0.794995 delz 0.794995 delxsq 0.632017 delysq 0.632017 delzsq 0.632017 dist 1.376972
-Atom IDs (6, 7) delx 0.341066 dely 0.341066 delz 0.341066 delxsq 0.116326 delysq 0.116326 delzsq 0.116326 dist 0.590743
-Atom IDs (7, 8) delx -0.665939 dely -0.665939 delz -0.665939 delxsq 0.443475 delysq 0.443475 delzsq 0.443475 dist 1.153441
-Atom IDs (8, 9) delx -0.944817 dely -0.944817 delz -0.944817 delxsq 0.892678 delysq 0.892678 delzsq 0.892678 dist 1.636470
-Atom IDs (9, 10) delx 0.121150 dely 0.121150 delz 0.121150 delxsq 0.014677 delysq 0.014677 delzsq 0.014677 dist 0.209838
-Atom IDs (10, 11) delx 0.611555 dely 0.611555 delz 0.611555 delxsq 0.374000 delysq 0.374000 delzsq 0.374000 dist 1.059244
-The length of molecule with ID 1 is 12.583779
-
-Atom IDs (1, 2) types (1, 2) scale 25.837786 delx 0.457184 dely 1.210772 delz 0.137066 dist 1.301450
-Atom IDs (2, 3) types (2, 3) scale 25.837786 delx -0.105198 dely -0.584576 delz -0.497937 dist 0.775072
-Atom IDs (3, 4) types (3, 4) scale 25.837786 delx -1.916670 dely -0.906813 delz 1.029688 dist 2.357157
-Atom IDs (4, 5) types (4, 5) scale 25.837786 delx 1.306674 dely -0.406414 delz 0.347330 dist 1.411810
-Atom IDs (5, 6) types (5, 6) scale 25.837786 delx 0.794995 dely 0.863899 delz -0.449115 dist 1.256998
-Atom IDs (6, 7) types (6, 7) scale 25.837786 delx 0.341066 dely 0.414303 delz -1.085938 dist 1.211294
-Atom IDs (7, 8) types (7, 8) scale 25.837786 delx -0.665939 dely -1.172356 delz 0.177244 dist 1.359893
-Atom IDs (8, 9) types (8, 9) scale 25.837786 delx -0.944817 dely 0.789220 delz 0.522358 dist 1.337312
-Atom IDs (9, 10) types (9, 10) scale 25.837786 delx 0.121150 dely -0.123640 delz 0.306845 dist 0.352304
-Atom IDs (10, 11) types (10, 11) scale 25.837786 delx 0.611555 dely -0.084395 delz -0.487541 dist 0.786650
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457170 dely 0.457170 delz 0.457170 delxsq 0.209004 delysq 0.209004 delzsq 0.209004 dist 0.791841
-Atom IDs (2, 3) delx -0.105175 dely -0.105175 delz -0.105175 delxsq 0.011062 delysq 0.011062 delzsq 0.011062 dist 0.182168
-Atom IDs (3, 4) delx -1.916701 dely -1.916701 delz -1.916701 delxsq 3.673744 delysq 3.673744 delzsq 3.673744 dist 3.319824
-Atom IDs (4, 5) delx 1.306717 dely 1.306717 delz 1.306717 delxsq 1.707508 delysq 1.707508 delzsq 1.707508 dist 2.263300
-Atom IDs (5, 6) delx 0.795005 dely 0.795005 delz 0.795005 delxsq 0.632033 delysq 0.632033 delzsq 0.632033 dist 1.376990
-Atom IDs (6, 7) delx 0.340959 dely 0.340959 delz 0.340959 delxsq 0.116253 delysq 0.116253 delzsq 0.116253 dist 0.590558
-Atom IDs (7, 8) delx -0.665841 dely -0.665841 delz -0.665841 delxsq 0.443344 delysq 0.443344 delzsq 0.443344 dist 1.153270
-Atom IDs (8, 9) delx -0.944823 dely -0.944823 delz -0.944823 delxsq 0.892690 delysq 0.892690 delzsq 0.892690 dist 1.636481
-Atom IDs (9, 10) delx 0.121191 dely 0.121191 delz 0.121191 delxsq 0.014687 delysq 0.014687 delzsq 0.014687 dist 0.209909
-Atom IDs (10, 11) delx 0.611498 dely 0.611498 delz 0.611498 delxsq 0.373930 delysq 0.373930 delzsq 0.373930 dist 1.059146
-The length of molecule with ID 1 is 12.583486
-
-Atom IDs (1, 2) types (1, 2) scale 25.834864 delx 0.457170 dely 1.210774 delz 0.137065 dist 1.301447
-Atom IDs (2, 3) types (2, 3) scale 25.834864 delx -0.105175 dely -0.584602 delz -0.497927 dist 0.775082
-Atom IDs (3, 4) types (3, 4) scale 25.834864 delx -1.916701 dely -0.906787 delz 1.029703 dist 2.357180
-Atom IDs (4, 5) types (4, 5) scale 25.834864 delx 1.306717 dely -0.406407 delz 0.347275 dist 1.411834
-Atom IDs (5, 6) types (5, 6) scale 25.834864 delx 0.795005 dely 0.863885 delz -0.449099 dist 1.256989
-Atom IDs (6, 7) types (6, 7) scale 25.834864 delx 0.340959 dely 0.414245 delz -1.085899 dist 1.211210
-Atom IDs (7, 8) types (7, 8) scale 25.834864 delx -0.665841 dely -1.172230 delz 0.177269 dist 1.359739
-Atom IDs (8, 9) types (8, 9) scale 25.834864 delx -0.944823 dely 0.789165 delz 0.522280 dist 1.337254
-Atom IDs (9, 10) types (9, 10) scale 25.834864 delx 0.121191 dely -0.123666 delz 0.306874 dist 0.352353
-Atom IDs (10, 11) types (10, 11) scale 25.834864 delx 0.611498 dely -0.084376 delz -0.487540 dist 0.786603
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457163 dely 0.457163 delz 0.457163 delxsq 0.208998 delysq 0.208998 delzsq 0.208998 dist 0.791829
-Atom IDs (2, 3) delx -0.105163 dely -0.105163 delz -0.105163 delxsq 0.011059 delysq 0.011059 delzsq 0.011059 dist 0.182147
-Atom IDs (3, 4) delx -1.916717 dely -1.916717 delz -1.916717 delxsq 3.673805 delysq 3.673805 delzsq 3.673805 dist 3.319852
-Atom IDs (4, 5) delx 1.306738 dely 1.306738 delz 1.306738 delxsq 1.707564 delysq 1.707564 delzsq 1.707564 dist 2.263336
-Atom IDs (5, 6) delx 0.795010 dely 0.795010 delz 0.795010 delxsq 0.632041 delysq 0.632041 delzsq 0.632041 dist 1.376998
-Atom IDs (6, 7) delx 0.340906 dely 0.340906 delz 0.340906 delxsq 0.116217 delysq 0.116217 delzsq 0.116217 dist 0.590466
-Atom IDs (7, 8) delx -0.665791 dely -0.665791 delz -0.665791 delxsq 0.443278 delysq 0.443278 delzsq 0.443278 dist 1.153185
-Atom IDs (8, 9) delx -0.944826 dely -0.944826 delz -0.944826 delxsq 0.892696 delysq 0.892696 delzsq 0.892696 dist 1.636487
-Atom IDs (9, 10) delx 0.121211 dely 0.121211 delz 0.121211 delxsq 0.014692 delysq 0.014692 delzsq 0.014692 dist 0.209944
-Atom IDs (10, 11) delx 0.611469 dely 0.611469 delz 0.611469 delxsq 0.373895 delysq 0.373895 delzsq 0.373895 dist 1.059096
-The length of molecule with ID 1 is 12.583340
-
-Atom IDs (1, 2) types (1, 2) scale 25.833403 delx 0.457163 dely 1.210774 delz 0.137064 dist 1.301445
-Atom IDs (2, 3) types (2, 3) scale 25.833403 delx -0.105163 dely -0.584615 delz -0.497922 dist 0.775087
-Atom IDs (3, 4) types (3, 4) scale 25.833403 delx -1.916717 dely -0.906774 delz 1.029711 dist 2.357191
-Atom IDs (4, 5) types (4, 5) scale 25.833403 delx 1.306738 dely -0.406403 delz 0.347247 dist 1.411845
-Atom IDs (5, 6) types (5, 6) scale 25.833403 delx 0.795010 dely 0.863878 delz -0.449091 dist 1.256984
-Atom IDs (6, 7) types (6, 7) scale 25.833403 delx 0.340906 dely 0.414215 delz -1.085880 dist 1.211168
-Atom IDs (7, 8) types (7, 8) scale 25.833403 delx -0.665791 dely -1.172167 delz 0.177281 dist 1.359662
-Atom IDs (8, 9) types (8, 9) scale 25.833403 delx -0.944826 dely 0.789137 delz 0.522241 dist 1.337224
-Atom IDs (9, 10) types (9, 10) scale 25.833403 delx 0.121211 dely -0.123679 delz 0.306889 dist 0.352377
-Atom IDs (10, 11) types (10, 11) scale 25.833403 delx 0.611469 dely -0.084367 delz -0.487540 dist 0.786580
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457159 dely 0.457159 delz 0.457159 delxsq 0.208995 delysq 0.208995 delzsq 0.208995 dist 0.791823
-Atom IDs (2, 3) delx -0.105157 dely -0.105157 delz -0.105157 delxsq 0.011058 delysq 0.011058 delzsq 0.011058 dist 0.182137
-Atom IDs (3, 4) delx -1.916725 dely -1.916725 delz -1.916725 delxsq 3.673836 delysq 3.673836 delzsq 3.673836 dist 3.319866
-Atom IDs (4, 5) delx 1.306749 dely 1.306749 delz 1.306749 delxsq 1.707592 delysq 1.707592 delzsq 1.707592 dist 2.263355
-Atom IDs (5, 6) delx 0.795013 dely 0.795013 delz 0.795013 delxsq 0.632045 delysq 0.632045 delzsq 0.632045 dist 1.377003
-Atom IDs (6, 7) delx 0.340879 dely 0.340879 delz 0.340879 delxsq 0.116198 delysq 0.116198 delzsq 0.116198 dist 0.590419
-Atom IDs (7, 8) delx -0.665767 dely -0.665767 delz -0.665767 delxsq 0.443245 delysq 0.443245 delzsq 0.443245 dist 1.153142
-Atom IDs (8, 9) delx -0.944828 dely -0.944828 delz -0.944828 delxsq 0.892699 delysq 0.892699 delzsq 0.892699 dist 1.636489
-Atom IDs (9, 10) delx 0.121222 dely 0.121222 delz 0.121222 delxsq 0.014695 delysq 0.014695 delzsq 0.014695 dist 0.209962
-Atom IDs (10, 11) delx 0.611455 dely 0.611455 delz 0.611455 delxsq 0.373877 delysq 0.373877 delzsq 0.373877 dist 1.059071
-The length of molecule with ID 1 is 12.583267
-
-Atom IDs (1, 2) types (1, 2) scale 25.832672 delx 0.457159 dely 1.210775 delz 0.137064 dist 1.301444
-Atom IDs (2, 3) types (2, 3) scale 25.832672 delx -0.105157 dely -0.584622 delz -0.497920 dist 0.775090
-Atom IDs (3, 4) types (3, 4) scale 25.832672 delx -1.916725 dely -0.906768 delz 1.029715 dist 2.357197
-Atom IDs (4, 5) types (4, 5) scale 25.832672 delx 1.306749 dely -0.406401 delz 0.347233 dist 1.411851
-Atom IDs (5, 6) types (5, 6) scale 25.832672 delx 0.795013 dely 0.863875 delz -0.449087 dist 1.256982
-Atom IDs (6, 7) types (6, 7) scale 25.832672 delx 0.340879 dely 0.414201 delz -1.085871 dist 1.211146
-Atom IDs (7, 8) types (7, 8) scale 25.832672 delx -0.665767 dely -1.172135 delz 0.177288 dist 1.359624
-Atom IDs (8, 9) types (8, 9) scale 25.832672 delx -0.944828 dely 0.789123 delz 0.522221 dist 1.337210
-Atom IDs (9, 10) types (9, 10) scale 25.832672 delx 0.121222 dely -0.123686 delz 0.306896 dist 0.352389
-Atom IDs (10, 11) types (10, 11) scale 25.832672 delx 0.611455 dely -0.084362 delz -0.487539 dist 0.786568
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457158 dely 0.457158 delz 0.457158 delxsq 0.208993 delysq 0.208993 delzsq 0.208993 dist 0.791820
-Atom IDs (2, 3) delx -0.105154 dely -0.105154 delz -0.105154 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182132
-Atom IDs (3, 4) delx -1.916729 dely -1.916729 delz -1.916729 delxsq 3.673851 delysq 3.673851 delzsq 3.673851 dist 3.319872
-Atom IDs (4, 5) delx 1.306754 dely 1.306754 delz 1.306754 delxsq 1.707606 delysq 1.707606 delzsq 1.707606 dist 2.263364
-Atom IDs (5, 6) delx 0.795014 dely 0.795014 delz 0.795014 delxsq 0.632047 delysq 0.632047 delzsq 0.632047 dist 1.377005
-Atom IDs (6, 7) delx 0.340865 dely 0.340865 delz 0.340865 delxsq 0.116189 delysq 0.116189 delzsq 0.116189 dist 0.590396
-Atom IDs (7, 8) delx -0.665754 dely -0.665754 delz -0.665754 delxsq 0.443229 delysq 0.443229 delzsq 0.443229 dist 1.153121
-Atom IDs (8, 9) delx -0.944828 dely -0.944828 delz -0.944828 delxsq 0.892701 delysq 0.892701 delzsq 0.892701 dist 1.636491
-Atom IDs (9, 10) delx 0.121227 dely 0.121227 delz 0.121227 delxsq 0.014696 delysq 0.014696 delzsq 0.014696 dist 0.209971
-Atom IDs (10, 11) delx 0.611448 dely 0.611448 delz 0.611448 delxsq 0.373869 delysq 0.373869 delzsq 0.373869 dist 1.059059
-The length of molecule with ID 1 is 12.583231
-
-Atom IDs (1, 2) types (1, 2) scale 25.832307 delx 0.457158 dely 1.210775 delz 0.137064 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.832307 delx -0.105154 dely -0.584625 delz -0.497918 dist 0.775091
-Atom IDs (3, 4) types (3, 4) scale 25.832307 delx -1.916729 dely -0.906764 delz 1.029717 dist 2.357199
-Atom IDs (4, 5) types (4, 5) scale 25.832307 delx 1.306754 dely -0.406400 delz 0.347226 dist 1.411854
-Atom IDs (5, 6) types (5, 6) scale 25.832307 delx 0.795014 dely 0.863873 delz -0.449085 dist 1.256981
-Atom IDs (6, 7) types (6, 7) scale 25.832307 delx 0.340865 dely 0.414194 delz -1.085866 dist 1.211136
-Atom IDs (7, 8) types (7, 8) scale 25.832307 delx -0.665754 dely -1.172120 delz 0.177291 dist 1.359605
-Atom IDs (8, 9) types (8, 9) scale 25.832307 delx -0.944828 dely 0.789117 delz 0.522211 dist 1.337202
-Atom IDs (9, 10) types (9, 10) scale 25.832307 delx 0.121227 dely -0.123689 delz 0.306900 dist 0.352396
-Atom IDs (10, 11) types (10, 11) scale 25.832307 delx 0.611448 dely -0.084360 delz -0.487539 dist 0.786562
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457157 dely 0.457157 delz 0.457157 delxsq 0.208992 delysq 0.208992 delzsq 0.208992 dist 0.791819
-Atom IDs (2, 3) delx -0.105152 dely -0.105152 delz -0.105152 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182129
-Atom IDs (3, 4) delx -1.916731 dely -1.916731 delz -1.916731 delxsq 3.673859 delysq 3.673859 delzsq 3.673859 dist 3.319876
-Atom IDs (4, 5) delx 1.306756 dely 1.306756 delz 1.306756 delxsq 1.707613 delysq 1.707613 delzsq 1.707613 dist 2.263369
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632048 delysq 0.632048 delzsq 0.632048 dist 1.377006
-Atom IDs (6, 7) delx 0.340859 dely 0.340859 delz 0.340859 delxsq 0.116185 delysq 0.116185 delzsq 0.116185 dist 0.590385
-Atom IDs (7, 8) delx -0.665748 dely -0.665748 delz -0.665748 delxsq 0.443221 delysq 0.443221 delzsq 0.443221 dist 1.153110
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892701 delysq 0.892701 delzsq 0.892701 dist 1.636491
-Atom IDs (9, 10) delx 0.121229 dely 0.121229 delz 0.121229 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209975
-Atom IDs (10, 11) delx 0.611444 dely 0.611444 delz 0.611444 delxsq 0.373864 delysq 0.373864 delzsq 0.373864 dist 1.059053
-The length of molecule with ID 1 is 12.583212
-
-Atom IDs (1, 2) types (1, 2) scale 25.832124 delx 0.457157 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.832124 delx -0.105152 dely -0.584627 delz -0.497918 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.832124 delx -1.916731 dely -0.906763 delz 1.029718 dist 2.357201
-Atom IDs (4, 5) types (4, 5) scale 25.832124 delx 1.306756 dely -0.406399 delz 0.347222 dist 1.411856
-Atom IDs (5, 6) types (5, 6) scale 25.832124 delx 0.795015 dely 0.863872 delz -0.449084 dist 1.256981
-Atom IDs (6, 7) types (6, 7) scale 25.832124 delx 0.340859 dely 0.414190 delz -1.085863 dist 1.211131
-Atom IDs (7, 8) types (7, 8) scale 25.832124 delx -0.665748 dely -1.172112 delz 0.177292 dist 1.359595
-Atom IDs (8, 9) types (8, 9) scale 25.832124 delx -0.944829 dely 0.789113 delz 0.522207 dist 1.337199
-Atom IDs (9, 10) types (9, 10) scale 25.832124 delx 0.121229 dely -0.123691 delz 0.306902 dist 0.352399
-Atom IDs (10, 11) types (10, 11) scale 25.832124 delx 0.611444 dely -0.084359 delz -0.487539 dist 0.786559
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208992 delysq 0.208992 delzsq 0.208992 dist 0.791818
-Atom IDs (2, 3) delx -0.105152 dely -0.105152 delz -0.105152 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182128
-Atom IDs (3, 4) delx -1.916732 dely -1.916732 delz -1.916732 delxsq 3.673863 delysq 3.673863 delzsq 3.673863 dist 3.319878
-Atom IDs (4, 5) delx 1.306758 dely 1.306758 delz 1.306758 delxsq 1.707616 delysq 1.707616 delzsq 1.707616 dist 2.263371
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377006
-Atom IDs (6, 7) delx 0.340855 dely 0.340855 delz 0.340855 delxsq 0.116182 delysq 0.116182 delzsq 0.116182 dist 0.590379
-Atom IDs (7, 8) delx -0.665745 dely -0.665745 delz -0.665745 delxsq 0.443217 delysq 0.443217 delzsq 0.443217 dist 1.153105
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121231 dely 0.121231 delz 0.121231 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209978
-Atom IDs (10, 11) delx 0.611443 dely 0.611443 delz 0.611443 delxsq 0.373862 delysq 0.373862 delzsq 0.373862 dist 1.059050
-The length of molecule with ID 1 is 12.583203
-
-Atom IDs (1, 2) types (1, 2) scale 25.832033 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.832033 delx -0.105152 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.832033 delx -1.916732 dely -0.906762 delz 1.029718 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.832033 delx 1.306758 dely -0.406399 delz 0.347221 dist 1.411856
-Atom IDs (5, 6) types (5, 6) scale 25.832033 delx 0.795015 dely 0.863872 delz -0.449084 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.832033 delx 0.340855 dely 0.414188 delz -1.085862 dist 1.211128
-Atom IDs (7, 8) types (7, 8) scale 25.832033 delx -0.665745 dely -1.172108 delz 0.177293 dist 1.359591
-Atom IDs (8, 9) types (8, 9) scale 25.832033 delx -0.944829 dely 0.789111 delz 0.522204 dist 1.337197
-Atom IDs (9, 10) types (9, 10) scale 25.832033 delx 0.121231 dely -0.123692 delz 0.306903 dist 0.352400
-Atom IDs (10, 11) types (10, 11) scale 25.832033 delx 0.611443 dely -0.084358 delz -0.487539 dist 0.786558
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208992 delysq 0.208992 delzsq 0.208992 dist 0.791818
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673864 delysq 3.673864 delzsq 3.673864 dist 3.319878
-Atom IDs (4, 5) delx 1.306758 dely 1.306758 delz 1.306758 delxsq 1.707618 delysq 1.707618 delzsq 1.707618 dist 2.263372
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340854 dely 0.340854 delz 0.340854 delxsq 0.116181 delysq 0.116181 delzsq 0.116181 dist 0.590376
-Atom IDs (7, 8) delx -0.665744 dely -0.665744 delz -0.665744 delxsq 0.443215 delysq 0.443215 delzsq 0.443215 dist 1.153102
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121231 dely 0.121231 delz 0.121231 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209979
-Atom IDs (10, 11) delx 0.611442 dely 0.611442 delz 0.611442 delxsq 0.373861 delysq 0.373861 delzsq 0.373861 dist 1.059048
-The length of molecule with ID 1 is 12.583199
-
-Atom IDs (1, 2) types (1, 2) scale 25.831987 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831987 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.831987 delx -1.916733 dely -0.906762 delz 1.029718 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831987 delx 1.306758 dely -0.406399 delz 0.347220 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831987 delx 0.795015 dely 0.863871 delz -0.449084 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831987 delx 0.340854 dely 0.414187 delz -1.085862 dist 1.211127
-Atom IDs (7, 8) types (7, 8) scale 25.831987 delx -0.665744 dely -1.172106 delz 0.177294 dist 1.359588
-Atom IDs (8, 9) types (8, 9) scale 25.831987 delx -0.944829 dely 0.789111 delz 0.522203 dist 1.337196
-Atom IDs (9, 10) types (9, 10) scale 25.831987 delx 0.121231 dely -0.123692 delz 0.306903 dist 0.352401
-Atom IDs (10, 11) types (10, 11) scale 25.831987 delx 0.611442 dely -0.084358 delz -0.487539 dist 0.786557
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208992 delysq 0.208992 delzsq 0.208992 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673865 delysq 3.673865 delzsq 3.673865 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340853 dely 0.340853 delz 0.340853 delxsq 0.116181 delysq 0.116181 delzsq 0.116181 dist 0.590375
-Atom IDs (7, 8) delx -0.665743 dely -0.665743 delz -0.665743 delxsq 0.443214 delysq 0.443214 delzsq 0.443214 dist 1.153101
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209979
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373861 delysq 0.373861 delzsq 0.373861 dist 1.059048
-The length of molecule with ID 1 is 12.583196
-
-Atom IDs (1, 2) types (1, 2) scale 25.831965 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831965 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.831965 delx -1.916733 dely -0.906761 delz 1.029718 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831965 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831965 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831965 delx 0.340853 dely 0.414187 delz -1.085861 dist 1.211126
-Atom IDs (7, 8) types (7, 8) scale 25.831965 delx -0.665743 dely -1.172105 delz 0.177294 dist 1.359587
-Atom IDs (8, 9) types (8, 9) scale 25.831965 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337196
-Atom IDs (9, 10) types (9, 10) scale 25.831965 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352401
-Atom IDs (10, 11) types (10, 11) scale 25.831965 delx 0.611441 dely -0.084358 delz -0.487539 dist 0.786557
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208992 delysq 0.208992 delzsq 0.208992 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340853 dely 0.340853 delz 0.340853 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590374
-Atom IDs (7, 8) delx -0.665743 dely -0.665743 delz -0.665743 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153100
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583195
-
-Atom IDs (1, 2) types (1, 2) scale 25.831953 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831953 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.831953 delx -1.916733 dely -0.906761 delz 1.029718 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831953 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831953 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831953 delx 0.340853 dely 0.414186 delz -1.085861 dist 1.211126
-Atom IDs (7, 8) types (7, 8) scale 25.831953 delx -0.665743 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831953 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831953 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352401
-Atom IDs (10, 11) types (10, 11) scale 25.831953 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590374
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153100
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583195
-
-Atom IDs (1, 2) types (1, 2) scale 25.831947 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831947 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.831947 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831947 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831947 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831947 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831947 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831947 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831947 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831947 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831945 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831945 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775092
-Atom IDs (3, 4) types (3, 4) scale 25.831945 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831945 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831945 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831945 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831945 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831945 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831945 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831945 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831943 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831943 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831943 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831943 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831943 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831943 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831943 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831943 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831943 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831943 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-Begin calculation of end-to-end distances per molecule.
-Atom IDs (1, 2) delx 0.457156 dely 0.457156 delz 0.457156 delxsq 0.208991 delysq 0.208991 delzsq 0.208991 dist 0.791817
-Atom IDs (2, 3) delx -0.105151 dely -0.105151 delz -0.105151 delxsq 0.011057 delysq 0.011057 delzsq 0.011057 dist 0.182127
-Atom IDs (3, 4) delx -1.916733 dely -1.916733 delz -1.916733 delxsq 3.673866 delysq 3.673866 delzsq 3.673866 dist 3.319879
-Atom IDs (4, 5) delx 1.306759 dely 1.306759 delz 1.306759 delxsq 1.707619 delysq 1.707619 delzsq 1.707619 dist 2.263373
-Atom IDs (5, 6) delx 0.795015 dely 0.795015 delz 0.795015 delxsq 0.632049 delysq 0.632049 delzsq 0.632049 dist 1.377007
-Atom IDs (6, 7) delx 0.340852 dely 0.340852 delz 0.340852 delxsq 0.116180 delysq 0.116180 delzsq 0.116180 dist 0.590373
-Atom IDs (7, 8) delx -0.665742 dely -0.665742 delz -0.665742 delxsq 0.443213 delysq 0.443213 delzsq 0.443213 dist 1.153099
-Atom IDs (8, 9) delx -0.944829 dely -0.944829 delz -0.944829 delxsq 0.892702 delysq 0.892702 delzsq 0.892702 dist 1.636492
-Atom IDs (9, 10) delx 0.121232 dely 0.121232 delz 0.121232 delxsq 0.014697 delysq 0.014697 delzsq 0.014697 dist 0.209980
-Atom IDs (10, 11) delx 0.611441 dely 0.611441 delz 0.611441 delxsq 0.373860 delysq 0.373860 delzsq 0.373860 dist 1.059047
-The length of molecule with ID 1 is 12.583194
-
-Atom IDs (1, 2) types (1, 2) scale 25.831942 delx 0.457156 dely 1.210775 delz 0.137063 dist 1.301443
-Atom IDs (2, 3) types (2, 3) scale 25.831942 delx -0.105151 dely -0.584628 delz -0.497917 dist 0.775093
-Atom IDs (3, 4) types (3, 4) scale 25.831942 delx -1.916733 dely -0.906761 delz 1.029719 dist 2.357202
-Atom IDs (4, 5) types (4, 5) scale 25.831942 delx 1.306759 dely -0.406399 delz 0.347219 dist 1.411857
-Atom IDs (5, 6) types (5, 6) scale 25.831942 delx 0.795015 dely 0.863871 delz -0.449083 dist 1.256980
-Atom IDs (6, 7) types (6, 7) scale 25.831942 delx 0.340852 dely 0.414186 delz -1.085861 dist 1.211125
-Atom IDs (7, 8) types (7, 8) scale 25.831942 delx -0.665742 dely -1.172104 delz 0.177294 dist 1.359586
-Atom IDs (8, 9) types (8, 9) scale 25.831942 delx -0.944829 dely 0.789110 delz 0.522202 dist 1.337195
-Atom IDs (9, 10) types (9, 10) scale 25.831942 delx 0.121232 dely -0.123692 delz 0.306904 dist 0.352402
-Atom IDs (10, 11) types (10, 11) scale 25.831942 delx 0.611441 dely -0.084357 delz -0.487539 dist 0.786556
-This iteration of calculating restraint forces is now complete.
-
-         2   0              0              31.741333      31.741333     -4.2675591e-07
-Loop time of 0.00292887 on 1 procs for 2 steps with 11 atoms
-
-16.4% CPU use with 1 MPI tasks x 1 OpenMP threads
-
-Minimization stats:
-  Stopping criterion = linesearch alpha is zero
-  Energy initial, next-to-last, final = 
-      48.6253779461921   31.7413330042828   31.7413330042828
-  Force two-norm initial, final = 23.86894 74.184421
-  Force max component initial, final = 10.899908 23.597001
-  Final line search alpha, max atom move = 1.2865176e-12 3.0357956e-11
-  Iterations, force evaluations = 2 40
-
-MPI task timing breakdown:
-Section |  min time  |  avg time  |  max time  |%varavg| %total
----------------------------------------------------------------
-Pair    | 0          | 0          | 0          |   0.0 |  0.00
-Bond    | 2.7365e-05 | 2.7365e-05 | 2.7365e-05 |   0.0 |  0.93
-Neigh   | 5.4361e-05 | 5.4361e-05 | 5.4361e-05 |   0.0 |  1.86
-Comm    | 3.9827e-05 | 3.9827e-05 | 3.9827e-05 |   0.0 |  1.36
-Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0027561  | 0.0027561  | 0.0027561  |   0.0 | 94.10
-Other   |            | 5.121e-05  |            |       |  1.75
-
-Nlocal:             11 ave          11 max          11 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:             77 ave          77 max          77 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-
-Total # of neighbors = 1
-Ave neighs/atom = 0.090909091
-Ave special neighs/atom = 4.9090909
-Neighbor list builds = 19
-Dangerous builds = 18
-WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
 Setting up Verlet run ...
   Unit style    : si
   Current step  : 0
   Time step     : 1e-08
-Per MPI rank memory allocation (min/avg/max) = 8.488 | 8.488 | 8.488 Mbytes
-   Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0              0              31.741333      31.741333     -4.2675591e-07
-Loop time of 9.22e-07 on 1 procs for 0 steps with 11 atoms
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2442)
+Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
+   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
 
-0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+### Calculation of global restraint energy called with compute_scalar() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329587 delz 0.224105 delxsq 0.126483 delysq 1.767801 delzsq 0.050223 dist 1.394456
+Atom IDs (2, 3) delx 0.196450 dely -0.853106 delz -0.587235 delxsq 0.038593 delysq 0.727789 delzsq 0.344845 dist 1.054148
+Atom IDs (3, 4) delx -2.443519 dely -0.706481 delz 1.200621 delxsq 5.970785 delysq 0.499115 delzsq 1.441490 dist 2.812719
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052143 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969065 dely 0.785927 delz -0.217490 delxsq 0.939087 delysq 0.617681 delzsq 0.047302 dist 1.266519
+Atom IDs (6, 7) delx -0.532161 dely 0.039392 delz -0.887095 delxsq 0.283195 delysq 0.001552 delzsq 0.786938 dist 1.035222
+Atom IDs (7, 8) delx 0.273391 dely -0.187261 delz 0.327555 delxsq 0.074742 delysq 0.035067 delzsq 0.107292 dist 0.465941
+Atom IDs (8, 9) delx -1.186840 dely 0.363008 delz -0.243257 delxsq 1.408589 delysq 0.131775 delzsq 0.059174 dist 1.264728
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804323 delxsq 0.207000 delysq 0.114650 delzsq 0.646935 dist 0.984167
+Atom IDs (10, 11) delx 0.205578 dely 0.045200 delz -0.569383 delxsq 0.042262 delysq 0.002043 delzsq 0.324197 dist 0.607044
+The length of molecule with ID 1 is 12.658687
+
+The total energy of the system is: 0.353431
+
+Calculation of global restraint energy complete.
+
+         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
+Loop time of 3.841e-06 on 1 procs for 0 steps with 11 atoms
+
+26.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -1136,7 +87,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 9.22e-07   |            |       |100.00
+Other   |            | 3.841e-06  |            |       |100.00
 
 Nlocal:             11 ave          11 max          11 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -1150,11 +101,580 @@ Ave neighs/atom = 0.090909091
 Ave special neighs/atom = 4.9090909
 Neighbor list builds = 0
 Dangerous builds = 0
-# End-to-end arc length following minimization: 12.149438578324
+Setting up Verlet run ...
+  Unit style    : si
+  Current step  : 0
+  Time step     : 0.001
+Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
+   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+
+### Calculation of global restraint energy called with compute_scalar() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329587 delz 0.224105 delxsq 0.126483 delysq 1.767801 delzsq 0.050223 dist 1.394456
+Atom IDs (2, 3) delx 0.196450 dely -0.853106 delz -0.587235 delxsq 0.038593 delysq 0.727789 delzsq 0.344845 dist 1.054148
+Atom IDs (3, 4) delx -2.443519 dely -0.706481 delz 1.200621 delxsq 5.970785 delysq 0.499115 delzsq 1.441490 dist 2.812719
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052143 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969065 dely 0.785927 delz -0.217490 delxsq 0.939087 delysq 0.617681 delzsq 0.047302 dist 1.266519
+Atom IDs (6, 7) delx -0.532161 dely 0.039392 delz -0.887095 delxsq 0.283195 delysq 0.001552 delzsq 0.786938 dist 1.035222
+Atom IDs (7, 8) delx 0.273391 dely -0.187261 delz 0.327555 delxsq 0.074742 delysq 0.035067 delzsq 0.107292 dist 0.465941
+Atom IDs (8, 9) delx -1.186840 dely 0.363008 delz -0.243257 delxsq 1.408589 delysq 0.131775 delzsq 0.059174 dist 1.264728
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804323 delxsq 0.207000 delysq 0.114650 delzsq 0.646935 dist 0.984167
+Atom IDs (10, 11) delx 0.205578 dely 0.045200 delz -0.569383 delxsq 0.042262 delysq 0.002043 delzsq 0.324197 dist 0.607044
+The length of molecule with ID 1 is 12.658687
+
+The total energy of the system is: 0.353431
+
+Calculation of global restraint energy complete.
+
+         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
+Loop time of 4.33e-06 on 1 procs for 0 steps with 11 atoms
+
+23.1% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 4.33e-06   |            |       |100.00
+
+Nlocal:             11 ave          11 max          11 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:             77 ave          77 max          77 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.090909091
+Ave special neighs/atom = 4.9090909
+Neighbor list builds = 0
+Dangerous builds = 0
+Setting up Verlet run ...
+  Unit style    : si
+  Current step  : 0
+  Time step     : 0.001
+Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
+   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+
+### Calculation of global restraint energy called with compute_scalar() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329587 delz 0.224105 delxsq 0.126483 delysq 1.767801 delzsq 0.050223 dist 1.394456
+Atom IDs (2, 3) delx 0.196450 dely -0.853106 delz -0.587235 delxsq 0.038593 delysq 0.727789 delzsq 0.344845 dist 1.054148
+Atom IDs (3, 4) delx -2.443519 dely -0.706481 delz 1.200621 delxsq 5.970785 delysq 0.499115 delzsq 1.441490 dist 2.812719
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052143 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969065 dely 0.785927 delz -0.217490 delxsq 0.939087 delysq 0.617681 delzsq 0.047302 dist 1.266519
+Atom IDs (6, 7) delx -0.532161 dely 0.039392 delz -0.887095 delxsq 0.283195 delysq 0.001552 delzsq 0.786938 dist 1.035222
+Atom IDs (7, 8) delx 0.273391 dely -0.187261 delz 0.327555 delxsq 0.074742 delysq 0.035067 delzsq 0.107292 dist 0.465941
+Atom IDs (8, 9) delx -1.186840 dely 0.363008 delz -0.243257 delxsq 1.408589 delysq 0.131775 delzsq 0.059174 dist 1.264728
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804323 delxsq 0.207000 delysq 0.114650 delzsq 0.646935 dist 0.984167
+Atom IDs (10, 11) delx 0.205578 dely 0.045200 delz -0.569383 delxsq 0.042262 delysq 0.002043 delzsq 0.324197 dist 0.607044
+The length of molecule with ID 1 is 12.658687
+
+The total energy of the system is: 0.353431
+
+Calculation of global restraint energy complete.
+
+         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329587 delz 0.224105 delxsq 0.126483 delysq 1.767801 delzsq 0.050223 dist 1.394456
+Atom IDs (2, 3) delx 0.196450 dely -0.853106 delz -0.587235 delxsq 0.038593 delysq 0.727789 delzsq 0.344845 dist 1.054148
+Atom IDs (3, 4) delx -2.443519 dely -0.706481 delz 1.200621 delxsq 5.970785 delysq 0.499115 delzsq 1.441490 dist 2.812719
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052143 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969065 dely 0.785927 delz -0.217490 delxsq 0.939087 delysq 0.617681 delzsq 0.047302 dist 1.266519
+Atom IDs (6, 7) delx -0.532161 dely 0.039392 delz -0.887095 delxsq 0.283195 delysq 0.001552 delzsq 0.786938 dist 1.035222
+Atom IDs (7, 8) delx 0.273391 dely -0.187261 delz 0.327555 delxsq 0.074742 delysq 0.035067 delzsq 0.107292 dist 0.465941
+Atom IDs (8, 9) delx -1.186840 dely 0.363008 delz -0.243257 delxsq 1.408589 delysq 0.131775 delzsq 0.059174 dist 1.264728
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804323 delxsq 0.207000 delysq 0.114650 delzsq 0.646935 dist 0.984167
+Atom IDs (10, 11) delx 0.205578 dely 0.045200 delz -0.569383 delxsq 0.042262 delysq 0.002043 delzsq 0.324197 dist 0.607044
+The length of molecule with ID 1 is 12.658687
+
+The total energy of the system is: 0.353431
+
+Atom IDs (1, 2) types (1, 2) scale 0.265869 delx 0.355644 dely 1.329587 delz 0.224105 dist 1.394456
+Atom IDs (1, 2) fx_i1 0.067808 fy_i1 0.253501 fz_i1 0.042728
+Atom IDs (2, 3) types (2, 3) scale 0.265869 delx 0.196450 dely -0.853106 delz -0.587235 dist 1.054148
+Atom IDs (2, 3) fx_i1 0.049547 fy_i1 -0.215164 fz_i1 -0.148108
+Atom IDs (3, 4) types (3, 4) scale 0.265869 delx -2.443519 dely -0.706481 delz 1.200621 dist 2.812719
+Atom IDs (3, 4) fx_i1 -0.230971 fy_i1 -0.066779 fz_i1 0.113487
+Atom IDs (4, 5) types (4, 5) scale 0.265869 delx 1.707419 dely -0.477666 delz -0.052143 dist 1.773743
+Atom IDs (4, 5) fx_i1 0.255927 fy_i1 -0.071598 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265869 delx 0.969065 dely 0.785927 delz -0.217490 dist 1.266519
+Atom IDs (5, 6) fx_i1 0.203427 fy_i1 0.164982 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265869 delx -0.532161 dely 0.039392 delz -0.887095 dist 1.035222
+Atom IDs (6, 7) fx_i1 -0.136671 fy_i1 0.010117 fz_i1 -0.227826
+Atom IDs (7, 8) types (7, 8) scale 0.265869 delx 0.273391 dely -0.187261 delz 0.327555 dist 0.465941
+Atom IDs (7, 8) fx_i1 0.155998 fy_i1 -0.106852 fz_i1 0.186905
+Atom IDs (8, 9) types (8, 9) scale 0.265869 delx -1.186840 dely 0.363008 delz -0.243257 dist 1.264728
+Atom IDs (8, 9) fx_i1 -0.249495 fy_i1 0.076311 fz_i1 -0.051137
+Atom IDs (9, 10) types (9, 10) scale 0.265869 delx 0.454972 dely -0.338600 delz 0.804323 dist 0.984167
+Atom IDs (9, 10) fx_i1 0.122909 fy_i1 -0.091471 fz_i1 0.217285
+Atom IDs (10, 11) types (10, 11) scale 0.265869 delx 0.205578 dely 0.045200 delz -0.569383 dist 0.607044
+Atom IDs (10, 11) fx_i1 0.090038 fy_i1 0.019796 fz_i1 -0.249374
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329587 delz 0.224105 delxsq 0.126483 delysq 1.767802 delzsq 0.050223 dist 1.394456
+Atom IDs (2, 3) delx 0.196450 dely -0.853106 delz -0.587235 delxsq 0.038593 delysq 0.727789 delzsq 0.344845 dist 1.054148
+Atom IDs (3, 4) delx -2.443519 dely -0.706481 delz 1.200621 delxsq 5.970787 delysq 0.499115 delzsq 1.441490 dist 2.812720
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052142 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969065 dely 0.785927 delz -0.217490 delxsq 0.939087 delysq 0.617681 delzsq 0.047302 dist 1.266519
+Atom IDs (6, 7) delx -0.532161 dely 0.039392 delz -0.887096 delxsq 0.283196 delysq 0.001552 delzsq 0.786939 dist 1.035223
+Atom IDs (7, 8) delx 0.273391 dely -0.187261 delz 0.327555 delxsq 0.074743 delysq 0.035067 delzsq 0.107293 dist 0.465942
+Atom IDs (8, 9) delx -1.186840 dely 0.363008 delz -0.243257 delxsq 1.408590 delysq 0.131775 delzsq 0.059174 dist 1.264729
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804323 delxsq 0.207000 delysq 0.114650 delzsq 0.646936 dist 0.984168
+Atom IDs (10, 11) delx 0.205578 dely 0.045200 delz -0.569383 delxsq 0.042263 delysq 0.002043 delzsq 0.324197 dist 0.607044
+The length of molecule with ID 1 is 12.658691
+
+The total energy of the system is: 0.353432
+
+Atom IDs (1, 2) types (1, 2) scale 0.265869 delx 0.355644 dely 1.329587 delz 0.224105 dist 1.394456
+Atom IDs (1, 2) fx_i1 0.067808 fy_i1 0.253501 fz_i1 0.042728
+Atom IDs (2, 3) types (2, 3) scale 0.265869 delx 0.196450 dely -0.853106 delz -0.587235 dist 1.054148
+Atom IDs (2, 3) fx_i1 0.049547 fy_i1 -0.215164 fz_i1 -0.148108
+Atom IDs (3, 4) types (3, 4) scale 0.265869 delx -2.443519 dely -0.706481 delz 1.200621 dist 2.812720
+Atom IDs (3, 4) fx_i1 -0.230971 fy_i1 -0.066779 fz_i1 0.113487
+Atom IDs (4, 5) types (4, 5) scale 0.265869 delx 1.707419 dely -0.477666 delz -0.052142 dist 1.773743
+Atom IDs (4, 5) fx_i1 0.255928 fy_i1 -0.071598 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265869 delx 0.969065 dely 0.785927 delz -0.217490 dist 1.266519
+Atom IDs (5, 6) fx_i1 0.203427 fy_i1 0.164983 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265869 delx -0.532161 dely 0.039392 delz -0.887096 dist 1.035223
+Atom IDs (6, 7) fx_i1 -0.136671 fy_i1 0.010117 fz_i1 -0.227827
+Atom IDs (7, 8) types (7, 8) scale 0.265869 delx 0.273391 dely -0.187261 delz 0.327555 dist 0.465942
+Atom IDs (7, 8) fx_i1 0.155998 fy_i1 -0.106852 fz_i1 0.186905
+Atom IDs (8, 9) types (8, 9) scale 0.265869 delx -1.186840 dely 0.363008 delz -0.243257 dist 1.264729
+Atom IDs (8, 9) fx_i1 -0.249496 fy_i1 0.076311 fz_i1 -0.051137
+Atom IDs (9, 10) types (9, 10) scale 0.265869 delx 0.454972 dely -0.338600 delz 0.804323 dist 0.984168
+Atom IDs (9, 10) fx_i1 0.122909 fy_i1 -0.091472 fz_i1 0.217285
+Atom IDs (10, 11) types (10, 11) scale 0.265869 delx 0.205578 dely 0.045200 delz -0.569383 dist 0.607044
+Atom IDs (10, 11) fx_i1 0.090038 fy_i1 0.019796 fz_i1 -0.249375
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329588 delz 0.224105 delxsq 0.126483 delysq 1.767804 delzsq 0.050223 dist 1.394457
+Atom IDs (2, 3) delx 0.196451 dely -0.853106 delz -0.587236 delxsq 0.038593 delysq 0.727790 delzsq 0.344846 dist 1.054148
+Atom IDs (3, 4) delx -2.443520 dely -0.706481 delz 1.200621 delxsq 5.970791 delysq 0.499115 delzsq 1.441491 dist 2.812721
+Atom IDs (4, 5) delx 1.707419 dely -0.477666 delz -0.052142 delxsq 2.915281 delysq 0.228165 delzsq 0.002719 dist 1.773743
+Atom IDs (5, 6) delx 0.969066 dely 0.785927 delz -0.217490 delxsq 0.939089 delysq 0.617682 delzsq 0.047302 dist 1.266520
+Atom IDs (6, 7) delx -0.532162 dely 0.039392 delz -0.887097 delxsq 0.283196 delysq 0.001552 delzsq 0.786940 dist 1.035224
+Atom IDs (7, 8) delx 0.273392 dely -0.187261 delz 0.327556 delxsq 0.074743 delysq 0.035067 delzsq 0.107293 dist 0.465943
+Atom IDs (8, 9) delx -1.186841 dely 0.363008 delz -0.243258 delxsq 1.408591 delysq 0.131775 delzsq 0.059174 dist 1.264730
+Atom IDs (9, 10) delx 0.454972 dely -0.338600 delz 0.804324 delxsq 0.207000 delysq 0.114650 delzsq 0.646938 dist 0.984169
+Atom IDs (10, 11) delx 0.205579 dely 0.045200 delz -0.569384 delxsq 0.042263 delysq 0.002043 delzsq 0.324198 dist 0.607045
+The length of molecule with ID 1 is 12.658698
+
+The total energy of the system is: 0.353434
+
+Atom IDs (1, 2) types (1, 2) scale 0.265870 delx 0.355644 dely 1.329588 delz 0.224105 dist 1.394457
+Atom IDs (1, 2) fx_i1 0.067808 fy_i1 0.253502 fz_i1 0.042728
+Atom IDs (2, 3) types (2, 3) scale 0.265870 delx 0.196451 dely -0.853106 delz -0.587236 dist 1.054148
+Atom IDs (2, 3) fx_i1 0.049547 fy_i1 -0.215164 fz_i1 -0.148108
+Atom IDs (3, 4) types (3, 4) scale 0.265870 delx -2.443520 dely -0.706481 delz 1.200621 dist 2.812721
+Atom IDs (3, 4) fx_i1 -0.230972 fy_i1 -0.066779 fz_i1 0.113488
+Atom IDs (4, 5) types (4, 5) scale 0.265870 delx 1.707419 dely -0.477666 delz -0.052142 dist 1.773743
+Atom IDs (4, 5) fx_i1 0.255928 fy_i1 -0.071598 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265870 delx 0.969066 dely 0.785927 delz -0.217490 dist 1.266520
+Atom IDs (5, 6) fx_i1 0.203428 fy_i1 0.164983 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265870 delx -0.532162 dely 0.039392 delz -0.887097 dist 1.035224
+Atom IDs (6, 7) fx_i1 -0.136672 fy_i1 0.010117 fz_i1 -0.227827
+Atom IDs (7, 8) types (7, 8) scale 0.265870 delx 0.273392 dely -0.187261 delz 0.327556 dist 0.465943
+Atom IDs (7, 8) fx_i1 0.155999 fy_i1 -0.106852 fz_i1 0.186905
+Atom IDs (8, 9) types (8, 9) scale 0.265870 delx -1.186841 dely 0.363008 delz -0.243258 dist 1.264730
+Atom IDs (8, 9) fx_i1 -0.249496 fy_i1 0.076311 fz_i1 -0.051137
+Atom IDs (9, 10) types (9, 10) scale 0.265870 delx 0.454972 dely -0.338600 delz 0.804324 dist 0.984169
+Atom IDs (9, 10) fx_i1 0.122909 fy_i1 -0.091472 fz_i1 0.217286
+Atom IDs (10, 11) types (10, 11) scale 0.265870 delx 0.205579 dely 0.045200 delz -0.569384 dist 0.607045
+Atom IDs (10, 11) fx_i1 0.090038 fy_i1 0.019796 fz_i1 -0.249375
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329589 delz 0.224106 delxsq 0.126483 delysq 1.767808 delzsq 0.050223 dist 1.394458
+Atom IDs (2, 3) delx 0.196452 dely -0.853106 delz -0.587237 delxsq 0.038593 delysq 0.727791 delzsq 0.344847 dist 1.054149
+Atom IDs (3, 4) delx -2.443522 dely -0.706481 delz 1.200621 delxsq 5.970798 delysq 0.499115 delzsq 1.441492 dist 2.812722
+Atom IDs (4, 5) delx 1.707420 dely -0.477667 delz -0.052142 delxsq 2.915282 delysq 0.228166 delzsq 0.002719 dist 1.773744
+Atom IDs (5, 6) delx 0.969067 dely 0.785928 delz -0.217489 delxsq 0.939091 delysq 0.617682 delzsq 0.047302 dist 1.266521
+Atom IDs (6, 7) delx -0.532163 dely 0.039392 delz -0.887098 delxsq 0.283197 delysq 0.001552 delzsq 0.786942 dist 1.035225
+Atom IDs (7, 8) delx 0.273393 dely -0.187262 delz 0.327557 delxsq 0.074744 delysq 0.035067 delzsq 0.107293 dist 0.465944
+Atom IDs (8, 9) delx -1.186842 dely 0.363009 delz -0.243259 delxsq 1.408594 delysq 0.131775 delzsq 0.059175 dist 1.264731
+Atom IDs (9, 10) delx 0.454973 dely -0.338601 delz 0.804326 delxsq 0.207000 delysq 0.114650 delzsq 0.646940 dist 0.984170
+Atom IDs (10, 11) delx 0.205579 dely 0.045200 delz -0.569384 delxsq 0.042263 delysq 0.002043 delzsq 0.324198 dist 0.607045
+The length of molecule with ID 1 is 12.658709
+
+The total energy of the system is: 0.353437
+
+Atom IDs (1, 2) types (1, 2) scale 0.265871 delx 0.355644 dely 1.329589 delz 0.224106 dist 1.394458
+Atom IDs (1, 2) fx_i1 0.067808 fy_i1 0.253503 fz_i1 0.042729
+Atom IDs (2, 3) types (2, 3) scale 0.265871 delx 0.196452 dely -0.853106 delz -0.587237 dist 1.054149
+Atom IDs (2, 3) fx_i1 0.049548 fy_i1 -0.215165 fz_i1 -0.148109
+Atom IDs (3, 4) types (3, 4) scale 0.265871 delx -2.443522 dely -0.706481 delz 1.200621 dist 2.812722
+Atom IDs (3, 4) fx_i1 -0.230972 fy_i1 -0.066780 fz_i1 0.113488
+Atom IDs (4, 5) types (4, 5) scale 0.265871 delx 1.707420 dely -0.477667 delz -0.052142 dist 1.773744
+Atom IDs (4, 5) fx_i1 0.255929 fy_i1 -0.071599 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265871 delx 0.969067 dely 0.785928 delz -0.217489 dist 1.266521
+Atom IDs (5, 6) fx_i1 0.203429 fy_i1 0.164984 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265871 delx -0.532163 dely 0.039392 delz -0.887098 dist 1.035225
+Atom IDs (6, 7) fx_i1 -0.136672 fy_i1 0.010117 fz_i1 -0.227828
+Atom IDs (7, 8) types (7, 8) scale 0.265871 delx 0.273393 dely -0.187262 delz 0.327557 dist 0.465944
+Atom IDs (7, 8) fx_i1 0.156000 fy_i1 -0.106853 fz_i1 0.186906
+Atom IDs (8, 9) types (8, 9) scale 0.265871 delx -1.186842 dely 0.363009 delz -0.243259 dist 1.264731
+Atom IDs (8, 9) fx_i1 -0.249497 fy_i1 0.076311 fz_i1 -0.051138
+Atom IDs (9, 10) types (9, 10) scale 0.265871 delx 0.454973 dely -0.338601 delz 0.804326 dist 0.984170
+Atom IDs (9, 10) fx_i1 0.122910 fy_i1 -0.091472 fz_i1 0.217286
+Atom IDs (10, 11) types (10, 11) scale 0.265871 delx 0.205579 dely 0.045200 delz -0.569384 dist 0.607045
+Atom IDs (10, 11) fx_i1 0.090038 fy_i1 0.019797 fz_i1 -0.249376
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329591 delz 0.224106 delxsq 0.126483 delysq 1.767812 delzsq 0.050224 dist 1.394460
+Atom IDs (2, 3) delx 0.196452 dely -0.853107 delz -0.587238 delxsq 0.038594 delysq 0.727792 delzsq 0.344848 dist 1.054150
+Atom IDs (3, 4) delx -2.443523 dely -0.706481 delz 1.200622 delxsq 5.970806 delysq 0.499115 delzsq 1.441493 dist 2.812724
+Atom IDs (4, 5) delx 1.707420 dely -0.477668 delz -0.052142 delxsq 2.915282 delysq 0.228167 delzsq 0.002719 dist 1.773744
+Atom IDs (5, 6) delx 0.969068 dely 0.785928 delz -0.217489 delxsq 0.939093 delysq 0.617683 delzsq 0.047301 dist 1.266522
+Atom IDs (6, 7) delx -0.532164 dely 0.039393 delz -0.887099 delxsq 0.283198 delysq 0.001552 delzsq 0.786945 dist 1.035227
+Atom IDs (7, 8) delx 0.273394 dely -0.187262 delz 0.327557 delxsq 0.074744 delysq 0.035067 delzsq 0.107294 dist 0.465946
+Atom IDs (8, 9) delx -1.186843 dely 0.363009 delz -0.243260 delxsq 1.408597 delysq 0.131776 delzsq 0.059175 dist 1.264732
+Atom IDs (9, 10) delx 0.454973 dely -0.338601 delz 0.804327 delxsq 0.207000 delysq 0.114651 delzsq 0.646942 dist 0.984171
+Atom IDs (10, 11) delx 0.205579 dely 0.045200 delz -0.569385 delxsq 0.042263 delysq 0.002043 delzsq 0.324199 dist 0.607046
+The length of molecule with ID 1 is 12.658722
+
+The total energy of the system is: 0.353440
+
+Atom IDs (1, 2) types (1, 2) scale 0.265872 delx 0.355644 dely 1.329591 delz 0.224106 dist 1.394460
+Atom IDs (1, 2) fx_i1 0.067808 fy_i1 0.253504 fz_i1 0.042729
+Atom IDs (2, 3) types (2, 3) scale 0.265872 delx 0.196452 dely -0.853107 delz -0.587238 dist 1.054150
+Atom IDs (2, 3) fx_i1 0.049548 fy_i1 -0.215166 fz_i1 -0.148110
+Atom IDs (3, 4) types (3, 4) scale 0.265872 delx -2.443523 dely -0.706481 delz 1.200622 dist 2.812724
+Atom IDs (3, 4) fx_i1 -0.230974 fy_i1 -0.066780 fz_i1 0.113489
+Atom IDs (4, 5) types (4, 5) scale 0.265872 delx 1.707420 dely -0.477668 delz -0.052142 dist 1.773744
+Atom IDs (4, 5) fx_i1 0.255931 fy_i1 -0.071599 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265872 delx 0.969068 dely 0.785928 delz -0.217489 dist 1.266522
+Atom IDs (5, 6) fx_i1 0.203430 fy_i1 0.164985 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265872 delx -0.532164 dely 0.039393 delz -0.887099 dist 1.035227
+Atom IDs (6, 7) fx_i1 -0.136673 fy_i1 0.010117 fz_i1 -0.227829
+Atom IDs (7, 8) types (7, 8) scale 0.265872 delx 0.273394 dely -0.187262 delz 0.327557 dist 0.465946
+Atom IDs (7, 8) fx_i1 0.156001 fy_i1 -0.106853 fz_i1 0.186907
+Atom IDs (8, 9) types (8, 9) scale 0.265872 delx -1.186843 dely 0.363009 delz -0.243260 dist 1.264732
+Atom IDs (8, 9) fx_i1 -0.249498 fy_i1 0.076312 fz_i1 -0.051138
+Atom IDs (9, 10) types (9, 10) scale 0.265872 delx 0.454973 dely -0.338601 delz 0.804327 dist 0.984171
+Atom IDs (9, 10) fx_i1 0.122910 fy_i1 -0.091472 fz_i1 0.217288
+Atom IDs (10, 11) types (10, 11) scale 0.265872 delx 0.205579 dely 0.045200 delz -0.569385 dist 0.607046
+Atom IDs (10, 11) fx_i1 0.090039 fy_i1 0.019797 fz_i1 -0.249377
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329593 delz 0.224107 delxsq 0.126483 delysq 1.767817 delzsq 0.050224 dist 1.394462
+Atom IDs (2, 3) delx 0.196454 dely -0.853108 delz -0.587239 delxsq 0.038594 delysq 0.727793 delzsq 0.344849 dist 1.054152
+Atom IDs (3, 4) delx -2.443525 dely -0.706481 delz 1.200622 delxsq 5.970816 delysq 0.499115 delzsq 1.441494 dist 2.812726
+Atom IDs (4, 5) delx 1.707420 dely -0.477669 delz -0.052142 delxsq 2.915283 delysq 0.228168 delzsq 0.002719 dist 1.773744
+Atom IDs (5, 6) delx 0.969069 dely 0.785929 delz -0.217488 delxsq 0.939095 delysq 0.617684 delzsq 0.047301 dist 1.266523
+Atom IDs (6, 7) delx -0.532165 dely 0.039393 delz -0.887101 delxsq 0.283199 delysq 0.001552 delzsq 0.786948 dist 1.035229
+Atom IDs (7, 8) delx 0.273396 dely -0.187263 delz 0.327558 delxsq 0.074745 delysq 0.035067 delzsq 0.107294 dist 0.465948
+Atom IDs (8, 9) delx -1.186845 dely 0.363010 delz -0.243261 delxsq 1.408600 delysq 0.131776 delzsq 0.059176 dist 1.264734
+Atom IDs (9, 10) delx 0.454973 dely -0.338601 delz 0.804329 delxsq 0.207000 delysq 0.114651 delzsq 0.646945 dist 0.984173
+Atom IDs (10, 11) delx 0.205580 dely 0.045200 delz -0.569386 delxsq 0.042263 delysq 0.002043 delzsq 0.324201 dist 0.607047
+The length of molecule with ID 1 is 12.658738
+
+The total energy of the system is: 0.353444
+
+Atom IDs (1, 2) types (1, 2) scale 0.265874 delx 0.355644 dely 1.329593 delz 0.224107 dist 1.394462
+Atom IDs (1, 2) fx_i1 0.067809 fy_i1 0.253506 fz_i1 0.042729
+Atom IDs (2, 3) types (2, 3) scale 0.265874 delx 0.196454 dely -0.853108 delz -0.587239 dist 1.054152
+Atom IDs (2, 3) fx_i1 0.049549 fy_i1 -0.215167 fz_i1 -0.148111
+Atom IDs (3, 4) types (3, 4) scale 0.265874 delx -2.443525 dely -0.706481 delz 1.200622 dist 2.812726
+Atom IDs (3, 4) fx_i1 -0.230975 fy_i1 -0.066780 fz_i1 0.113489
+Atom IDs (4, 5) types (4, 5) scale 0.265874 delx 1.707420 dely -0.477669 delz -0.052142 dist 1.773744
+Atom IDs (4, 5) fx_i1 0.255932 fy_i1 -0.071600 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265874 delx 0.969069 dely 0.785929 delz -0.217488 dist 1.266523
+Atom IDs (5, 6) fx_i1 0.203431 fy_i1 0.164985 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265874 delx -0.532165 dely 0.039393 delz -0.887101 dist 1.035229
+Atom IDs (6, 7) fx_i1 -0.136674 fy_i1 0.010117 fz_i1 -0.227831
+Atom IDs (7, 8) types (7, 8) scale 0.265874 delx 0.273396 dely -0.187263 delz 0.327558 dist 0.465948
+Atom IDs (7, 8) fx_i1 0.156002 fy_i1 -0.106854 fz_i1 0.186908
+Atom IDs (8, 9) types (8, 9) scale 0.265874 delx -1.186845 dely 0.363010 delz -0.243261 dist 1.264734
+Atom IDs (8, 9) fx_i1 -0.249500 fy_i1 0.076312 fz_i1 -0.051139
+Atom IDs (9, 10) types (9, 10) scale 0.265874 delx 0.454973 dely -0.338601 delz 0.804329 dist 0.984173
+Atom IDs (9, 10) fx_i1 0.122911 fy_i1 -0.091473 fz_i1 0.217289
+Atom IDs (10, 11) types (10, 11) scale 0.265874 delx 0.205580 dely 0.045200 delz -0.569386 dist 0.607047
+Atom IDs (10, 11) fx_i1 0.090039 fy_i1 0.019797 fz_i1 -0.249379
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355644 dely 1.329595 delz 0.224108 delxsq 0.126483 delysq 1.767823 delzsq 0.050224 dist 1.394464
+Atom IDs (2, 3) delx 0.196455 dely -0.853108 delz -0.587240 delxsq 0.038595 delysq 0.727794 delzsq 0.344851 dist 1.054153
+Atom IDs (3, 4) delx -2.443528 dely -0.706481 delz 1.200623 delxsq 5.970827 delysq 0.499115 delzsq 1.441495 dist 2.812728
+Atom IDs (4, 5) delx 1.707420 dely -0.477670 delz -0.052142 delxsq 2.915284 delysq 0.228169 delzsq 0.002719 dist 1.773745
+Atom IDs (5, 6) delx 0.969071 dely 0.785930 delz -0.217487 delxsq 0.939099 delysq 0.617685 delzsq 0.047301 dist 1.266525
+Atom IDs (6, 7) delx -0.532166 dely 0.039394 delz -0.887103 delxsq 0.283201 delysq 0.001552 delzsq 0.786951 dist 1.035231
+Atom IDs (7, 8) delx 0.273398 dely -0.187264 delz 0.327559 delxsq 0.074746 delysq 0.035068 delzsq 0.107295 dist 0.465950
+Atom IDs (8, 9) delx -1.186846 dely 0.363011 delz -0.243262 delxsq 1.408604 delysq 0.131777 delzsq 0.059176 dist 1.264736
+Atom IDs (9, 10) delx 0.454973 dely -0.338602 delz 0.804331 delxsq 0.207000 delysq 0.114651 delzsq 0.646949 dist 0.984175
+Atom IDs (10, 11) delx 0.205580 dely 0.045200 delz -0.569387 delxsq 0.042263 delysq 0.002043 delzsq 0.324202 dist 0.607049
+The length of molecule with ID 1 is 12.658756
+
+The total energy of the system is: 0.353449
+
+Atom IDs (1, 2) types (1, 2) scale 0.265876 delx 0.355644 dely 1.329595 delz 0.224108 dist 1.394464
+Atom IDs (1, 2) fx_i1 0.067809 fy_i1 0.253507 fz_i1 0.042730
+Atom IDs (2, 3) types (2, 3) scale 0.265876 delx 0.196455 dely -0.853108 delz -0.587240 dist 1.054153
+Atom IDs (2, 3) fx_i1 0.049549 fy_i1 -0.215169 fz_i1 -0.148112
+Atom IDs (3, 4) types (3, 4) scale 0.265876 delx -2.443528 dely -0.706481 delz 1.200623 dist 2.812728
+Atom IDs (3, 4) fx_i1 -0.230977 fy_i1 -0.066781 fz_i1 0.113490
+Atom IDs (4, 5) types (4, 5) scale 0.265876 delx 1.707420 dely -0.477670 delz -0.052142 dist 1.773745
+Atom IDs (4, 5) fx_i1 0.255934 fy_i1 -0.071600 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265876 delx 0.969071 dely 0.785930 delz -0.217487 dist 1.266525
+Atom IDs (5, 6) fx_i1 0.203433 fy_i1 0.164987 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265876 delx -0.532166 dely 0.039394 delz -0.887103 dist 1.035231
+Atom IDs (6, 7) fx_i1 -0.136675 fy_i1 0.010117 fz_i1 -0.227832
+Atom IDs (7, 8) types (7, 8) scale 0.265876 delx 0.273398 dely -0.187264 delz 0.327559 dist 0.465950
+Atom IDs (7, 8) fx_i1 0.156003 fy_i1 -0.106855 fz_i1 0.186909
+Atom IDs (8, 9) types (8, 9) scale 0.265876 delx -1.186846 dely 0.363011 delz -0.243262 dist 1.264736
+Atom IDs (8, 9) fx_i1 -0.249501 fy_i1 0.076313 fz_i1 -0.051139
+Atom IDs (9, 10) types (9, 10) scale 0.265876 delx 0.454973 dely -0.338602 delz 0.804331 dist 0.984175
+Atom IDs (9, 10) fx_i1 0.122911 fy_i1 -0.091474 fz_i1 0.217291
+Atom IDs (10, 11) types (10, 11) scale 0.265876 delx 0.205580 dely 0.045200 delz -0.569387 dist 0.607049
+Atom IDs (10, 11) fx_i1 0.090040 fy_i1 0.019797 fz_i1 -0.249381
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355645 dely 1.329597 delz 0.224109 delxsq 0.126483 delysq 1.767829 delzsq 0.050225 dist 1.394467
+Atom IDs (2, 3) delx 0.196456 dely -0.853109 delz -0.587241 delxsq 0.038595 delysq 0.727795 delzsq 0.344852 dist 1.054155
+Atom IDs (3, 4) delx -2.443530 dely -0.706481 delz 1.200623 delxsq 5.970839 delysq 0.499115 delzsq 1.441497 dist 2.812730
+Atom IDs (4, 5) delx 1.707421 dely -0.477671 delz -0.052142 delxsq 2.915285 delysq 0.228170 delzsq 0.002719 dist 1.773746
+Atom IDs (5, 6) delx 0.969073 dely 0.785930 delz -0.217486 delxsq 0.939102 delysq 0.617687 delzsq 0.047300 dist 1.266526
+Atom IDs (6, 7) delx -0.532168 dely 0.039394 delz -0.887105 delxsq 0.283202 delysq 0.001552 delzsq 0.786955 dist 1.035234
+Atom IDs (7, 8) delx 0.273400 dely -0.187265 delz 0.327561 delxsq 0.074748 delysq 0.035068 delzsq 0.107296 dist 0.465952
+Atom IDs (8, 9) delx -1.186848 dely 0.363012 delz -0.243263 delxsq 1.408609 delysq 0.131778 delzsq 0.059177 dist 1.264739
+Atom IDs (9, 10) delx 0.454973 dely -0.338603 delz 0.804334 delxsq 0.207001 delysq 0.114652 delzsq 0.646953 dist 0.984177
+Atom IDs (10, 11) delx 0.205580 dely 0.045200 delz -0.569389 delxsq 0.042263 delysq 0.002043 delzsq 0.324203 dist 0.607050
+The length of molecule with ID 1 is 12.658776
+
+The total energy of the system is: 0.353454
+
+Atom IDs (1, 2) types (1, 2) scale 0.265878 delx 0.355645 dely 1.329597 delz 0.224109 dist 1.394467
+Atom IDs (1, 2) fx_i1 0.067809 fy_i1 0.253509 fz_i1 0.042730
+Atom IDs (2, 3) types (2, 3) scale 0.265878 delx 0.196456 dely -0.853109 delz -0.587241 dist 1.054155
+Atom IDs (2, 3) fx_i1 0.049550 fy_i1 -0.215170 fz_i1 -0.148113
+Atom IDs (3, 4) types (3, 4) scale 0.265878 delx -2.443530 dely -0.706481 delz 1.200623 dist 2.812730
+Atom IDs (3, 4) fx_i1 -0.230978 fy_i1 -0.066781 fz_i1 0.113491
+Atom IDs (4, 5) types (4, 5) scale 0.265878 delx 1.707421 dely -0.477671 delz -0.052142 dist 1.773746
+Atom IDs (4, 5) fx_i1 0.255936 fy_i1 -0.071601 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265878 delx 0.969073 dely 0.785930 delz -0.217486 dist 1.266526
+Atom IDs (5, 6) fx_i1 0.203434 fy_i1 0.164988 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265878 delx -0.532168 dely 0.039394 delz -0.887105 dist 1.035234
+Atom IDs (6, 7) fx_i1 -0.136676 fy_i1 0.010118 fz_i1 -0.227834
+Atom IDs (7, 8) types (7, 8) scale 0.265878 delx 0.273400 dely -0.187265 delz 0.327561 dist 0.465952
+Atom IDs (7, 8) fx_i1 0.156005 fy_i1 -0.106855 fz_i1 0.186910
+Atom IDs (8, 9) types (8, 9) scale 0.265878 delx -1.186848 dely 0.363012 delz -0.243263 dist 1.264739
+Atom IDs (8, 9) fx_i1 -0.249503 fy_i1 0.076314 fz_i1 -0.051140
+Atom IDs (9, 10) types (9, 10) scale 0.265878 delx 0.454973 dely -0.338603 delz 0.804334 dist 0.984177
+Atom IDs (9, 10) fx_i1 0.122912 fy_i1 -0.091474 fz_i1 0.217292
+Atom IDs (10, 11) types (10, 11) scale 0.265878 delx 0.205580 dely 0.045200 delz -0.569389 dist 0.607050
+Atom IDs (10, 11) fx_i1 0.090041 fy_i1 0.019797 fz_i1 -0.249383
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355645 dely 1.329600 delz 0.224110 delxsq 0.126483 delysq 1.767836 delzsq 0.050225 dist 1.394469
+Atom IDs (2, 3) delx 0.196458 dely -0.853110 delz -0.587243 delxsq 0.038596 delysq 0.727796 delzsq 0.344854 dist 1.054157
+Atom IDs (3, 4) delx -2.443533 dely -0.706481 delz 1.200624 delxsq 5.970853 delysq 0.499115 delzsq 1.441498 dist 2.812733
+Atom IDs (4, 5) delx 1.707421 dely -0.477673 delz -0.052141 delxsq 2.915286 delysq 0.228171 delzsq 0.002719 dist 1.773746
+Atom IDs (5, 6) delx 0.969075 dely 0.785931 delz -0.217485 delxsq 0.939106 delysq 0.617688 delzsq 0.047300 dist 1.266528
+Atom IDs (6, 7) delx -0.532169 dely 0.039395 delz -0.887107 delxsq 0.283204 delysq 0.001552 delzsq 0.786959 dist 1.035237
+Atom IDs (7, 8) delx 0.273402 dely -0.187266 delz 0.327562 delxsq 0.074749 delysq 0.035069 delzsq 0.107297 dist 0.465955
+Atom IDs (8, 9) delx -1.186851 dely 0.363013 delz -0.243265 delxsq 1.408614 delysq 0.131778 delzsq 0.059178 dist 1.264741
+Atom IDs (9, 10) delx 0.454973 dely -0.338603 delz 0.804336 delxsq 0.207001 delysq 0.114652 delzsq 0.646957 dist 0.984180
+Atom IDs (10, 11) delx 0.205581 dely 0.045201 delz -0.569390 delxsq 0.042264 delysq 0.002043 delzsq 0.324205 dist 0.607052
+The length of molecule with ID 1 is 12.658798
+
+The total energy of the system is: 0.353460
+
+Atom IDs (1, 2) types (1, 2) scale 0.265880 delx 0.355645 dely 1.329600 delz 0.224110 dist 1.394469
+Atom IDs (1, 2) fx_i1 0.067810 fy_i1 0.253511 fz_i1 0.042730
+Atom IDs (2, 3) types (2, 3) scale 0.265880 delx 0.196458 dely -0.853110 delz -0.587243 dist 1.054157
+Atom IDs (2, 3) fx_i1 0.049551 fy_i1 -0.215172 fz_i1 -0.148115
+Atom IDs (3, 4) types (3, 4) scale 0.265880 delx -2.443533 dely -0.706481 delz 1.200624 dist 2.812733
+Atom IDs (3, 4) fx_i1 -0.230980 fy_i1 -0.066782 fz_i1 0.113492
+Atom IDs (4, 5) types (4, 5) scale 0.265880 delx 1.707421 dely -0.477673 delz -0.052141 dist 1.773746
+Atom IDs (4, 5) fx_i1 0.255938 fy_i1 -0.071602 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265880 delx 0.969075 dely 0.785931 delz -0.217485 dist 1.266528
+Atom IDs (5, 6) fx_i1 0.203436 fy_i1 0.164989 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265880 delx -0.532169 dely 0.039395 delz -0.887107 dist 1.035237
+Atom IDs (6, 7) fx_i1 -0.136677 fy_i1 0.010118 fz_i1 -0.227836
+Atom IDs (7, 8) types (7, 8) scale 0.265880 delx 0.273402 dely -0.187266 delz 0.327562 dist 0.465955
+Atom IDs (7, 8) fx_i1 0.156007 fy_i1 -0.106856 fz_i1 0.186911
+Atom IDs (8, 9) types (8, 9) scale 0.265880 delx -1.186851 dely 0.363013 delz -0.243265 dist 1.264741
+Atom IDs (8, 9) fx_i1 -0.249505 fy_i1 0.076314 fz_i1 -0.051140
+Atom IDs (9, 10) types (9, 10) scale 0.265880 delx 0.454973 dely -0.338603 delz 0.804336 dist 0.984180
+Atom IDs (9, 10) fx_i1 0.122913 fy_i1 -0.091475 fz_i1 0.217294
+Atom IDs (10, 11) types (10, 11) scale 0.265880 delx 0.205581 dely 0.045201 delz -0.569390 dist 0.607052
+Atom IDs (10, 11) fx_i1 0.090041 fy_i1 0.019797 fz_i1 -0.249385
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Begin calculation of restraint forces called by post_force() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355645 dely 1.329603 delz 0.224111 delxsq 0.126483 delysq 1.767844 delzsq 0.050226 dist 1.394472
+Atom IDs (2, 3) delx 0.196460 dely -0.853111 delz -0.587244 delxsq 0.038596 delysq 0.727798 delzsq 0.344856 dist 1.054159
+Atom IDs (3, 4) delx -2.443536 dely -0.706481 delz 1.200625 delxsq 5.970868 delysq 0.499115 delzsq 1.441500 dist 2.812736
+Atom IDs (4, 5) delx 1.707421 dely -0.477674 delz -0.052141 delxsq 2.915287 delysq 0.228172 delzsq 0.002719 dist 1.773747
+Atom IDs (5, 6) delx 0.969077 dely 0.785932 delz -0.217484 delxsq 0.939110 delysq 0.617689 delzsq 0.047299 dist 1.266530
+Atom IDs (6, 7) delx -0.532171 dely 0.039396 delz -0.887110 delxsq 0.283206 delysq 0.001552 delzsq 0.786964 dist 1.035240
+Atom IDs (7, 8) delx 0.273405 dely -0.187267 delz 0.327563 delxsq 0.074750 delysq 0.035069 delzsq 0.107298 dist 0.465958
+Atom IDs (8, 9) delx -1.186853 dely 0.363014 delz -0.243267 delxsq 1.408620 delysq 0.131779 delzsq 0.059179 dist 1.264744
+Atom IDs (9, 10) delx 0.454974 dely -0.338604 delz 0.804339 delxsq 0.207001 delysq 0.114653 delzsq 0.646962 dist 0.984182
+Atom IDs (10, 11) delx 0.205582 dely 0.045201 delz -0.569392 delxsq 0.042264 delysq 0.002043 delzsq 0.324207 dist 0.607053
+The length of molecule with ID 1 is 12.658821
+
+The total energy of the system is: 0.353467
+
+Atom IDs (1, 2) types (1, 2) scale 0.265882 delx 0.355645 dely 1.329603 delz 0.224111 dist 1.394472
+Atom IDs (1, 2) fx_i1 0.067810 fy_i1 0.253514 fz_i1 0.042731
+Atom IDs (2, 3) types (2, 3) scale 0.265882 delx 0.196460 dely -0.853111 delz -0.587244 dist 1.054159
+Atom IDs (2, 3) fx_i1 0.049551 fy_i1 -0.215173 fz_i1 -0.148116
+Atom IDs (3, 4) types (3, 4) scale 0.265882 delx -2.443536 dely -0.706481 delz 1.200625 dist 2.812736
+Atom IDs (3, 4) fx_i1 -0.230982 fy_i1 -0.066782 fz_i1 0.113493
+Atom IDs (4, 5) types (4, 5) scale 0.265882 delx 1.707421 dely -0.477674 delz -0.052141 dist 1.773747
+Atom IDs (4, 5) fx_i1 0.255940 fy_i1 -0.071603 fz_i1 -0.007816
+Atom IDs (5, 6) types (5, 6) scale 0.265882 delx 0.969077 dely 0.785932 delz -0.217484 dist 1.266530
+Atom IDs (5, 6) fx_i1 0.203438 fy_i1 0.164990 fz_i1 -0.045656
+Atom IDs (6, 7) types (6, 7) scale 0.265882 delx -0.532171 dely 0.039396 delz -0.887110 dist 1.035240
+Atom IDs (6, 7) fx_i1 -0.136678 fy_i1 0.010118 fz_i1 -0.227838
+Atom IDs (7, 8) types (7, 8) scale 0.265882 delx 0.273405 dely -0.187267 delz 0.327563 dist 0.465958
+Atom IDs (7, 8) fx_i1 0.156009 fy_i1 -0.106857 fz_i1 0.186912
+Atom IDs (8, 9) types (8, 9) scale 0.265882 delx -1.186853 dely 0.363014 delz -0.243267 dist 1.264744
+Atom IDs (8, 9) fx_i1 -0.249507 fy_i1 0.076315 fz_i1 -0.051141
+Atom IDs (9, 10) types (9, 10) scale 0.265882 delx 0.454974 dely -0.338604 delz 0.804339 dist 0.984182
+Atom IDs (9, 10) fx_i1 0.122914 fy_i1 -0.091476 fz_i1 0.217297
+Atom IDs (10, 11) types (10, 11) scale 0.265882 delx 0.205582 dely 0.045201 delz -0.569392 dist 0.607053
+Atom IDs (10, 11) fx_i1 0.090042 fy_i1 0.019797 fz_i1 -0.249387
+### Restraining forces called by post_force() is now complete. ###
+
+
+### Calculation of global restraint energy called with compute_scalar() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355645 dely 1.329603 delz 0.224111 delxsq 0.126483 delysq 1.767844 delzsq 0.050226 dist 1.394472
+Atom IDs (2, 3) delx 0.196460 dely -0.853111 delz -0.587244 delxsq 0.038596 delysq 0.727798 delzsq 0.344856 dist 1.054159
+Atom IDs (3, 4) delx -2.443536 dely -0.706481 delz 1.200625 delxsq 5.970868 delysq 0.499115 delzsq 1.441500 dist 2.812736
+Atom IDs (4, 5) delx 1.707421 dely -0.477674 delz -0.052141 delxsq 2.915287 delysq 0.228172 delzsq 0.002719 dist 1.773747
+Atom IDs (5, 6) delx 0.969077 dely 0.785932 delz -0.217484 delxsq 0.939110 delysq 0.617689 delzsq 0.047299 dist 1.266530
+Atom IDs (6, 7) delx -0.532171 dely 0.039396 delz -0.887110 delxsq 0.283206 delysq 0.001552 delzsq 0.786964 dist 1.035240
+Atom IDs (7, 8) delx 0.273405 dely -0.187267 delz 0.327563 delxsq 0.074750 delysq 0.035069 delzsq 0.107298 dist 0.465958
+Atom IDs (8, 9) delx -1.186853 dely 0.363014 delz -0.243267 delxsq 1.408620 delysq 0.131779 delzsq 0.059179 dist 1.264744
+Atom IDs (9, 10) delx 0.454974 dely -0.338604 delz 0.804339 delxsq 0.207001 delysq 0.114653 delzsq 0.646962 dist 0.984182
+Atom IDs (10, 11) delx 0.205582 dely 0.045201 delz -0.569392 delxsq 0.042264 delysq 0.002043 delzsq 0.324207 dist 0.607053
+The length of molecule with ID 1 is 12.658821
+
+The total energy of the system is: 0.353467
+
+Calculation of global restraint energy complete.
+
+        10   0.35346658     1.4115302e-05  0.09916107     0              0              0              0              0              0.3534807    
+Loop time of 0.00176999 on 1 procs for 10 steps with 11 atoms
+
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 1.5298e-05 | 1.5298e-05 | 1.5298e-05 |   0.0 |  0.86
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 3.0797e-05 | 3.0797e-05 | 3.0797e-05 |   0.0 |  1.74
+Output  | 8.3809e-05 | 8.3809e-05 | 8.3809e-05 |   0.0 |  4.74
+Modify  | 0.0015665  | 0.0015665  | 0.0015665  |   0.0 | 88.50
+Other   |            | 7.361e-05  |            |       |  4.16
+
+Nlocal:             11 ave          11 max          11 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:             77 ave          77 max          77 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.090909091
+Ave special neighs/atom = 4.9090909
+Neighbor list builds = 0
+Dangerous builds = 0
+Setting up Verlet run ...
+  Unit style    : si
+  Current step  : 0
+  Time step     : 0.001
+Per MPI rank memory allocation (min/avg/max) = 8.488 | 8.488 | 8.488 Mbytes
+   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+
+### Calculation of global restraint energy called with compute_scalar() ###
+Begin calculation of end-to-end distances per molecule.
+Atom IDs (1, 2) delx 0.355645 dely 1.329603 delz 0.224111 delxsq 0.126483 delysq 1.767844 delzsq 0.050226 dist 1.394472
+Atom IDs (2, 3) delx 0.196460 dely -0.853111 delz -0.587244 delxsq 0.038596 delysq 0.727798 delzsq 0.344856 dist 1.054159
+Atom IDs (3, 4) delx -2.443536 dely -0.706481 delz 1.200625 delxsq 5.970868 delysq 0.499115 delzsq 1.441500 dist 2.812736
+Atom IDs (4, 5) delx 1.707421 dely -0.477674 delz -0.052141 delxsq 2.915287 delysq 0.228172 delzsq 0.002719 dist 1.773747
+Atom IDs (5, 6) delx 0.969077 dely 0.785932 delz -0.217484 delxsq 0.939110 delysq 0.617689 delzsq 0.047299 dist 1.266530
+Atom IDs (6, 7) delx -0.532171 dely 0.039396 delz -0.887110 delxsq 0.283206 delysq 0.001552 delzsq 0.786964 dist 1.035240
+Atom IDs (7, 8) delx 0.273405 dely -0.187267 delz 0.327563 delxsq 0.074750 delysq 0.035069 delzsq 0.107298 dist 0.465958
+Atom IDs (8, 9) delx -1.186853 dely 0.363014 delz -0.243267 delxsq 1.408620 delysq 0.131779 delzsq 0.059179 dist 1.264744
+Atom IDs (9, 10) delx 0.454974 dely -0.338604 delz 0.804339 delxsq 0.207001 delysq 0.114653 delzsq 0.646962 dist 0.984182
+Atom IDs (10, 11) delx 0.205582 dely 0.045201 delz -0.569392 delxsq 0.042264 delysq 0.002043 delzsq 0.324207 dist 0.607053
+The length of molecule with ID 1 is 12.658821
+
+The total energy of the system is: 0.353467
+
+Calculation of global restraint energy complete.
+
+         0   0.35346658     1.4115302e-05  0.16173699     0              0              0              0              0              0.3534807    
+Loop time of 3.841e-06 on 1 procs for 0 steps with 11 atoms
+
+130.2% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 3.841e-06  |            |       |100.00
+
+Nlocal:             11 ave          11 max          11 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:             77 ave          77 max          77 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 4.9090909
+Neighbor list builds = 0
+Dangerous builds = 0
+# End-to-end arc length following minimization: 12.6588214750816
 
 # Bond component distances: x y z
 
-# Total forces on system following minimization: [-1.3322676295501878e-15,8.881784197001252e-16,-8.881784197001252e-16]
+# Total forces on system following minimization: [-0.2076118089708684,0.01716180855778663,0.10712589851613423]
 # Relaxed Production Model for Worm-Like Chain
 
 11 atoms

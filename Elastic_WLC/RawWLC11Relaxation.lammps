@@ -14,14 +14,19 @@ create_box 11 main bond/types 10 angle/types 9 extra/bond/per/atom 2 extra/angle
 
 molecule raw_WLC_11_Atoms Structures/Raw/raw_WLC_11.txt
 bond_style harmonic
-bond_coeff * 0 1
+# bond_coeff * 0 1
 angle_style harmonic
-angle_coeff * 0 180
+# angle_coeff * 0 180
+dihedral_style none
+# pair_style none
+# pair_style zero 10 nocoeff
+# pair_coeff * *
 
 create_atoms 0 single 0 0 0 mol raw_WLC_11_Atoms ${seed} rotate 0 0 0 1
 
 read_data Structures/Coeffs/coeffs_WLC_11.data add merge
-
+bond_coeff * 0 1
+angle_coeff * 0 180
 
 group internals type 2:10
 group endpoints subtract all internals
@@ -30,18 +35,24 @@ group endpoints subtract all internals
 compute bondID all property/local btype batom1 batom2
 compute angleID all property/local atype aatom1 aatom2 aatom3
 
-variable k_restrain equal 100
+variable k_restrain equal 1
 
 fix restraint all arclengthrestraint raw_WLC_11_Atoms ${k_restrain} ${totLength}
-
+fix_modify restraint energy yes
 
 
 comm_modify cutoff 100
 
-fix stationary endpoints setforce 0 0 0
-min_modify dmax 5 norm max
-minimize 0.0 0 1000000000 1000000000
-unfix stationary
+velocity all set 0 0 0
+thermo_style custom step pe ke fmax epair epair ebond eangle edihed etotal
+
+run 0
+
+# fix stationary endpoints setforce 0 0 0
+# min_modify dmax 10 norm max
+# minimize 0.0 0 1000000000 1000000000
+# minimize 0 0 100 100
+# unfix stationary
 
 # I have a feeling that setting the force of the endpoints to 0 0 0
 # during minimization is preventing the arclengthrestraint fix
@@ -51,15 +62,19 @@ unfix stationary
 # is performed only on the internal atoms
 #
 
-# reset_timestep 0
-# timestep 1e-9
-# fix integrator internals nve/limit 0.001
-# fix integrator all nve/limit 0.001
-# fix damper internals viscous 100
-# fix damper all viscous 100
+reset_timestep 0
+timestep 1e-3
+# min_style fire
+# min_modify dmax 10 norm max
+# minimize 0 0 1000000 1000000
+
+# fix integrator internals nve/limit 0.1
+ fix integrator all nve/limit 0.001
+# fix damper internals viscous 100000
+ fix damper all viscous 100
 # velocity all set 0 0 0
-# run 0
-# run 100000000
+run 0
+run 10
 
 
 reset_timestep 0
@@ -84,7 +99,7 @@ print "# Bond component distances: x y z" append ${validationFile}
 write_dump all local ${validationFile} c_bcomps[1] c_bcomps[2] c_bcomps[3] modify append yes header no
 print "" append ${validationFile}
 print "# Total forces on system following minimization: ${totForce}" append ${validationFile}
-write_dump all custom ${validationFile} id fx fy fz modify append yes header no
+write_dump all custom ${validationFile} id type mol fx fy fz modify append yes header no
 
 
 variable natoms equal count(all)
