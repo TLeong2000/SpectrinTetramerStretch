@@ -40,8 +40,9 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
    scalar_flag = 1;
    energy_global_flag = 1;
    extscalar = 1;
+   thermo_energy = 1;
 
-   debug_mode = true;
+   debug_mode = false;
 
    if (narg < 6) error->all(FLERR, "Insufficient args for fix arclengthrestraint command.");
 
@@ -101,27 +102,59 @@ int FixArcLengthRestraint::setmask()
 
 void FixArcLengthRestraint::post_force(int /*vflag*/)
 { 
-   if (debug_mode) printf("\n### Begin calculation of restraint forces called by post_force() ###\n");
+   int rank;
+   MPI_Comm_rank(world, &rank);
+
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("\n### Begin calculation of restraint forces called by post_force() ###\n");
+      }
+   }   
 
    set_forces();
 
-   if (debug_mode) printf("\n### Restraining forces called by post_force() is now complete. ###\n");
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("\n### Restraining forces called by post_force() is now complete. ###\n");
+      }
+   }
+
 }
 
 /* ---------------------------------------------------------------------- */
 
 void FixArcLengthRestraint::min_post_force(int vflag) {
-   if (debug_mode) printf("\n### Begin calculations of forces called by min_post_force() ###\n");
+   int rank;
+   MPI_Comm_rank(world, &rank);
+
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("\n### Begin calculations of forces called by min_post_force() ###\n");
+      }
+   }
 
    set_forces();
 
-   if (debug_mode) printf("\n### Restraining forces called by min_post_force complete. ###\n");
+   if (debug_mode) {
+      if (rank == 0) {
+	  printf("\n### Restraining forces called by min_post_force complete. ###\n");
+      }
+   }
+
 }
 
 /* ------------------------------------------------------------------------- */
 
 double FixArcLengthRestraint::compute_scalar() {
-   if (debug_mode) printf("\n### Calculation of global restraint energy called with compute_scalar() ###\n");
+   int rank;
+   MPI_Comm_rank(world, &rank);
+
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("\n### Calculation of global restraint energy called with compute_scalar() ###\n");
+         // printf("The value of debug_mode is: %d\n",debug_mode);
+      }
+   }
 
    int i1, i2, n;
 
@@ -131,9 +164,7 @@ double FixArcLengthRestraint::compute_scalar() {
 
    tagint *tag = atom->tag;
    
-   int rank;
-   MPI_Comm_rank(world, &rank);
-
+   
    // int ntimestep = update->ntimestep;
 
    /*
@@ -183,7 +214,11 @@ double FixArcLengthRestraint::compute_scalar() {
    MPI_Comm_size(world, &size_Of_Cluster);
    */
 
-   if (debug_mode) printf("Begin calculation of end-to-end distances per molecule.\n");
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("Begin calculation of end-to-end distances per molecule.\n");
+      }
+   }
    
    for (n = 0; n < nbondlist; n++) {
       dist = 0;
@@ -212,10 +247,11 @@ double FixArcLengthRestraint::compute_scalar() {
        molLengths[mol1 - 1] += dist;
       /* For half neighbor lists, because each bond is only stored once,
          there is no worry of double-counting a bond length */
-
-      if (debug_mode) printf("Atom IDs (%d, %d) delx %f dely %f delz %f delxsq %f delysq %f delzsq %f dist %f\n", tag[i1], tag[i2], delx, dely, delz, delxsq, delysq, delzsq, dist);
+     
+      // Do not put printf statements that require substituting in values of LAMMPS variables inside of if statements 
+      //   printf("Atom IDs (%d, %d) delx %f dely %f delz %f delxsq %f delysq %f delzsq %f dist %f\n", tag[i1], tag[i2], delx, dely, delz, delxsq, delysq, delzsq, dist);
       // printf("Atom IDs (%d, %d) x1 %f y1 %f z1 %f x2 %f y2 %f z2 %f\n", tag[i1], tag[i2], x[i1][0], x[i1][1], x[i1][2], x[i2][0], x[i2][1], x[i2][2]);
-
+      
       /*
       if (isnan(molLengths[m - 1])) {
          printf("atom IDs (%d, %d) of molecule %d from process %d\n", tag[i1], tag[i2], m, rank);
@@ -235,11 +271,12 @@ double FixArcLengthRestraint::compute_scalar() {
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
    
-   
+   if (debug_mode) {
    if (rank == 0) {
       for (n = 0; n < nmols; n++) {
-         if (debug_mode) printf("The length of molecule with ID %d is %f\n\n", n + 1, molLengths[n]);    
+         printf("The length of molecule with ID %d is %f\n\n", n + 1, molLengths[n]);    
       }
+   }
    }
    
 
@@ -249,10 +286,13 @@ double FixArcLengthRestraint::compute_scalar() {
       erestraint += k/2 * ((molLengths[n] * molLengths[n] / equiLength) - 2 * molLengths[n] + equiLength);
    }
 
-   if (debug_mode) printf("The total energy of the system is: %f\n\n", erestraint);  
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("The total energy of the system is: %f\n", erestraint);  
+         printf("### Calculation of global restraint energy complete. ###\n");
+      }
+   }
 
-   if (debug_mode) printf("\n### Calculation of global restraint energy complete. ###\n");
-	
    return erestraint;
 }
 
@@ -326,7 +366,7 @@ void FixArcLengthRestraint::set_forces() {
    MPI_Comm_size(world, &size_Of_Cluster);
    */
 
-   printf("Begin calculation of end-to-end distances per molecule.\n");
+   // printf("!!! Begin calculation of end-to-end distances per molecule.\n");
    
    for (n = 0; n < nbondlist; n++) {
       dist = 0;
@@ -356,11 +396,6 @@ void FixArcLengthRestraint::set_forces() {
       /* For half neighbor lists, because each bond is only stored once,
          there is no worry of double-counting a bond length */
 
-      printf("Atom IDs (%d, %d) delx %f dely %f delz %f delxsq %f delysq %f delzsq %f dist %f\n", tag[i1], tag[i2], delx, dely, delz, delxsq, delysq, delzsq, dist);
-      // printf("Atom IDs (%d, %d) x1 %f y1 %f z1 %f x2 %f y2 %f z2 %f\n", tag[i1], tag[i2], x[i1][0], x[i1][1], x[i1][2], x[i2][0], x[i2][1], x[i2][2]);
-      
-      // printf("Atom IDs (%d, %d) f[i1][0]: %f f[i1][1]: %f f[i1][2]: %f f[i2][0]: %f f[i2][1]: %f f[i2][2]: %f\n", tag[i1], tag[i2], f[i1][0], f[i1][1], f[i1][2], f[i2][0], f[i2][1], f[i2][2]);
-
       /*
       if (isnan(molLengths[m - 1])) {
          printf("atom IDs (%d, %d) of molecule %d from process %d\n", tag[i1], tag[i2], m, rank);
@@ -380,26 +415,18 @@ void FixArcLengthRestraint::set_forces() {
    // sum them up in place to get the total arc length for each molecule
    MPI_Allreduce(MPI_IN_PLACE, &molLengths, nmols, MPI_DOUBLE, MPI_SUM, world);
    
-   
+   if (debug_mode) { 
    if (rank == 0) {
       for (n = 0; n < nmols; n++) {
-         printf("The length of molecule with ID %d is %f\n\n", n + 1, molLengths[n]);    
+         printf("!!! The length of molecule with ID %d is %f\n\n", n + 1, molLengths[n]);    
       }
    }
-   
-
-   /*
-   erestraint = 0;
-   for (n = 0; n < nmols; n++) {
-      erestraint += k/2 * ((molLengths[n] * molLengths[n] / equiLength) - 2 * molLengths[n] + equiLength);
    }
 
-   printf("The total energy of the system is: %f\n\n", erestraint);
-   */
 
    double scalingFactors[max_glo_molID];
    for(n = 0; n < max_glo_molID; n++) {
-      scalingFactors[n] = k * (molLengths[n] / equiLength - 1);
+      scalingFactors[n] = -1 * k * (molLengths[n] / equiLength - 1);
    }
 
    double scale;
@@ -407,6 +434,59 @@ void FixArcLengthRestraint::set_forces() {
    double fx_i1;
    double fy_i1;
    double fz_i1;
+
+   int glob_id1;
+   int glob_id2;
+
+   if (debug_mode){
+      if (rank == 0) {
+         printf("!!!ALERT!!!: Begin validation of pre-assignment forces on system.\n");
+         printf("Format:\n");
+         printf(" id1 | id2 |  fx_i1 |  fy_i1 |  fz_i1 |  fx_i2 |  fy_i2 |  fz_i2 \n");  
+      }
+
+      double tot_fx = 0;
+      double tot_fy = 0;
+      double tot_fz = 0;
+
+      double fx_i2 = 0;
+      double fy_i2 = 0;
+      double fz_i2 = 0;
+
+      // int glob_id1 = 0;
+      // int glob_id2 = 0;
+      for (n = 0; n < nbondlist; n++) {
+         i1 = bondlist[n][0];
+	 i2 = bondlist[n][1];
+
+	 glob_id1 = tag[i1];
+	 glob_id2 = tag[i2];
+         
+	 fx_i1 = f[i1][0];
+	 fy_i1 = f[i1][1];
+	 fz_i1 = f[i1][2];
+
+	 fx_i2 = f[i2][0];
+         fy_i2 = f[i2][1];
+	 fz_i2 = f[i2][2];
+
+         tot_fx += fx_i1;
+	 tot_fy += fy_i1;
+	 tot_fz += fz_i1;
+
+	 printf(" %3d | %3d |%8f|%8f|%8f|%8f|%8f|%8f\n", glob_id1, glob_id2, fx_i1, fy_i1, fz_i1, fx_i2, fy_i2, fz_i2); 
+
+      }
+
+      if (rank == 0) {
+         printf("!!!ALERT!!!: Validation of pre-assignment forces on system complete.\n\n");
+
+         printf("!!!ALERT!!!: We will now be printing out force calculation data.\n");
+         printf("Format:\n");
+         printf(" id1 | id2 |  scale  |   delx  |   dely  |   delz  |   dist  |  fx_i1  |  fy_i1  |  fz_i1  \n");  
+      }
+
+   }
 
    //Now that we have the molecule lengths, we can allocate forces
    for (n = 0; n < nbondlist; n++){
@@ -420,6 +500,9 @@ void FixArcLengthRestraint::set_forces() {
       typ_i1 = type[i1];
       typ_i2 = type[i2];
 
+      glob_id1 = tag[i1];
+      glob_id2 = tag[i2];
+
       delx = x[i1][0] - x[i2][0];
       dely = x[i1][1] - x[i2][1];
       delz = x[i1][2] - x[i2][2];
@@ -430,19 +513,12 @@ void FixArcLengthRestraint::set_forces() {
 
       dist = sqrt(delxsq + delysq + delzsq);
 
-      if (debug_mode) printf("Atom IDs (%d, %d) types (%d, %d) scale %f delx %f dely %f delz %f dist %f\n", tag[i1], tag[i2], typ_i1, typ_i2, scale, delx, dely, delz, dist);
-      // printf("Atom IDs (%d, %d) x1 %f y1 %f z1 %f x2 %f y2 %f z2 %f\n", tag[i1], tag[i2], x[i1][0], x[i1][1], x[i1][2], x[i2][0], x[i2][1], x[i2][2]);
 
       fx_i1 = 0;
       fy_i1 = 0;
       fz_i1 = 0;
 
-      /*
-      printf("\nHere are the forces on the atoms before assignment:\n");
-      printf("Atom IDs (%d, %d) f[i1][0]: %f f[i1][1]: %f f[i1][2]: %f f[i2][0]: %f f[i2][1]: %f f[i2][2]: %f\n", tag[i1], tag[i2], f[i1][0], f[i1][1], f[i1][2], f[i2][0], f[i2][1], f[i2][2]);
-      */
-
-
+      
       // This check is to avoid a division by zero error.
       if (dist > 10e-18) {
          fx_i1 = scale * delx / dist;
@@ -453,36 +529,95 @@ void FixArcLengthRestraint::set_forces() {
       // This is for standardization, because we assume that
       // the global type IDs for the atom of a molecule 
       // are sequentially-ordered.
-      if (typ_i2 > typ_i1) {
+      if (typ_i1 > typ_i2) {
          fx_i1 *= -1;
          fy_i1 *= -1;
          fz_i1 *= -1;
       }
 
-      f[i1][0] += fx_i1;
-      f[i1][1] += fy_i1;
-      f[i1][2] += fz_i1;
+      if (newton_bond || i1 < nlocal) { 
+         f[i1][0] += fx_i1;
+         f[i1][1] += fy_i1;
+         f[i1][2] += fz_i1;
+      }
 
-      // If newton_bond == 1, then LAMMPS automatically adds
-      // -1*fx_i1 to f[i2][0], -1*fy_i1 to f[i2][1], -1*fz_1 to f[i2][2]
-      // Otherwise, we need to do this manually:
-      if (newton_bond == 0) {
+      // It turns out that in order to do a reverse-communication,
+      // you need to have defined one in your file.
+      // So I'm doing this to avoid having to manually define one.
+      if (newton_bond || i2 < nlocal) {
          f[i2][0] -= fx_i1;
          f[i2][1] -= fy_i1;
          f[i2][2] -= fz_i1;
       }
 
-      if (debug_mode) printf("Atom IDs (%d, %d) fx_i1 %f fy_i1 %f fz_i1 %f\n", tag[i1], tag[i2], fx_i1, fy_i1, fz_i1);
+      // printf("Atom IDs (%d, %d) fx_i1 %f fy_i1 %f fz_i1 %f\n", tag[i1], tag[i2], fx_i1, fy_i1, fz_i1);
 
-      /*
-      printf("\nHere are the forces on the atoms after assignment:\n");
-      printf("Atom IDs (%d, %d) f[i1][0]: %f f[i1][1]: %f f[i1][2]: %f f[i2][0]: %f f[i2][1]: %f f[i2][2]: %f\n", tag[i1], tag[i2], f[i1][0], f[i1][1], f[i1][2], f[i2][0], f[i2][1], f[i2][2]);
-      */
+      if (debug_mode) {
+         printf(" %3d | %3d |%9f|%9f|%9f|%9f|%9f|%9f|%9f|%9f\n", glob_id1, glob_id2, scale, delx, dely, delz, dist, fx_i1, fy_i1, fz_i1); 
+      }
 
       // printf("Atom IDs (%d, %d) fx_i1 %f fy_i1 %f fz_i1 %f fx_i2 %f fy_i2 %f fz_i2 %f\n", tag[i1], tag[i2], f[i1][0], f[i1][1], f[i1][2], f[i2][0], f[i2][1], f[i2][2]);
    }
 
    // Communicate accumulated forces on ghost atoms back to owning procs:
-   if (newton_bond == 1) comm->reverse_comm(this); 
+   //if (newton_bond == 1) comm->reverse_comm(this);
 
+   // Confirm that forces on atoms really are what we desire:
+   
+   if (debug_mode) {
+      if (rank == 0) {
+         printf("\n!!!ALERT!!!: Printing of force calculations complete.\n\n"); 
+         printf("!!!ALERT!!!: Begin validation of forces on system.\n");
+         printf("Format:\n");
+         printf(" id1 | id2 |  fx_i1  |  fy_i1  |  fz_i1  |  fx_i2  |  fy_i2  |  fz_i2  \n"); 
+      }
+
+      double tot_fx = 0;
+      double tot_fy = 0;
+      double tot_fz = 0;
+
+      double fx_i2 = 0;
+      double fy_i2 = 0;
+      double fz_i2 = 0;
+
+      // int glob_id1 = 0;
+      // int glob_id2 = 0;
+      for (n = 0; n < nbondlist; n++) {
+         i1 = bondlist[n][0];
+	 i2 = bondlist[n][1];
+
+	 glob_id1 = tag[i1];
+	 glob_id2 = tag[i2];
+         
+	 fx_i1 = f[i1][0];
+	 fy_i1 = f[i1][1];
+	 fz_i1 = f[i1][2];
+
+	 fx_i2 = f[i2][0];
+         fy_i2 = f[i2][1];
+	 fz_i2 = f[i2][2];
+
+         tot_fx += fx_i1;
+	 tot_fy += fy_i1;
+	 tot_fz += fz_i1;
+
+	 // Check if the second atom on the bond is the terminus of the molecule
+	 // We need to add those forces up as part of our total
+	 if (type[i2] == napmol) {
+            tot_fx += fx_i2;
+	    tot_fy += fy_i2;
+	    tot_fz += fz_i2;
+         }
+
+	 printf(" %3d | %3d |%9f|%9f|%9f|%9f|%9f|%9f\n", glob_id1, glob_id2, fx_i1, fy_i1, fz_i1, fx_i2, fy_i2, fz_i2); 
+
+         // printf("Atom IDs (%d, %d) f[i1][0]: %f f[i1][1]: %f f[i1][2]: %f f[i2][0]: %f f[i2][1]: %f f[i2][2]: %f\n", glob_id1, glob_id2, fx_i1, fy_i1, fz_i1, fx_i2, fy_i2, fz_i2);
+      }
+
+      if (rank == 0){
+         printf("!!!ALERT!!!: Total forces on system in along following coordinates: x %f y %f z %f\n", tot_fx, tot_fy, tot_fz);
+      }
+
+   }
+   
 }

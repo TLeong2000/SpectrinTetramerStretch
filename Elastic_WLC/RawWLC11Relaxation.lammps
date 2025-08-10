@@ -15,6 +15,7 @@ create_box 11 main bond/types 10 angle/types 9 extra/bond/per/atom 2 extra/angle
 molecule raw_WLC_11_Atoms Structures/Raw/raw_WLC_11.txt
 bond_style harmonic
 # bond_coeff * 0 1
+bond_style zero nocoeff
 angle_style harmonic
 # angle_coeff * 0 180
 dihedral_style none
@@ -26,7 +27,7 @@ create_atoms 0 single 0 0 0 mol raw_WLC_11_Atoms ${seed} rotate 0 0 0 1
 
 read_data Structures/Coeffs/coeffs_WLC_11.data add merge
 bond_coeff * 0 1
-angle_coeff * 0 180
+# angle_coeff * 0 180
 
 group internals type 2:10
 group endpoints subtract all internals
@@ -35,24 +36,32 @@ group endpoints subtract all internals
 compute bondID all property/local btype batom1 batom2
 compute angleID all property/local atype aatom1 aatom2 aatom3
 
-variable k_restrain equal 1
+variable k_restrain equal 100
 
 fix restraint all arclengthrestraint raw_WLC_11_Atoms ${k_restrain} ${totLength}
-fix_modify restraint energy yes
+# print "fix arclengthrestraint has been imposed on system"
+ fix_modify restraint energy yes
 
 
 comm_modify cutoff 100
 
 velocity all set 0 0 0
-thermo_style custom step pe ke fmax epair epair ebond eangle edihed etotal
+thermo_style custom step pe ke fnorm epair epair ebond eangle edihed etotal
+
+compute forces all property/atom fx fy fz
+compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
+variable totForce vector c_sumForces
 
 run 0
+timestep 1e-6
 
-# fix stationary endpoints setforce 0 0 0
-# min_modify dmax 10 norm max
-# minimize 0.0 0 1000000000 1000000000
-# minimize 0 0 100 100
-# unfix stationary
+ fix stationary endpoints setforce 0 0 0
+# min_modify dmax 1 line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+# minimize 0 0 10000000 10000000
+ min_style fire
+ min_modify dmax 1 abcfire yes
+ minimize 0 0 10000 10000
+ unfix stationary
 
 # I have a feeling that setting the force of the endpoints to 0 0 0
 # during minimization is preventing the arclengthrestraint fix
@@ -63,34 +72,44 @@ run 0
 #
 
 reset_timestep 0
-timestep 1e-3
+timestep 1e-6
 # min_style fire
 # min_modify dmax 10 norm max
 # minimize 0 0 1000000 1000000
-
-# fix integrator internals nve/limit 0.1
- fix integrator all nve/limit 0.001
-# fix damper internals viscous 100000
- fix damper all viscous 100
-# velocity all set 0 0 0
-run 0
-run 10
-
-
-reset_timestep 0
 
 compute blen all bond/local dist
 compute bcomps all bond/local dx dy dz 
 compute end2end all reduce sum c_blen inputs local
 variable totLen equal c_end2end
 
-compute forces all property/atom fx fy fz
-compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
-variable totForce vector c_sumForces
+variable validProgFile string "Out_relaxation/validation/in-progress_validation_WLC_11.txt"
+print "" file ${validProgFile}
+# dump inProgressblen all local 1 ${validProgFile} c_blen
+# dump inProgressbcomps all local 1 ${validProgFile} c_bcomps[1] c_bcomps[2] c_bcomps[3]
+dump inProgressforces all custom 1 ${validProgFile} id fx fy fz
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append ${validProgFile}
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append ${validProgFile}
+fix newline all print 1 "" append ${validProgFile}
+
+# dump_modify inProgressblen append yes
+# dump_modify inProgressbcomps append yes header no
+dump_modify inProgressforces append yes
+
+# fix integrator internals nve
+# fix integrator all nve
+# fix damper internals viscous 100000
+# fix damper all viscous 1
+# velocity all set 0 0 0
+ run 0
+# run 10000000
+
+
+# reset_timestep 0
+
 
 variable validationFile string "Out_relaxation/validation/validation_WLC_11.txt"
 
-run 0
+# run 0
 
 print "# End-to-end arc length following minimization: ${totLen}" file ${validationFile}
 write_dump all local ${validationFile} c_blen modify append yes header no

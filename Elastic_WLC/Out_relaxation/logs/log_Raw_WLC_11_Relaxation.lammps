@@ -25,6 +25,7 @@ Read molecule template raw_WLC_11_Atoms:
   0 impropers with max type 0
 bond_style harmonic
 # bond_coeff * 0 1
+bond_style zero nocoeff
 angle_style harmonic
 # angle_coeff * 0 180
 dihedral_style none
@@ -42,6 +43,7 @@ read_data Structures/Coeffs/coeffs_WLC_11.data add merge
 Reading data file ...
   orthogonal box = (-100 -100 -100) to (100 100 100)
   1 by 1 by 1 MPI processor grid
+WARNING: Bond style harmonic in data file differs from currently defined bond style zero (../read_data.cpp:809)
 Finding 1-2 1-3 1-4 neighbors ...
   special bond factors lj:    0        0        0       
   special bond factors coul:  0        0        0       
@@ -49,10 +51,10 @@ Finding 1-2 1-3 1-4 neighbors ...
      6 = max # of 1-3 neighbors
     18 = max # of 1-4 neighbors
     13 = max # of special neighbors
-  special bonds CPU = 0.000 seconds
-  read_data CPU = 0.003 seconds
+  special bonds CPU = 0.034 seconds
+  read_data CPU = 0.045 seconds
 bond_coeff * 0 1
-angle_coeff * 0 180
+# angle_coeff * 0 180
 
 group internals type 2:10
 9 atoms in group internals
@@ -63,18 +65,23 @@ group endpoints subtract all internals
 compute bondID all property/local btype batom1 batom2
 compute angleID all property/local atype aatom1 aatom2 aatom3
 
-variable k_restrain equal 1
+variable k_restrain equal 100
 
 fix restraint all arclengthrestraint raw_WLC_11_Atoms ${k_restrain} ${totLength}
-fix restraint all arclengthrestraint raw_WLC_11_Atoms 1 ${totLength}
-fix restraint all arclengthrestraint raw_WLC_11_Atoms 1 10
-fix_modify restraint energy yes
+fix restraint all arclengthrestraint raw_WLC_11_Atoms 100 ${totLength}
+fix restraint all arclengthrestraint raw_WLC_11_Atoms 100 10
+# print "fix arclengthrestraint has been imposed on system"
+ fix_modify restraint energy yes
 
 
 comm_modify cutoff 100
 
 velocity all set 0 0 0
-thermo_style custom step pe ke fmax epair epair ebond eangle edihed etotal
+thermo_style custom step pe ke fmax fnorm epair epair ebond eangle edihed etotal
+
+compute forces all property/atom fx fy fz
+compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
+variable totForce vector c_sumForces
 
 run 0
 WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
@@ -92,11 +99,11 @@ Neighbor list info ...
       bin: standard
 WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2442)
 Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
-   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
-         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
-Loop time of 3.841e-06 on 1 procs for 0 steps with 11 atoms
+   Step         PotEng         KinEng          Fmax          Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   29532.943      0              1.3215536      2.8622624      0              0              0              52.261501      0              29532.943    
+Loop time of 9.11e-07 on 1 procs for 0 steps with 11 atoms
 
-26.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -107,7 +114,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.841e-06  |            |       |100.00
+Other   |            | 9.11e-07   |            |       |100.00
 
 Nlocal:             11 ave          11 max          11 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -121,12 +128,58 @@ Ave neighs/atom = 0.090909091
 Ave special neighs/atom = 4.9090909
 Neighbor list builds = 0
 Dangerous builds = 0
+timestep 1e-6
 
-# fix stationary endpoints setforce 0 0 0
-# min_modify dmax 10 norm max
-# minimize 0.0 0 1000000000 1000000000
-# minimize 0 0 100 100
-# unfix stationary
+ fix stationary endpoints setforce 0 0 0
+# min_modify dmax 1 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+# minimize 0 0 10000000 10000000
+ min_style fire
+ min_modify dmax 1 norm max abcfire yes
+ minimize 0 0 10000 10000
+  Parameters for fire:
+    dmax  delaystep dtgrow dtshrink alpha0 alphashrink tmax tmin   integrator   halfstepback   abcfire  
+      1      20      1.1     0.5     0.25     0.99      10  0.02 eulerimplicit      yes          yes    
+Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
+   Step         PotEng         KinEng          Fmax          Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   29532.943      0              1.3215536      2.6046164      0              0              0              52.261501      0              29532.943    
+     10000   3.0998616      4.2746324e-05  0.43997908     1.0490082      0              0              0              3.0955669      0              3.0999043    
+Loop time of 50.11 on 1 procs for 10000 steps with 11 atoms
+
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = max iterations
+  Energy initial, next-to-last, final = 
+        29532.94291533    3.0998616726925    3.0998615756987
+  Force two-norm initial, final = 2.6046164 1.0490082
+  Force max component initial, final = 1.3215536 0.43997908
+  Final line search alpha, max atom move = 0 0
+  Iterations, force evaluations = 10000 10000
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0.0054545  | 0.0054545  | 0.0054545  |   0.0 |  0.01
+Neigh   | 0.001677   | 0.001677   | 0.001677   |   0.0 |  0.00
+Comm    | 0.0040828  | 0.0040828  | 0.0040828  |   0.0 |  0.01
+Output  | 0.0050202  | 0.0050202  | 0.0050202  |   0.0 |  0.01
+Modify  | 0.0049854  | 0.0049854  | 0.0049854  |   0.0 |  0.01
+Other   |            | 50.09      |            |       | 99.96
+
+Nlocal:             11 ave          11 max          11 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:             77 ave          77 max          77 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.090909091
+Ave special neighs/atom = 4.9090909
+Neighbor list builds = 577
+Dangerous builds = 422
+ unfix stationary
 
 # I have a feeling that setting the force of the endpoints to 0 0 0
 # during minimization is preventing the arclengthrestraint fix
@@ -137,101 +190,51 @@ Dangerous builds = 0
 #
 
 reset_timestep 0
-timestep 1e-3
+timestep 1e-6
 # min_style fire
 # min_modify dmax 10 norm max
 # minimize 0 0 1000000 1000000
-
-# fix integrator internals nve/limit 0.1
- fix integrator all nve/limit 0.001
-# fix damper internals viscous 100000
- fix damper all viscous 100
-# velocity all set 0 0 0
-run 0
-Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
-   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
-         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
-Loop time of 4.33e-06 on 1 procs for 0 steps with 11 atoms
-
-23.1% CPU use with 1 MPI tasks x 1 OpenMP threads
-
-MPI task timing breakdown:
-Section |  min time  |  avg time  |  max time  |%varavg| %total
----------------------------------------------------------------
-Pair    | 0          | 0          | 0          |   0.0 |  0.00
-Bond    | 0          | 0          | 0          |   0.0 |  0.00
-Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0          | 0          | 0          |   0.0 |  0.00
-Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 4.33e-06   |            |       |100.00
-
-Nlocal:             11 ave          11 max          11 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:             77 ave          77 max          77 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-
-Total # of neighbors = 1
-Ave neighs/atom = 0.090909091
-Ave special neighs/atom = 4.9090909
-Neighbor list builds = 0
-Dangerous builds = 0
-run 10
-Per MPI rank memory allocation (min/avg/max) = 8.183 | 8.183 | 8.183 Mbytes
-   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
-         0   0.35343088     0              0              0              0              0              0              0              0.35343088   
-        10   0.35346658     1.4115302e-05  0.09916107     0              0              0              0              0              0.3534807    
-Loop time of 0.00176999 on 1 procs for 10 steps with 11 atoms
-
-100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
-
-MPI task timing breakdown:
-Section |  min time  |  avg time  |  max time  |%varavg| %total
----------------------------------------------------------------
-Pair    | 0          | 0          | 0          |   0.0 |  0.00
-Bond    | 1.5298e-05 | 1.5298e-05 | 1.5298e-05 |   0.0 |  0.86
-Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 3.0797e-05 | 3.0797e-05 | 3.0797e-05 |   0.0 |  1.74
-Output  | 8.3809e-05 | 8.3809e-05 | 8.3809e-05 |   0.0 |  4.74
-Modify  | 0.0015665  | 0.0015665  | 0.0015665  |   0.0 | 88.50
-Other   |            | 7.361e-05  |            |       |  4.16
-
-Nlocal:             11 ave          11 max          11 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:             77 ave          77 max          77 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:              1 ave           1 max           1 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-
-Total # of neighbors = 1
-Ave neighs/atom = 0.090909091
-Ave special neighs/atom = 4.9090909
-Neighbor list builds = 0
-Dangerous builds = 0
-
-
-reset_timestep 0
 
 compute blen all bond/local dist
 compute bcomps all bond/local dx dy dz
 compute end2end all reduce sum c_blen inputs local
 variable totLen equal c_end2end
 
-compute forces all property/atom fx fy fz
-compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
-variable totForce vector c_sumForces
+variable validProgFile string "Out_relaxation/validation/in-progress_validation_WLC_11.txt"
+print "" file ${validProgFile}
+print "" file Out_relaxation/validation/in-progress_validation_WLC_11.txt
 
-variable validationFile string "Out_relaxation/validation/validation_WLC_11.txt"
+# dump inProgressblen all local 1 ${validProgFile} c_blen
+# dump inProgressbcomps all local 1 ${validProgFile} c_bcomps[1] c_bcomps[2] c_bcomps[3]
+dump inProgressforces all custom 1 ${validProgFile} id fx fy fz
+dump inProgressforces all custom 1 Out_relaxation/validation/in-progress_validation_WLC_11.txt id fx fy fz
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append ${validProgFile}
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append Out_relaxation/validation/in-progress_validation_WLC_11.txt
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append ${validProgFile}
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append Out_relaxation/validation/in-progress_validation_WLC_11.txt
+fix newline all print 1 "" append ${validProgFile}
+fix newline all print 1 "" append Out_relaxation/validation/in-progress_validation_WLC_11.txt
 
-run 0
-Per MPI rank memory allocation (min/avg/max) = 8.488 | 8.488 | 8.488 Mbytes
-   Step         PotEng         KinEng          Fmax          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
-         0   0.35346658     1.4115302e-05  0.16173699     0              0              0              0              0              0.3534807    
-Loop time of 3.841e-06 on 1 procs for 0 steps with 11 atoms
+# dump_modify inProgressblen append yes
+# dump_modify inProgressbcomps append yes header no
+dump_modify inProgressforces append yes
 
-130.2% CPU use with 1 MPI tasks x 1 OpenMP threads
+# fix integrator internals nve
+# fix integrator all nve
+# fix damper internals viscous 100000
+# fix damper all viscous 1
+# velocity all set 0 0 0
+ run 0
+WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
+ITEM: Total forces on system at current timestep: [3.3306690738754696e-16,3.3306690738754696e-16,3.3306690738754696e-16]
+ITEM: End-to-end arc length: 9.97069246393174
+
+Per MPI rank memory allocation (min/avg/max) = 8.863 | 8.863 | 8.863 Mbytes
+   Step         PotEng         KinEng          Fmax          Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   3.0998616      4.2746324e-05  0.52087601     1.4066159      0              0              0              3.0955669      0              3.0999043    
+Loop time of 9.31e-07 on 1 procs for 0 steps with 11 atoms
+
+214.8% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -242,24 +245,33 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 3.841e-06  |            |       |100.00
+Other   |            | 9.31e-07   |            |       |100.00
 
 Nlocal:             11 ave          11 max          11 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 Nghost:             77 ave          77 max          77 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:              0 ave           0 max           0 min
+Neighs:              1 ave           1 max           1 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 0
-Ave neighs/atom = 0
+Total # of neighbors = 1
+Ave neighs/atom = 0.090909091
 Ave special neighs/atom = 4.9090909
 Neighbor list builds = 0
 Dangerous builds = 0
+# run 10000000
+
+
+# reset_timestep 0
+
+
+variable validationFile string "Out_relaxation/validation/validation_WLC_11.txt"
+
+# run 0
 
 print "# End-to-end arc length following minimization: ${totLen}" file ${validationFile}
 print "# End-to-end arc length following minimization: ${totLen}" file Out_relaxation/validation/validation_WLC_11.txt
-# End-to-end arc length following minimization: 12.6588214750816
+# End-to-end arc length following minimization: 9.97069246393174
 write_dump all local ${validationFile} c_blen modify append yes header no
 write_dump all local Out_relaxation/validation/validation_WLC_11.txt c_blen modify append yes header no
 print "" append ${validationFile}
@@ -275,7 +287,7 @@ print "" append Out_relaxation/validation/validation_WLC_11.txt
 
 print "# Total forces on system following minimization: ${totForce}" append ${validationFile}
 print "# Total forces on system following minimization: ${totForce}" append Out_relaxation/validation/validation_WLC_11.txt
-# Total forces on system following minimization: [-0.2076118089708684,0.01716180855778663,0.10712589851613423]
+# Total forces on system following minimization: [3.3306690738754696e-16,3.3306690738754696e-16,3.3306690738754696e-16]
 write_dump all custom ${validationFile} id type mol fx fy fz modify append yes header no
 write_dump all custom Out_relaxation/validation/validation_WLC_11.txt id type mol fx fy fz modify append yes header no
 
@@ -371,4 +383,4 @@ Angles
 # write_dump all local ${productionFile} index c_angleID[0] c_angleID[1] c_angleID[2] c_angleID[3] modify append yes header no sort 2
 write_dump all local ${productionFile} index c_angleID[*] modify append yes header no
 write_dump all local Out_relaxation/relaxed_WLC_11.txt index c_angleID[*] modify append yes header no
-Total wall time: 0:00:00
+Total wall time: 0:00:50
