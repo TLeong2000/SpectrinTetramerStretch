@@ -42,7 +42,9 @@ FixArcLengthRestraint::FixArcLengthRestraint(LAMMPS *lmp, int narg, char **arg) 
    extscalar = 1;
    thermo_energy = 1;
 
-   debug_mode = false;
+   is_minimize = false;
+   debug_mode = true;
+   is_safe = true;
 
    if (narg < 6) error->all(FLERR, "Insufficient args for fix arclengthrestraint command.");
 
@@ -100,6 +102,30 @@ int FixArcLengthRestraint::setmask()
 
 /* ---------------------------------------------------------------------- */
 
+void FixArcLengthRestraint::min_setup(int vflag)
+{
+    int rank;
+    MPI_Comm_rank(world, &rank);
+
+    is_minimize = true;
+
+    if (debug_mode) {
+       if (rank == 0) {
+          printf("\n### min_setup() called for fix arclengthrestraint ###\n"); 
+       }
+    }
+
+    set_forces();
+
+    if (debug_mode) {
+       if (rank == 0) {
+	       printf("\n### min_setup() complete for fix arclengthrestraint ###\n");
+       }
+    }
+}
+
+/* ---------------------------------------------------------------------- */
+
 void FixArcLengthRestraint::post_force(int /*vflag*/)
 { 
    int rank;
@@ -149,10 +175,17 @@ double FixArcLengthRestraint::compute_scalar() {
    int rank;
    MPI_Comm_rank(world, &rank);
 
+   // Check if we're still in a minimization run at the time energy calculation is requested
+   if (is_minimize) {
+      if (update->whichflag != 2) {
+	 is_minimize = 0;
+      }
+   }
+
    if (debug_mode) {
       if (rank == 0) {
          printf("\n### Calculation of global restraint energy called with compute_scalar() ###\n");
-         // printf("The value of debug_mode is: %d\n",debug_mode);
+         printf("Value of is_minimize: %d\n", is_minimize);
       }
    }
 
@@ -174,7 +207,7 @@ double FixArcLengthRestraint::compute_scalar() {
    */
 
 
-   int max_glo_molID;   
+   int max_glo_molID = -1;   
    // For each processor, store the maximum local molecule ID in max_glo_molID
    /*
    for (n = 0; n < nlocal; n++) {
@@ -182,15 +215,19 @@ double FixArcLengthRestraint::compute_scalar() {
    }
    */
 
+   
+
    for (n = 0; n < nbondlist; n++) {
       i1 = bondlist[n][0];
-      max_glo_molID = MAX(max_glo_molID, atom->molecule[i1]);
+      max_glo_molID = MAX(max_glo_molID, atom->molecule[i1]); 
    }
+
+   
 
    // We take the highest value of max_glo_molID across all processors, and
    // distribute that value to max_glo_molID to the rest of the processors
    // (hence the usage of MPI_IN_PLACE as the send buffer)
-   MPI_Allreduce(MPI_IN_PLACE, &max_glo_molID, 1, MPI_INT, MPI_MAX, world);
+   MPI_Allreduce(MPI_IN_PLACE, &max_glo_molID, 1, MPI_INT, MPI_MAX, world); 
 
    // We want to create a double-type array with max_glo_molID elements
    // to store the arc lengths of each molecule in the system
@@ -279,12 +316,123 @@ double FixArcLengthRestraint::compute_scalar() {
    }
    }
    
+   double scalingFactors[max_glo_molID] = {1};
+   for(n = 0; n < max_glo_molID; n++) {
+      scalingFactors[n] = -1 * k * (molLengths[n] / equiLength - 1);
+   }
 
+   double scale;
 
    erestraint = 0;
    for (n = 0; n < nmols; n++) {
       erestraint += k/2 * ((molLengths[n] * molLengths[n] / equiLength) - 2 * molLengths[n] + equiLength);
    }
+
+
+   if (is_minimize) {
+      if (debug_mode) {
+         if (rank == 0) {
+            printf("!!!ALERT!!!: Begin minimization energy correction to suppress uneven bond lengths.\n");
+            printf("Value of system energy pre-correction: %f\n", erestraint);
+         }
+      }
+      int nlocal = atom->nlocal;
+      int num_bond_neighbors = 0;
+      int *type = atom->type;
+      tagint bonded_atom_globid = 0;
+
+      double eps = 1e-3;
+      double max_norm = 0;
+      double norm = 0;
+
+      double acc_fx = 0;
+      double acc_fy = 0;
+      double acc_fz = 0;
+
+      double fx = 0;
+      double fy = 0;
+      double fz = 0;
+
+      double fxsq = 0;
+      double fysq = 0;
+      double fzsq = 0;
+
+      for (n = 0; n < nlocal; n++) {
+	  acc_fx = 0;
+	  acc_fy = 0;
+	  acc_fz = 0;
+          num_bond_neighbors = atom->nspecial[n][0];
+	  i1 = n;
+	  mol1 = atom->molecule[i1];
+	  scale = scalingFactors[mol1 - 1];
+
+	  // Loop through all atoms that are bonded to atom i1
+          for (int j = 0; j < num_bond_neighbors; j++) {
+              bonded_atom_globid = atom->special[n][j];
+              i2 = atom->map(bonded_atom_globid);
+              mol2 = atom->molecule[i2];
+              if (mol1 != mol2) error->all(FLERR, "There is a bond whose atoms belong to different molecules");
+
+	      // Now calculate force on atom i1 based on its bond with atom i2
+              delx = x[i1][0] - x[i2][0];
+	      dely = x[i1][1] - x[i2][1];
+	      delz = x[i1][2] - x[i2][2];
+
+              delxsq = delx*delx;
+	      delysq = dely*dely;
+	      delzsq = delz*delz;
+
+	      fx = 0;
+	      fy = 0;
+	      fz = 0;
+	      
+	      dist = sqrt(delxsq + delysq + delzsq);
+
+	      if (dist > 10e-18) {
+		 fx = scale * delx / dist;
+		 fy = scale * dely / dist;
+		 fz = scale * delz / dist;
+	      }
+
+	      if (type[i1] > type[i2]) {
+                 fx *= -1;
+		 fy *= -1;
+		 fz *= -1;
+	      }
+
+	      acc_fx += fx;
+	      acc_fy += fy;
+	      acc_fz += fz;
+	 }
+
+         norm = sqrt(acc_fx*acc_fx + acc_fy*acc_fy + acc_fz*acc_fz);
+         max_norm = MAX(max_norm, norm);
+	 if (debug_mode) {
+	    printf("The norm of the force experienced by atom with glolbal ID %d is: %f\n", atom->tag[i1],norm);
+	    printf("The maximum of the norms of the forces per-atom so far is: %f\n", max_norm);
+	 }
+	 
+      }
+      
+      // Take max of max_norm per-proc and dist to rest of procs:
+      MPI_Allreduce(MPI_IN_PLACE, &max_norm, 1, MPI_DOUBLE, MPI_MAX, world);
+
+      erestraint = erestraint * (1 + eps * max_norm);
+      
+
+      
+      if (debug_mode) {
+         if (rank == 0) {
+            printf("Value of epsilon: %f\n", eps);
+            printf("Value of maximum of 2-norms of forces per-atom: %f\n", max_norm);
+            printf("Value of system energy post-correction: %f\n", erestraint);
+            printf("!!!ALERT!!!: Minimization energy correction complete.\n");
+         }
+      }
+      
+
+   }
+
 
    if (debug_mode) {
       if (rank == 0) {
@@ -326,7 +474,7 @@ void FixArcLengthRestraint::set_forces() {
    */
 
 
-   int max_glo_molID;   
+   int max_glo_molID = -1;   
    // For each processor, store the maximum local molecule ID in max_glo_molID
    /*
    for (n = 0; n < nlocal; n++) {
@@ -424,7 +572,7 @@ void FixArcLengthRestraint::set_forces() {
    }
 
 
-   double scalingFactors[max_glo_molID];
+   double scalingFactors[max_glo_molID] = {1};
    for(n = 0; n < max_glo_molID; n++) {
       scalingFactors[n] = -1 * k * (molLengths[n] / equiLength - 1);
    }

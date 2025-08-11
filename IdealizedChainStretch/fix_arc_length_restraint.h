@@ -27,10 +27,11 @@ namespace LAMMPS_NS
         public:
         FixArcLengthRestraint(class LAMMPS *, int, char **);
         int setmask() override;
-	    void init() override;
+	void init() override;
+	void min_setup(int) override;
         void post_force(int) override;
         void min_post_force(int) override;
-	    double compute_scalar() override;
+	double compute_scalar() override;
 
         protected:
         int imol;
@@ -39,7 +40,9 @@ namespace LAMMPS_NS
 
         private:
         double erestraint;
+	bool is_minimize;
         bool debug_mode;
+	bool is_safe;
 
         void set_forces();
 

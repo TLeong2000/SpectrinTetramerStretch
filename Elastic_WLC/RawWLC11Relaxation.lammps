@@ -56,11 +56,10 @@ run 0
 timestep 1e-6
 
  fix stationary endpoints setforce 0 0 0
-# min_modify dmax 1 line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
-# minimize 0 0 10000000 10000000
- min_style fire
- min_modify dmax 1 abcfire yes
- minimize 0 0 10000 10000
+min_modify dmax 10 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+# min_style fire
+# min_modify dmax 1 abcfire yes
+ minimize 0 0 100000 100000
  unfix stationary
 
 # I have a feeling that setting the force of the endpoints to 0 0 0
@@ -95,13 +94,13 @@ fix newline all print 1 "" append ${validProgFile}
 # dump_modify inProgressbcomps append yes header no
 dump_modify inProgressforces append yes
 
-# fix integrator internals nve
+ fix integrator internals nve
 # fix integrator all nve
-# fix damper internals viscous 100000
+ fix damper internals viscous 1000
 # fix damper all viscous 1
 # velocity all set 0 0 0
  run 0
-# run 10000000
+ run 10
 
 
 # reset_timestep 0
