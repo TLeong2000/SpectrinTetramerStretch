@@ -42,8 +42,9 @@ EXE="./lmp_polaris_gnu"
 # EXE="../IdealizedChainStretch/lmp_polaris_gnu"
 echo "EXE directory = $EXE"
 
-EXE_ARG="-in RawWLC11Relaxation.lammps -nonbuf"
-# EXE_ARG="-in RawWLC21Relaxation.lammps RawWLC41Relaxation.lammps"
+# EXE_ARG="-in RawWLC11Relaxation.lammps"
+EXE_ARG="-in RawWLC21Relaxation.lammps" 
+# EXE_ARG="-in RawWLC41Relaxation.lammps"
 
 # MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth "
 MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind none "

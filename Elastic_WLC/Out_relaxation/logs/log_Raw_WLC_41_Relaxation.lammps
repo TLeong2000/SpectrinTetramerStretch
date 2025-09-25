@@ -1,0 +1,432 @@
+
+variable totLength equal 10
+
+variable seed equal 1
+units si
+boundary p p p
+
+atom_style molecular
+
+region main block -100 100 -100 100 -100 100
+
+create_box 41 main bond/types 40 angle/types 39 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+Created orthogonal box = (-100 -100 -100) to (100 100 100)
+  1 by 1 by 1 MPI processor grid
+
+molecule raw_WLC_41_Atoms Structures/Raw/raw_WLC_41.txt
+Read molecule template raw_WLC_41_Atoms:
+# Molecule File for Worm-Like Chain with 41 atoms
+  1 molecules
+  0 fragments
+  41 atoms with max type 41
+  40 bonds with max type 40
+  39 angles with max type 39
+  0 dihedrals with max type 0
+  0 impropers with max type 0
+bond_style harmonic
+bond_style zero nocoeff
+angle_style harmonic
+dihedral_style none
+
+create_atoms 0 single 0 0 0 mol raw_WLC_41_Atoms ${seed} rotate 0 0 0 1
+create_atoms 0 single 0 0 0 mol raw_WLC_41_Atoms 1 rotate 0 0 0 1
+Created 41 atoms
+  using lattice units in orthogonal box = (-100 -100 -100) to (100 100 100)
+  create_atoms CPU = 0.001 seconds
+
+read_data Structures/Coeffs/coeffs_WLC_41.data add merge
+Reading data file ...
+  orthogonal box = (-100 -100 -100) to (100 100 100)
+  1 by 1 by 1 MPI processor grid
+WARNING: Bond style harmonic in data file differs from currently defined bond style zero (../read_data.cpp:809)
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0       
+  special bond factors coul:  0        0        0       
+     3 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+    18 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  read_data CPU = 0.018 seconds
+bond_coeff * 0 1
+# angle_coeff * 0 180
+
+group internals type 2:40
+39 atoms in group internals
+group endpoints subtract all internals
+2 atoms in group endpoints
+
+
+compute bondID all property/local btype batom1 batom2
+compute angleID all property/local atype aatom1 aatom2 aatom3
+
+variable k_restrain equal 400
+
+fix restraint all arclengthrestraint raw_WLC_41_Atoms ${k_restrain} ${totLength}
+fix restraint all arclengthrestraint raw_WLC_41_Atoms 400 ${totLength}
+fix restraint all arclengthrestraint raw_WLC_41_Atoms 400 10
+# print "fix arclengthrestraint has been imposed on system"
+ fix_modify restraint energy yes
+
+
+comm_modify cutoff 100
+
+velocity all set 0 0 0
+thermo_style custom step pe ke fnorm epair epair ebond eangle edihed etotal
+
+compute forces all property/atom fx fy fz
+compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
+variable totForce vector c_sumForces
+
+run 0
+WARNING: No fixes with time integration, atoms won't move (../verlet.cpp:60)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 0
+  ghost atom cutoff = 100
+  binsize = 200, bins = 1 1 1
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) fix arclengthrestraint, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton
+      stencil: half/bin/3d
+      bin: standard
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2442)
+Per MPI rank memory allocation (min/avg/max) = 8.186 | 8.186 | 8.186 Mbytes
+   Step         PotEng         KinEng         Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   69173.306      0              166.22639      0              0              0              808.9478       0              69173.306    
+Loop time of 9.42e-07 on 1 procs for 0 steps with 41 atoms
+
+106.2% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 9.42e-07   |            |       |100.00
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            287 ave         287 max         287 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.024390244
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 0
+Dangerous builds = 0
+timestep 1e-6
+
+ fix stationary endpoints setforce 0 0 0
+min_modify dmax 10 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+# min_style fire
+# min_modify dmax 1 abcfire yes
+ minimize 0 0 100000 100000
+Per MPI rank memory allocation (min/avg/max) = 9.311 | 9.311 | 9.311 Mbytes
+   Step         PotEng         KinEng         Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   374256.17      0              25233.578      0              0              0              808.9478       0              374256.17    
+       111   77.709356      0              38.969048      0              0              0              77.470028      0              77.709356    
+Loop time of 0.0346659 on 1 procs for 111 steps with 41 atoms
+
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      374256.168745107   77.7093562774294   77.7093562774294
+  Force two-norm initial, final = 25233.578 38.969048
+  Force max component initial, final = 4273.0019 13.276794
+  Final line search alpha, max atom move = 5.4802067e-12 7.2759576e-11
+  Iterations, force evaluations = 111 2114
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0.0046579  | 0.0046579  | 0.0046579  |   0.0 | 13.44
+Neigh   | 0.015495   | 0.015495   | 0.015495   |   0.0 | 44.70
+Comm    | 0.0061896  | 0.0061896  | 0.0061896  |   0.0 | 17.85
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0021763  | 0.0021763  | 0.0021763  |   0.0 |  6.28
+Other   |            | 0.006147   |            |       | 17.73
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            287 ave         287 max         287 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.024390244
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 1562
+Dangerous builds = 1439
+ unfix stationary
+
+reset_timestep 0
+timestep 1e-6
+# min_style fire
+# min_modify dmax 10 norm max
+# minimize 0 0 1000000 1000000
+
+compute blen all bond/local dist
+compute bcomps all bond/local dx dy dz
+compute end2end all reduce sum c_blen inputs local
+variable totLen equal c_end2end
+
+variable validProgFile string "Out_relaxation/validation/in-progress_validation_WLC_41.txt"
+print "" file ${validProgFile}
+print "" file Out_relaxation/validation/in-progress_validation_WLC_41.txt
+
+# dump inProgressblen all local 1 ${validProgFile} c_blen
+# dump inProgressbcomps all local 1 ${validProgFile} c_bcomps[1] c_bcomps[2] c_bcomps[3]
+dump inProgressforces all custom 1 ${validProgFile} id fx fy fz
+dump inProgressforces all custom 1 Out_relaxation/validation/in-progress_validation_WLC_41.txt id fx fy fz
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append ${validProgFile}
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append Out_relaxation/validation/in-progress_validation_WLC_41.txt
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append ${validProgFile}
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append Out_relaxation/validation/in-progress_validation_WLC_41.txt
+fix newline all print 1 "" append ${validProgFile}
+fix newline all print 1 "" append Out_relaxation/validation/in-progress_validation_WLC_41.txt
+
+# dump_modify inProgressblen append yes
+# dump_modify inProgressbcomps append yes header no
+dump_modify inProgressforces append yes
+
+ fix integrator internals nve
+# fix integrator all nve
+ fix damper internals viscous 1000
+# fix damper all viscous 1
+# velocity all set 0 0 0
+ run 0
+ITEM: Total forces on system at current timestep: [-4.027711497656128e-11,3.1536107059082497e-11,-3.2759794876824344e-10]
+ITEM: End-to-end arc length: 9.89108179569967
+
+Per MPI rank memory allocation (min/avg/max) = 8.866 | 8.866 | 8.866 Mbytes
+   Step         PotEng         KinEng         Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   77.707291      0              48.323478      0              0              0              77.470028      0              77.707291    
+Loop time of 8.81e-07 on 1 procs for 0 steps with 41 atoms
+
+113.5% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 8.81e-07   |            |       |100.00
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            287 ave         287 max         287 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.024390244
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 0
+Dangerous builds = 0
+ run 10
+ITEM: Total forces on system at current timestep: [-4.027711497656128e-11,3.1536107059082497e-11,-3.2759794876824344e-10]
+ITEM: End-to-end arc length: 9.89108179569967
+
+Per MPI rank memory allocation (min/avg/max) = 10.12 | 10.12 | 10.12 Mbytes
+   Step         PotEng         KinEng         Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   77.707291      0              48.323478      0              0              0              77.470028      0              77.707291    
+ITEM: Total forces on system at current timestep: [0.011985884125868651,-0.0001455823777614107,0.004426635831542569]
+ITEM: End-to-end arc length: 9.89108179565965
+
+ITEM: Total forces on system at current timestep: [0.03451716538366867,-0.007416877303481506,0.01019072343587446]
+ITEM: End-to-end arc length: 9.89108179561918
+
+ITEM: Total forces on system at current timestep: [0.057025915493200685,-0.014680901005404756,0.015949047632454416]
+ITEM: End-to-end arc length: 9.89108179557824
+
+ITEM: Total forces on system at current timestep: [0.07951215691791624,-0.021937660523636993,0.021701612786516833]
+ITEM: End-to-end arc length: 9.89108179553685
+
+ITEM: Total forces on system at current timestep: [0.10197591191199784,-0.029187163465712818,0.027448426404291126]
+ITEM: End-to-end arc length: 9.891081795495
+
+ITEM: Total forces on system at current timestep: [0.12441720325364791,-0.0364294168446766,0.033189492083954164]
+ITEM: End-to-end arc length: 9.89108179545272
+
+ITEM: Total forces on system at current timestep: [0.14683605324592897,-0.0436644279509375,0.03892481692624372]
+ITEM: End-to-end arc length: 9.89108179541015
+
+ITEM: Total forces on system at current timestep: [0.16923248436757632,-0.05089220402001127,0.04465440664402287]
+ITEM: End-to-end arc length: 9.89108179536811
+
+ITEM: Total forces on system at current timestep: [0.19160651916509508,-0.05811275232485258,0.05037826681874957]
+ITEM: End-to-end arc length: 9.89108179533175
+
+ITEM: Total forces on system at current timestep: [0.21395817975653486,-0.0653260800648563,0.05609640323492204]
+ITEM: End-to-end arc length: 9.89108179533206
+
+        10   77.707469      3.8922067e-05  41661.796      0              0              0              77.470206      0              77.707508    
+Loop time of 0.000973564 on 1 procs for 10 steps with 41 atoms
+
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 2.1961e-05 | 2.1961e-05 | 2.1961e-05 |   0.0 |  2.26
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.1351e-05 | 1.1351e-05 | 1.1351e-05 |   0.0 |  1.17
+Output  | 0.00047303 | 0.00047303 | 0.00047303 |   0.0 | 48.59
+Modify  | 0.00045666 | 0.00045666 | 0.00045666 |   0.0 | 46.91
+Other   |            | 1.057e-05  |            |       |  1.09
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            287 ave         287 max         287 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              1 ave           1 max           1 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1
+Ave neighs/atom = 0.024390244
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 0
+Dangerous builds = 0
+
+
+# reset_timestep 0
+
+
+variable validationFile string "Out_relaxation/validation/validation_WLC_41.txt"
+
+# run 0
+
+print "# End-to-end arc length following minimization: ${totLen}" file ${validationFile}
+print "# End-to-end arc length following minimization: ${totLen}" file Out_relaxation/validation/validation_WLC_41.txt
+# End-to-end arc length following minimization: 9.89108179533206
+write_dump all local ${validationFile} c_blen modify append yes header no
+write_dump all local Out_relaxation/validation/validation_WLC_41.txt c_blen modify append yes header no
+print "" append ${validationFile}
+print "" append Out_relaxation/validation/validation_WLC_41.txt
+
+print "# Bond component distances: x y z" append ${validationFile}
+print "# Bond component distances: x y z" append Out_relaxation/validation/validation_WLC_41.txt
+# Bond component distances: x y z
+write_dump all local ${validationFile} c_bcomps[1] c_bcomps[2] c_bcomps[3] modify append yes header no
+write_dump all local Out_relaxation/validation/validation_WLC_41.txt c_bcomps[1] c_bcomps[2] c_bcomps[3] modify append yes header no
+print "" append ${validationFile}
+print "" append Out_relaxation/validation/validation_WLC_41.txt
+
+print "# Total forces on system following minimization: ${totForce}" append ${validationFile}
+print "# Total forces on system following minimization: ${totForce}" append Out_relaxation/validation/validation_WLC_41.txt
+# Total forces on system following minimization: [0.21395817975653486,-0.0653260800648563,0.05609640323492204]
+write_dump all custom ${validationFile} id type mol fx fy fz modify append yes header no
+write_dump all custom Out_relaxation/validation/validation_WLC_41.txt id type mol fx fy fz modify append yes header no
+
+
+variable natoms equal count(all)
+
+variable productionFile string "Out_relaxation/relaxed_WLC_41.txt"
+
+print "# Relaxed Production Model for Worm-Like Chain" file ${productionFile}
+print "# Relaxed Production Model for Worm-Like Chain" file Out_relaxation/relaxed_WLC_41.txt
+# Relaxed Production Model for Worm-Like Chain
+
+print """
+$(count(all)) atoms
+$(count(all)-1) bonds
+$(count(all)-2) angles
+0 dihedrals
+0 impropers
+""" append ${productionFile}
+print """
+$(count(all)) atoms
+$(count(all)-1) bonds
+$(count(all)-2) angles
+0 dihedrals
+0 impropers
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+41 atoms
+40 bonds
+39 angles
+0 dihedrals
+0 impropers
+
+
+print """
+Coords
+""" append ${productionFile}
+print """
+Coords
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+Coords
+
+write_dump all custom ${productionFile} id x y z modify append yes header no sort id
+write_dump all custom Out_relaxation/relaxed_WLC_41.txt id x y z modify append yes header no sort id
+
+print """
+Types
+""" append ${productionFile}
+print """
+Types
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+Types
+
+write_dump all custom ${productionFile} id type modify append yes header no sort id
+write_dump all custom Out_relaxation/relaxed_WLC_41.txt id type modify append yes header no sort id
+
+print """
+Molecules
+""" append ${productionFile}
+print """
+Molecules
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+Molecules
+
+write_dump all custom ${productionFile} id mol modify append yes header no sort id
+write_dump all custom Out_relaxation/relaxed_WLC_41.txt id mol modify append yes header no sort id
+
+print """
+Bonds
+""" append ${productionFile}
+print """
+Bonds
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+Bonds
+
+write_dump all local ${productionFile} index c_bondID[*] modify append yes header no
+write_dump all local Out_relaxation/relaxed_WLC_41.txt index c_bondID[*] modify append yes header no
+# write_dump all local ${productionFile} index c_bondID[0] c_bondID[1] c_bondID[2] modify append yes header no sort 2
+
+print """
+Angles
+""" append ${productionFile}
+print """
+Angles
+""" append Out_relaxation/relaxed_WLC_41.txt
+
+Angles
+
+# write_dump all local ${productionFile} index c_angleID[0] c_angleID[1] c_angleID[2] c_angleID[3] modify append yes header no sort 2
+write_dump all local ${productionFile} index c_angleID[*] modify append yes header no
+write_dump all local Out_relaxation/relaxed_WLC_41.txt index c_angleID[*] modify append yes header no
+Total wall time: 0:00:00

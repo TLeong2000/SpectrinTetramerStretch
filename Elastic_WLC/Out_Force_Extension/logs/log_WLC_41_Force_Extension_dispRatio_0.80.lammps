@@ -1,0 +1,354 @@
+
+variable totLength equal 10
+variable dispDist equal "v_totLength * v_dispRatio / 2"
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -500 500 -500 500 -500 500
+
+create_box 41 main bond/types 40 angle/types 39 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+Created orthogonal box = (-500 -500 -500) to (500 500 500)
+  1 by 1 by 1 MPI processor grid
+
+molecule WLC_41 Structures/Production/relaxed_WLC_41.txt
+Read molecule template WLC_41:
+# Relaxed Production Model for Worm-Like Chain
+  1 molecules
+  0 fragments
+  41 atoms with max type 41
+  40 bonds with max type 40
+  39 angles with max type 39
+  0 dihedrals with max type 0
+  0 impropers with max type 0
+bond_style harmonic
+angle_style harmonic
+dihedral_style none
+
+create_atoms 0 single 0 0 0 mol WLC_41 ${seed} rotate 0 0 0 1
+create_atoms 0 single 0 0 0 mol WLC_41 1 rotate 0 0 0 1
+Created 41 atoms
+  using lattice units in orthogonal box = (-500 -500 -500) to (500 500 500)
+  create_atoms CPU = 0.002 seconds
+
+read_data Structures/Coeffs/coeffs_WLC_41.data add merge
+Reading data file ...
+  orthogonal box = (-500 -500 -500) to (500 500 500)
+  1 by 1 by 1 MPI processor grid
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0       
+  special bond factors coul:  0        0        0       
+     3 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+    18 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  read_data CPU = 0.012 seconds
+bond_coeff * 0 0.25
+
+group internals type 2:40
+39 atoms in group internals
+group endpointAlpha type 1
+1 atoms in group endpointAlpha
+group endpointOmega type 41
+1 atoms in group endpointOmega
+group endpoints subtract all internals
+2 atoms in group endpoints
+
+displace_atoms endpointAlpha move 0 ${dispDist} 0 units box
+displace_atoms endpointAlpha move 0 4 0 units box
+Displacing atoms ...
+displace_atoms endpointOmega move 0 -${dispDist} 0 units box
+displace_atoms endpointOmega move 0 -4 0 units box
+Displacing atoms ...
+
+variable k_restrain equal 400
+
+fix restraint all arclengthrestraint WLC_41 ${k_restrain} ${totLength}
+fix restraint all arclengthrestraint WLC_41 400 ${totLength}
+fix restraint all arclengthrestraint WLC_41 400 10
+fix_modify restraint energy yes
+
+comm_modify cutoff 100
+
+compute internalsTemp internals temp
+thermo_style custom step pe ke fnorm epair epair ebond eangle edihed etotal
+
+fix stationary endpoints setforce 0 0 0
+min_modify dmax 10 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+minimize 0 0 100000 100000
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 0
+  ghost atom cutoff = 100
+  binsize = 1000, bins = 1 1 1
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) fix arclengthrestraint, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton
+      stencil: half/bin/3d
+      bin: standard
+WARNING: No pairwise cutoff or binsize set. Atom sorting therefore disabled. (../atom.cpp:2442)
+Per MPI rank memory allocation (min/avg/max) = 8.622 | 8.622 | 8.622 Mbytes
+   Step         PotEng         KinEng         Fnorm          E_pair         E_pair         E_bond        E_angle        E_dihed         TotEng    
+         0   2006.2958      0              2050628.4      0              0              0              115.25008      0              2006.2958    
+       138   81.164428      0              522.96795      0              0              0              28.025399      0              81.164428    
+Loop time of 0.0201205 on 1 procs for 138 steps with 41 atoms
+
+99.5% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      2006.29581873062   81.1644282121996   81.1644282121996
+  Force two-norm initial, final = 2050628.4 522.96795
+  Force max component initial, final = 1437107 352.86747
+  Final line search alpha, max atom move = 2.5774399e-14 9.094947e-12
+  Iterations, force evaluations = 138 2693
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0.0071877  | 0.0071877  | 0.0071877  |   0.0 | 35.72
+Neigh   | 0.002811   | 0.002811   | 0.002811   |   0.0 | 13.97
+Comm    | 0.00060349 | 0.00060349 | 0.00060349 |   0.0 |  3.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0027741  | 0.0027741  | 0.0027741  |   0.0 | 13.79
+Other   |            | 0.006744   |            |       | 33.52
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 690
+Dangerous builds = 416
+unfix stationary
+
+reset_timestep 0
+timestep 1e-6
+
+fix integrate internals nvt temp 310.0 310.0 $(10.0*dt)
+fix integrate internals nvt temp 310.0 310.0 9.999999999999999124e-06
+velocity internals create 310.0 ${seed} dist gaussian
+velocity internals create 310.0 1 dist gaussian
+
+
+compute endForce endpointOmega reduce ave fy # Obtain force on endpoint
+variable computedForce equal c_endForce # fix print cannot directly print out computes
+thermo_style custom step c_endForce c_integrate_temp temp ke
+
+neighbor 100.0 bin
+run 0
+WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 100.375. This may lead to errors. (../comm.cpp:730)
+Per MPI rank memory allocation (min/avg/max) = 7.497 | 7.497 | 7.497 Mbytes
+   Step       c_endForce   c_integrate_temp      Temp          KinEng    
+         0   0.013449725    310            294.5          35.113942    
+Loop time of 9.42e-07 on 1 procs for 0 steps with 41 atoms
+
+0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 9.42e-07   |            |       |100.00
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 0
+Dangerous builds = 0
+velocity internals scale 310.0
+
+variable sampFreq equal 10000000 # Sample force on endpoints every this-many timesteps.
+variable numSamps equal 100 # Number of force samples to take.
+variable numSteps equal "v_sampFreq * v_numSamps"
+thermo ${sampFreq}
+thermo 10000000
+
+# Print out force on endpoint below
+fix printForces all print ${sampFreq} "${computedForce}" file Out_Force_Extension/data/data_WLC_41_dispRatio_$(v_dispRatio:%.2f).txt screen no
+fix printForces all print 10000000 "${computedForce}" file Out_Force_Extension/data/data_WLC_41_dispRatio_$(v_dispRatio:%.2f).txt screen no
+fix printForces all print 10000000 "${computedForce}" file Out_Force_Extension/data/data_WLC_41_dispRatio_0.80.txt screen no
+
+### Below is for validation purposes ###
+compute blen all bond/local dist
+compute end2end all reduce sum c_blen inputs local
+variable totLen equal c_end2end
+
+variable computedTemp equal c_integrate_temp
+# variable sysTemp equal temp
+# variable sysKE equal ke
+
+variable validFile_end2end string "Out_Force_Extension/validation/end2end_WLC_41_Force_Extension_dispRatio_$(v_dispRatio:%.2f).txt"
+Out_Force_Extension/validation/end2end_WLC_41_Force_Extension_dispRatio_0.80.txt
+fix print_end2end all print ${sampFreq} "${totLen}" file ${validFile_end2end} screen no title "End-to-end arc length of WLC with 41 atoms"
+fix print_end2end all print 10000000 "${totLen}" file ${validFile_end2end} screen no title "End-to-end arc length of WLC with 41 atoms"
+fix print_end2end all print 10000000 "${totLen}" file Out_Force_Extension/validation/end2end_WLC_41_Force_Extension_dispRatio_0.80.txt screen no title "End-to-end arc length of WLC with 41 atoms"
+
+variable validFile_internalsTemp string "Out_Force_Extension/validation/internalsTemp_WLC_41_Force_Extension_dispRatio_$(v_dispRatio:%.2f).txt"
+Out_Force_Extension/validation/internalsTemp_WLC_41_Force_Extension_dispRatio_0.80.txt
+fix print_internalsTemp all print ${sampFreq} "${computedTemp}" file ${validFile_internalsTemp} screen no title "Temperature (K) of internal atoms of WLC with 41 atoms"
+fix print_internalsTemp all print 10000000 "${computedTemp}" file ${validFile_internalsTemp} screen no title "Temperature (K) of internal atoms of WLC with 41 atoms"
+fix print_internalsTemp all print 10000000 "${computedTemp}" file Out_Force_Extension/validation/internalsTemp_WLC_41_Force_Extension_dispRatio_0.80.txt screen no title "Temperature (K) of internal atoms of WLC with 41 atoms"
+### End of validation block ###
+
+
+run ${numSteps}
+run 1000000000
+WARNING: Communication cutoff 100 is shorter than a bond length based estimate of 100.375. This may lead to errors. (../comm.cpp:730)
+Per MPI rank memory allocation (min/avg/max) = 7.573 | 7.573 | 7.573 Mbytes
+   Step       c_endForce   c_integrate_temp      Temp          KinEng    
+         0   0.013449725    310            294.5          35.113942    
+  10000000   2.8193981      326.19383      309.88414      36.94823     
+  20000000   13.364613      267.76777      254.37938      30.330265    
+  30000000   15.175848      299.66854      284.68511      33.94369     
+  40000000   6.2306275      333.67043      316.98691      37.79511     
+  50000000   15.26164       263.53275      250.35611      29.850561    
+  60000000   9.2851799      303.03495      287.8832       34.325006    
+  70000000   3.6313133      310.1725       294.66388      35.133482    
+  80000000  -1.5308432      290.36848      275.85005      32.890264    
+  90000000  -13.446511      331.82653      315.2352       37.58625     
+ 100000000  -11.110724      272.60818      258.97777      30.878542    
+ 110000000   5.1223469      305.54159      290.26451      34.608935    
+ 120000000  -2.2320259      256.80413      243.96392      29.088404    
+ 130000000   6.2101385      233.84555      222.15327      26.487868    
+ 140000000  -1.1075228      368.7736       350.33492      41.771274    
+ 150000000  -60.326399      354.4319       336.7103       40.146778    
+ 160000000  -0.81660405     287.16113      272.80307      32.526965    
+ 170000000   0.10442029     223.2499       212.0874       25.287691    
+ 180000000   11.988043      293.67784      278.99395      33.265118    
+ 190000000   2.3965988      314.93772      299.19083      35.673242    
+ 200000000   5.8036823      323.48793      307.31354      36.641731    
+ 210000000  -6.2532257      295.99753      281.19765      33.527872    
+ 220000000   9.6087892      318.66159      302.72851      36.095048    
+ 230000000   9.0202262      287.02971      272.67823      32.51208     
+ 240000000  -8.5060874      333.93501      317.23826      37.82508     
+ 250000000  -83.10393       289.96854      275.47012      32.844964    
+ 260000000   7.2662649      370.2805       351.76647      41.941962    
+ 270000000   6.9963817      212.5773       201.94844      24.078797    
+ 280000000   9.6660306      304.54138      289.31431      34.495641    
+ 290000000   14.188821      306.4381       291.1162       34.710484    
+ 300000000   5.9521729      377.13647      358.27964      42.718542    
+ 310000000  -1.195911       286.84403      272.50183      32.491047    
+ 320000000   3.210949       248.25098      235.83843      28.119583    
+ 330000000  -0.3274593      298.25127      283.33871      33.783154    
+ 340000000   3.914231       355.23935      337.47739      40.238239    
+ 350000000   6.4057477      283.10778      268.95239      32.067839    
+ 360000000   5.5770521      341.94831      324.85089      38.732752    
+ 370000000   17.06888       329.69324      313.20858      37.344611    
+ 380000000   3.7184634      320.13989      304.13289      36.262495    
+ 390000000   4.3781847      299.37778      284.4089       33.910756    
+ 400000000   7.7751196      269.62887      256.14743      30.541073    
+ 410000000   6.8573444      283.84406      269.65186      32.151239    
+ 420000000  -1.8456072      312.02053      296.4195       35.34281     
+ 430000000   9.8460523      318.51051      302.58498      36.077935    
+ 440000000   14.926681      283.70578      269.52049      32.135576    
+ 450000000   11.611347      404.46983      384.24634      45.814614    
+ 460000000  -2.7208881      273.86969      260.1762       31.021433    
+ 470000000  -33.073544      268.19851      254.78858      30.379055    
+ 480000000  -9.0846811      276.86279      263.01965      31.360464    
+ 490000000   6.1933899      267.00509      253.65483      30.243875    
+ 500000000   6.8188214      288.41172      273.99114      32.668621    
+ 510000000   4.0127337      289.68507      275.20082      32.812855    
+ 520000000   2.8552538      307.90035      292.50534      34.876114    
+ 530000000   2.7323478      244.74684      232.5095       27.722666    
+ 540000000  -0.28105983     373.41638      354.74556      42.297165    
+ 550000000  -0.6652056      355.34987      337.58238      40.250758    
+ 560000000   14.417533      314.5154       298.78963      35.625406    
+ 570000000   10.201455      386.4943       367.16959      43.778512    
+ 580000000   5.7380362      350.7411       333.20405      39.728719    
+ 590000000   23.72376       344.18942      326.97995      38.986605    
+ 600000000   1.3184211      306.03415      290.73244      34.664727    
+ 610000000   6.9112105      262.89525      249.75048      29.77835     
+ 620000000   3.802902       308.80149      293.36142      34.978186    
+ 630000000   16.304384      316.58929      300.75982      35.860316    
+ 640000000  -35.084386      289.09436      274.63964      32.745944    
+ 650000000   4.7559547      272.43763      258.81574      30.859223    
+ 660000000  -0.57559051     258.38233      245.46321      29.267169    
+ 670000000   1.0220687      248.43794      236.01604      28.14076     
+ 680000000  -19.350118      285.71054      271.42501      32.362656    
+ 690000000  -0.21062413     310.18073      294.67169      35.134414    
+ 700000000   19.960647      289.99937      275.4994       32.848455    
+ 710000000   10.86039       313.64122      297.95916      35.526386    
+ 720000000   6.0226315      298.00928      283.10882      33.755745    
+ 730000000  -22.48915       295.78161      280.99253      33.503414    
+ 740000000   8.1508799      282.31717      268.20131      31.978287    
+ 750000000  -4.8509728      329.86146      313.36839      37.363666    
+ 760000000   13.766603      330.65742      314.12455      37.453824    
+ 770000000  -4.4772285      296.07028      281.26676      33.536112    
+ 780000000   0.91608012     413.3557       392.68791      46.821123    
+ 790000000  -4.616123       345.012        327.7614       39.079779    
+ 800000000   11.256772      299.70221      284.7171       33.947503    
+ 810000000  -33.830306      310.22629      294.71497      35.139574    
+ 820000000  -2.2611979      334.99846      318.24854      37.945538    
+ 830000000  -13.435312      360.83292      342.79127      40.871827    
+ 840000000   4.4922138      292.45749      277.83461      33.126888    
+ 850000000   10.169503      199.58543      189.60616      22.607198    
+ 860000000  -16.587818      265.72459      252.43836      30.098832    
+ 870000000  -48.73635       249.91843      237.42251      28.308456    
+ 880000000  -42.698034      349.79169      332.3021       39.621178    
+ 890000000  -7.3083378      265.20803      251.94763      30.040321    
+ 900000000   23.283765      278.38258      264.46346      31.532613    
+ 910000000   4.2722459      245.48561      233.21133      27.806348    
+ 920000000   9.1307992      288.48129      274.05723      32.676501    
+ 930000000   0.1523119      338.57804      321.64913      38.350999    
+ 940000000   4.0337311      347.66078      330.27774      39.379808    
+ 950000000  -9.1140914      290.13061      275.62408      32.863321    
+ 960000000  -2.931263       306.17149      290.86291      34.680284    
+ 970000000  -4.357016       254.2861       241.57179      28.803185    
+ 980000000  -3.756519       350.86107      333.31802      39.742308    
+ 990000000   1.7620441      365.26876      347.00532      41.374278    
+1000000000   6.1177785      340.02271      323.02157      38.514638    
+Loop time of 4527.79 on 1 procs for 1000000000 steps with 41 atoms
+
+Performance: 0.019 ns/day, 1257.718 hours/ns, 220858.499 timesteps/s, 9.055 Matom-step/s
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 2100.8     | 2100.8     | 2100.8     |   0.0 | 46.40
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 78.126     | 78.126     | 78.126     |   0.0 |  1.73
+Output  | 0.0036524  | 0.0036524  | 0.0036524  |   0.0 |  0.00
+Modify  | 1993       | 1993       | 1993       |   0.0 | 44.02
+Other   |            | 355.9      |            |       |  7.86
+
+Nlocal:             41 ave          41 max          41 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 5.7073171
+Neighbor list builds = 0
+Dangerous builds = 0
+Total wall time: 1:15:28

@@ -1,0 +1,69 @@
+variable dispRatio world 0.50
+log Out_Force_Extension/logs/log_WLC_41_Force_Extension_dispRatio_$(v_dispRatio:%.2f).lammps
+
+variable totLength equal 10
+variable dispDist equal "v_totLength * v_dispRatio / 2"
+
+variable seed equal 1
+units real
+boundary p p p
+
+atom_style molecular
+
+region main block -500 500 -500 500 -500 500
+
+create_box 41 main bond/types 40 angle/types 39 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
+
+molecule WLC_41 Structures/Production/relaxed_WLC_41.txt
+bond_style harmonic
+angle_style harmonic
+dihedral_style none
+
+create_atoms 0 single 0 0 0 mol WLC_41 ${seed} rotate 0 0 0 1
+
+read_data Structures/Coeffs/coeffs_WLC_41.data add merge
+bond_coeff * 0 1 
+
+group internals type 2:40
+group endpointAlpha type 1
+group endpointOmega type 41
+group endpoints subtract all internals
+
+displace_atoms endpointAlpha move 0 ${dispDist} 0 units box
+displace_atoms endpointOmega move 0 -${dispDist} 0 units box
+
+variable k_restrain equal 400
+
+fix restraint all arclengthrestraint WLC_41 ${k_restrain} ${totLength}
+fix_modify restraint energy yes
+
+comm_modify cutoff 100
+
+compute internalsTemp internals temp
+thermo_style custom step pe ke fnorm epair epair ebond eangle edihed etotal
+
+fix stationary endpoints setforce 0 0 0
+min_modify dmax 10 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+minimize 0 0 100000 100000
+unfix stationary
+
+reset_timestep 0
+timestep 1e-6
+
+fix integrate internals nvt temp 310.0 310.0 $(10.0*dt)
+velocity internals create 310.0 ${seed} dist gaussian
+
+thermo_style custom step c_integrate_temp temp ke
+
+neighbor 100.0 bin
+run 0
+velocity internals scale 310.0
+
+variable sampFreq equal 10000000 # Sample force on endpoints every this-many timesteps.
+variable numSamps equal 100 # Number of force samples to take.
+variable numSteps equal "v_sampFreq * v_numSamps"
+thermo ${sampFreq}
+
+dump trajectory all dcd ${sampFreq} Out_Force_Extension/trajectories/WLC_41_dispRatio_$(v_dispRatio:%.2f).dcd
+
+run ${numSteps}

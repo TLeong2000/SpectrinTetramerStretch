@@ -1,26 +1,28 @@
-log Out.relaxation/logs/log_Raw_WLC_41_Relaxation.lammps
+log Out_relaxation/logs/log_Raw_WLC_41_Relaxation.lammps
 
 variable totLength equal 10
 
 variable seed equal 1
-units real
+units si
 boundary p p p
 
 atom_style molecular
 
-region main block -50 50 -50 50 -50 50
+region main block -100 100 -100 100 -100 100
 
 create_box 41 main bond/types 40 angle/types 39 extra/bond/per/atom 2 extra/angle/per/atom 3 extra/special/per/atom 6
 
-molecule raw_WLC_41 Structures/Raw/raw_WLC_41.txt
-bond_style harmonic 
-bond_coeff * 0 1
+molecule raw_WLC_41_Atoms Structures/Raw/raw_WLC_41.txt
+bond_style harmonic
+bond_style zero nocoeff
 angle_style harmonic
+dihedral_style none
 
-create_atoms 0 single 0 0 0 mol raw_WLC_41 ${seed} rotate 0 0 0 1
+create_atoms 0 single 0 0 0 mol raw_WLC_41_Atoms ${seed} rotate 0 0 0 1
 
 read_data Structures/Coeffs/coeffs_WLC_41.data add merge
-
+bond_coeff * 0 1
+# angle_coeff * 0 180
 
 group internals type 2:40
 group endpoints subtract all internals
@@ -29,31 +31,85 @@ group endpoints subtract all internals
 compute bondID all property/local btype batom1 batom2
 compute angleID all property/local atype aatom1 aatom2 aatom3
 
-fix restraint all arclengthrestraint raw_WLC_41 10 ${totLength}
+variable k_restrain equal 400
 
-fix stationary endpoints setforce 0.0 0.0 0.0
+fix restraint all arclengthrestraint raw_WLC_41_Atoms ${k_restrain} ${totLength}
+# print "fix arclengthrestraint has been imposed on system"
+ fix_modify restraint energy yes
+
 
 comm_modify cutoff 100
 
-minimize 0.0 1.0e-9 100000 100000
+velocity all set 0 0 0
+thermo_style custom step pe ke fnorm epair epair ebond eangle edihed etotal
 
-unfix stationary
-
-
-reset_timestep 0
+compute forces all property/atom fx fy fz
+compute sumForces all reduce sum c_forces[1] c_forces[2] c_forces[3]
+variable totForce vector c_sumForces
 
 run 0
+timestep 1e-6
 
+ fix stationary endpoints setforce 0 0 0
+min_modify dmax 10 norm max line backtrack # backtrack is necessary because minimizing points of restraint energy are degenerate
+# min_style fire
+# min_modify dmax 1 abcfire yes
+ minimize 0 0 100000 100000
+ unfix stationary
+
+reset_timestep 0
+timestep 1e-6
+# min_style fire
+# min_modify dmax 10 norm max
+# minimize 0 0 1000000 1000000
 
 compute blen all bond/local dist
-compute end2end all reduce sum c_blen[1]
-variable validationFile string "Out.relaxation/validation_WLC_41.txt"
-write_dump all custom ${validationFile} c_end2end modify append yes header no 
+compute bcomps all bond/local dx dy dz 
+compute end2end all reduce sum c_blen inputs local
+variable totLen equal c_end2end
+
+variable validProgFile string "Out_relaxation/validation/in-progress_validation_WLC_41.txt"
+print "" file ${validProgFile}
+# dump inProgressblen all local 1 ${validProgFile} c_blen
+# dump inProgressbcomps all local 1 ${validProgFile} c_bcomps[1] c_bcomps[2] c_bcomps[3]
+dump inProgressforces all custom 1 ${validProgFile} id fx fy fz
+fix print_totForce all print 1 "ITEM: Total forces on system at current timestep: ${totForce}" append ${validProgFile}
+fix print_end2end all print 1 "ITEM: End-to-end arc length: ${totLen}" append ${validProgFile}
+fix newline all print 1 "" append ${validProgFile}
+
+# dump_modify inProgressblen append yes
+# dump_modify inProgressbcomps append yes header no
+dump_modify inProgressforces append yes
+
+ fix integrator internals nve
+# fix integrator all nve
+ fix damper internals viscous 1000
+# fix damper all viscous 1
+# velocity all set 0 0 0
+ run 0
+ run 10
+
+
+# reset_timestep 0
+
+
+variable validationFile string "Out_relaxation/validation/validation_WLC_41.txt"
+
+# run 0
+
+print "# End-to-end arc length following minimization: ${totLen}" file ${validationFile}
+write_dump all local ${validationFile} c_blen modify append yes header no
+print "" append ${validationFile}
+print "# Bond component distances: x y z" append ${validationFile}
+write_dump all local ${validationFile} c_bcomps[1] c_bcomps[2] c_bcomps[3] modify append yes header no
+print "" append ${validationFile}
+print "# Total forces on system following minimization: ${totForce}" append ${validationFile}
+write_dump all custom ${validationFile} id type mol fx fy fz modify append yes header no
 
 
 variable natoms equal count(all)
 
-variable productionFile string "Out.relaxation/relaxed_WLC_41.txt"
+variable productionFile string "Out_relaxation/relaxed_WLC_41.txt"
 
 print "# Relaxed Production Model for Worm-Like Chain" file ${productionFile}
 

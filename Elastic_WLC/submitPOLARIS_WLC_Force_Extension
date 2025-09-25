@@ -1,9 +1,9 @@
 #!/bin/sh
-#PBS -l select=3:system=polaris
-#PBS -l place=pack
-#PBS -l walltime=1:00:00
+#PBS -l select=24:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=2:00:00
 #PBS -l filesystems=home:eagle:grand
-#PBS -q debug-scaling
+#PBS -q prod
 #PBS -A ModelingCoronaVirus
 #PBS -N WLC_Force_Extension
 #PBS -o Out_Force_Extension/nohup.out
@@ -19,12 +19,12 @@ echo "PWD = $PWD"
 # export MPICH_GPU_SUPPORT_ENABLED=1
 
 #NNODES=`wc -l < $PBS_NODEFILE`
-NNODES=3
+NNODES=24
 
 # per-node settings
 # NRANKS=4
 # NDEPTH=8
-NRANKS=8
+NRANKS=1
 NDEPTH=1
 NTHREADS=1
 
@@ -42,11 +42,12 @@ EXE="./lmp_polaris_gnu"
 # EXE="../IdealizedChainStretch/lmp_polaris_gnu"
 echo "EXE directory = $EXE"
 
-EXE_ARG="-in WLC_11_Force_Extension.lammps -partition 24x1 "
-# EXE_ARG="-in RawWLC21Relaxation.lammps RawWLC41Relaxation.lammps"
+# EXE_ARG="-in WLC_11_Force_Extension.lammps -partition 24x1 "
+# EXE_ARG="-in WLC_21_Force_Extension.lammps -partition 24x1"
+EXE_ARG="-in WLC_41_Force_Extension.lammps -partition 24x1"
 
 # MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth "
-MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind none "
+MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth "
 # --cpu-bind is apparently unrecognized by mpirun here
 # MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} "
 OMP_ARG=" -env OMP_NUM_THREADS=${NTHREADS} -env OMP_PROC_BIND=spread -env OMP_PLACES=cores "
