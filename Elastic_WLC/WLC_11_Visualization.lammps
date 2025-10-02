@@ -60,7 +60,7 @@ run 0
 velocity internals scale 310.0
 
 variable sampFreq equal 10000000 # Sample force on endpoints every this-many timesteps.
-variable numSamps equal 100 # Number of force samples to take.
+variable numSamps equal 200 # Number of force samples to take.
 variable numSteps equal "v_sampFreq * v_numSamps"
 thermo ${sampFreq}
 
